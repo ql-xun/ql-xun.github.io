@@ -1,181 +1,214 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-
+<html lang="en">
 <head>
-
-  <title>Qinglin Xun's Homepage</title>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="description" content="Qinglin Xun is currently a senior researcher at Huawei Noah's Ark Lab">
-  <meta name="keywords" content="Qinglin Xun, 荀清林, xunqinglin, Qinglin, Xun, network failures monitoring, pengcheng laboratory, Sun Yat-sen University, ">
-  <meta name="author" content="Qinglin Xun" />
-
-  <link rel="stylesheet" href="w3.css">
-
-  <style>
-  .w3-sidebar a {font-family: "Roboto", sans-serif}
-  body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-  </style>
-
+  <title>Qinglin Xun | Academic Homepage</title>
+  <meta name="author" content="Qinglin Xun">
+  <meta name="description" content="Qinglin Xun is a Ph.D. candidate at Sun Yat-sen University researching wireless physical-layer systems, GPU-accelerated computing, and network measurement.">
+  <meta name="keywords" content="Qinglin Xun, 荀清林, network measurement, data center networks, GPU computing, massive MIMO">
+  <meta property="og:title" content="Qinglin Xun | Academic Homepage">
+  <meta property="og:description" content="Research in network measurement, GPU-accelerated computing, and wireless physical-layer systems.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ql-xun.github.io/">
+  <meta property="og:image" content="https://ql-xun.github.io/images/Qinglin.png">
+  <link rel="canonical" href="https://ql-xun.github.io/">
   <link rel="icon" type="image/png" href="images/icons.png">
-  <!--
-  <script src="jquery.min.js"></script>
-  <script>
-  $(document).ready(function(){
-    // Add smooth scrolling to all links
-    $("a").on('click', function(event) {
-      // Make sure this.hash has a value before overriding default behavior
-      if (this.hash !== "") {
-        // Prevent default anchor click behavior
-        event.preventDefault();
-        // Store hash
-        var hash = this.hash;
-        // Using jQuery's animate() method to add smooth page scroll
-        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 800, function(){
-          // Add hash (#) to URL when done scrolling (default click behavior)
-          window.location.hash = hash;
-        });
-      } // End if
-    });
-  });
-  </script>
-  //-->
-
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <style>
+    body, * { cursor: url('images/icon/cursor.png'), auto; }
+    a, a * { cursor: url('images/icon/cursor-pointer.png'), pointer !important; }
+    html { scroll-behavior: smooth; }
+    .profile-photo { width: 88%; max-width: 245px; border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,.14); }
+    .research-tags { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px; }
+    .research-tag { padding:5px 11px; border-radius:16px; background:rgba(173,112,32,.1); color:#6e3519; border:1px solid rgba(173,112,32,.22); font-size:13px; }
+    .publication-card { border:1px solid rgba(0,0,0,.13); border-radius:10px; background:#fff; }
+    .publication-card.featured { background:#fffde8; }
+    .publication-year { width:16%; text-align:center; vertical-align:middle; padding:20px 10px; }
+    .year-badge { display:inline-flex; width:66px; height:66px; align-items:center; justify-content:center; border-radius:50%; background:linear-gradient(145deg,#f6c56e,#ad7020); color:white; font-weight:700; box-shadow:0 4px 12px rgba(173,112,32,.22); }
+    .publication-details { width:84%; padding:20px 18px 20px 8px; vertical-align:middle; }
+    .venue { color:#8a4e20; font-weight:600; }
+    .project-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:14px; }
+    .project-card { padding:18px; border:1px solid rgba(0,0,0,.12); border-radius:10px; background:rgba(255,255,255,.85); box-shadow:0 5px 15px rgba(0,0,0,.045); }
+    .project-card h3 { margin:0 0 7px; font-size:17px; }
+    .project-card p { margin:0; }
+    .timeline-item { display:grid; grid-template-columns:140px 1fr; gap:20px; padding:13px 0; border-bottom:1px solid rgba(0,0,0,.1); }
+    .timeline-item:last-child { border-bottom:0; }
+    .timeline-date { color:#805023; font-weight:600; }
+    .compact-list li { margin-bottom:9px; }
+    .section-copy { color:#555; margin-top:5px; }
+    .status-pill { display:inline-block; padding:2px 8px; border-radius:12px; background:#f2eadb; color:#73451d; font-size:12px; font-weight:600; }
+    @media (max-width:700px) {
+      .about-row { display:flex; flex-direction:column-reverse; }
+      .about-copy, .about-photo { width:auto !important; text-align:center; }
+      .profile-photo { width:170px; }
+      .project-grid { grid-template-columns:1fr; }
+      .timeline-item { grid-template-columns:1fr; gap:3px; }
+      .publication-year { display:none; }
+      .publication-details { width:100%; padding:17px; }
+    }
+  </style>
 </head>
+<body>
+  <nav class="section-drip-nav" aria-label="Section navigation">
+    <a href="#about"><span>About</span></a>
+    <a href="#news"><span>News</span></a>
+    <a href="#publications"><span>Publications</span></a>
+    <a href="#experience"><span>Experience</span></a>
+    <a href="#projects"><span>Projects</span></a>
+    <a href="#service"><span>Service</span></a>
+  </nav>
 
+  <table id="about" class="page-section" style="width:100%;max-width:800px;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
+    <tr><td style="padding:0">
+      <table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
+        <tr class="about-row">
+          <td class="about-copy" style="padding:2.5%;width:65%;vertical-align:middle">
+            <p style="text-align:center"><name>Qinglin Xun &nbsp;|&nbsp; 荀清林</name></p>
+            <p>
+              I am a Ph.D. candidate in Information and Communication Engineering at
+              <a href="https://www.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a>,
+              advised by Prof. Weichao Li and Prof. Jinbei Zhang. I also work as a research assistant at
+              <a href="https://www.pcl.ac.cn/" target="_blank" rel="noopener">Peng Cheng Laboratory</a>.
+            </p>
+            <p>
+              My research focuses on efficient and reliable network measurement, GPU-accelerated parallel computing,
+              and wireless physical-layer systems. I am especially interested in turning algorithmic ideas into
+              practical, low-latency systems.
+            </p>
+            <div class="research-tags" aria-label="Research interests">
+              <span class="research-tag">Network Measurement</span>
+              <span class="research-tag">Data Center Networks</span>
+              <span class="research-tag">GPU Computing</span>
+              <span class="research-tag">Massive MIMO</span>
+            </div>
+            <div style="height:1px;background:linear-gradient(to right,transparent,#ccc 20%,#ccc 80%,transparent);margin:14px 0"></div>
+            <p class="contact-links">
+              <span class="contact-line">
+                <a href="mailto:xunqlin@mail2.sysu.edu.cn">Email</a> &nbsp;/&nbsp;
+                <a href="data/resume.pdf">CV</a> &nbsp;/&nbsp;
+                <a href="https://github.com/ql-xun" target="_blank" rel="noopener">GitHub</a> &nbsp;/&nbsp;
+                <a href="https://dblp.org/pid/297/6718.html" target="_blank" rel="noopener">DBLP</a>
+              </span>
+            </p>
+          </td>
+          <td class="about-photo" style="padding:2.5%;width:35%;vertical-align:middle;text-align:center">
+            <img class="profile-photo" src="images/Qinglin.png" alt="Portrait of Qinglin Xun">
+          </td>
+        </tr>
+      </tbody></table>
 
-<body class="w3-content" style="max-width:1000px">
+      <table id="news" class="page-section" style="width:96%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
+        <tr><td style="padding:0;width:100%;vertical-align:middle">
+          <heading>News</heading><br><br>
+          <ul class="compact-list">
+            <li class="news-entry"><span class="news-date-badge">2026</span> Our work on a hierarchically parallel GPU framework for large-scale MIMO detection appears at <span class="news-highlight">IEEE ISCC 2026</span>.</li>
+            <li class="news-entry"><span class="news-date-badge">2025</span> LMon was published in <span class="news-highlight">IEEE Transactions on Networking</span>.</li>
+            <li class="news-entry"><span class="news-date-badge">2023</span> Our data-center network monitoring work appeared at <span class="news-highlight">IEEE/ACM IWQoS 2023</span>.</li>
+          </ul>
+        </td></tr>
+      </tbody></table>
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-collapse w3-top w3-right" style="z-index:3;width:150px" id="mySidebar">
-  <div class="w3-container w3-display-container w3-padding-16">
-    <h3><b>QINGLIN</b></h3>
-  </div>
-  <div class="w3-padding-64 w3-text-light-grey w3-large" style="font-weight:bold">
-    <a href="#home" class="w3-bar-item w3-button">Home</a>
-    <a href="#projects" class="w3-bar-item w3-button">Projects</a>
-    <a href="#publications" class="w3-bar-item w3-button">Research</a>
-    <a href="#award" class="w3-bar-item w3-button">Awards</a>
-  </div>
-</nav>
+      <table id="publications" class="publications-table page-section" style="width:100%;border:0;border-spacing:0 16px;border-collapse:separate;margin:auto"><tbody>
+        <tr><td colspan="2"><heading>Selected Publications</heading><br><p class="section-copy">Published and accepted work listed in the curriculum vitae. My name is shown in bold.</p></td></tr>
+        <tr class="publication-card featured">
+          <td class="publication-year"><span class="year-badge">2025</span></td>
+          <td class="publication-details">
+            <a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener"><papertitle>Efficient Data Center Network Monitoring and Troubleshooting With LMon: Leveraging ECMP Hashing Linearity and Lightweight Probing</papertitle></a><br>
+            <strong>Qinglin Xun</strong>, Weichao Li, Jianer Zhou, Jingpu Duan, Yi Wang, Xiaofeng Tao, Jinbei Zhang<br>
+            <span class="venue">IEEE Transactions on Networking, 33(5): 2601-2616</span> &nbsp; <span class="status-pill">CCF-A Journal</span>
+            <p>A lightweight monitoring and troubleshooting system that exploits ECMP hashing linearity for controllable path probing and reliable failure localization.</p>
+          </td>
+        </tr>
+        <tr class="publication-card">
+          <td class="publication-year"><span class="year-badge">2023</span></td>
+          <td class="publication-details">
+            <a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener"><papertitle>Enabling Reliable and Efficient Performance Monitoring and Troubleshooting in Datacenter Networks</papertitle></a><br>
+            <strong>Qinglin Xun</strong>, Weichao Li, Haorui Guo, Qianyi Huang, Jianer Zhou, Jingpu Duan, Yi Wang, Jinbei Zhang<br>
+            <span class="venue">IEEE/ACM IWQoS 2023, pp. 1-4</span> &nbsp; <span class="status-pill">CCF-B Conference</span>
+            <p>A short paper on efficient, reliable network performance monitoring and troubleshooting in data-center environments.</p>
+          </td>
+        </tr>
+        <tr class="publication-card">
+          <td class="publication-year"><span class="year-badge">2026</span></td>
+          <td class="publication-details">
+            <papertitle>An Efficient Hierarchically Parallel GPU-Accelerated Framework in Large-Scale MIMO Detection</papertitle><br>
+            <strong>Qinglin Xun</strong>, X. Xu, F. Jiang, et al.<br>
+            <span class="venue">IEEE ISCC 2026</span> &nbsp; <span class="status-pill">CCF-C Conference</span>
+            <p>A hierarchical GPU-parallel framework that reduces the cost of high-dimensional matrix operations in large-scale MIMO detection.</p>
+          </td>
+        </tr>
+      </tbody></table>
 
-<!-- Top menu on small screens -->
-<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-  <div class="w3-bar-item w3-padding-24">QINGLIN</div>
-  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right"  style="font-stretch: extra-expanded;" onclick="w3_open()"><b>≡</b></a>
-  </div>
-</header>
+      <table id="experience" class="page-section" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
+        <tr><td style="padding:10px 20px">
+          <heading>Education &amp; Experience</heading><br><br>
+          <div class="timeline-item"><div class="timeline-date">Sep. 2023 - Present</div><div><strong>Sun Yat-sen University</strong><br>Ph.D. Candidate, Information and Communication Engineering<br>Advisors: Prof. Weichao Li and Prof. Jinbei Zhang</div></div>
+          <div class="timeline-item"><div class="timeline-date">Sep. 2020 - Present</div><div><strong>Peng Cheng Laboratory, Shenzhen</strong><br>Research Assistant · C/C++, CUDA, Python</div></div>
+          <div class="timeline-item"><div class="timeline-date">Sep. 2020 - Jul. 2023</div><div><strong>Southern University of Science and Technology</strong><br>M.Eng. in Computer Networks · Outstanding Graduate<br>Advisors: Prof. Weichao Li and Prof. Yi Wang</div></div>
+          <div class="timeline-item"><div class="timeline-date">Sep. 2016 - Jul. 2020</div><div><strong>Jimei University</strong><br>B.Eng. in Communication Engineering · Outstanding Graduate</div></div>
+        </td></tr>
+      </tbody></table>
 
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+      <table id="projects" class="page-section" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
+        <tr><td style="padding:10px 20px">
+          <heading>Research Projects</heading><br>
+          <div class="project-grid">
+            <article class="project-card"><h3>GPU-Accelerated Massive MIMO Detection</h3><p>Designed a Neumann-series approximate inverse and a hierarchical CUDA execution framework to reduce detection latency and improve throughput.</p></article>
+            <article class="project-card"><h3>5D Wireless Channel Estimation</h3><p>Implemented GPU-accelerated SVD and Lanczos methods for high-dimensional channel parameters including AoD, AoA, and propagation delay, reaching 10 ms-level processing.</p></article>
+            <article class="project-card"><h3>Data-Center Network Monitoring</h3><p>Built LMon around controllable ECMP probing, Lasso regression, and hypothesis testing to identify potential network failures with low monitoring overhead.</p></article>
+            <article class="project-card"><h3>Embedded Intelligent Vehicles</h3><p>Developed a CMOS-camera line-following vehicle with PID control and a 555-timer/H-bridge wireless-charging vehicle during undergraduate research.</p></article>
+          </div>
+        </td></tr>
+      </tbody></table>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:150px">
+      <table id="service" class="page-section" style="width:90%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
+        <tr><td style="padding:10px 0;width:100%;vertical-align:middle">
+          <heading>Service, Honors &amp; Skills</heading><br><br>
+          <ul class="compact-list">
+            <li><strong>Peer review:</strong> IEEE GLOBECOM, ISCC, and WCNC (2025-2026).</li>
+            <li><strong>Patents:</strong> First inventor on two core patent applications; one granted.</li>
+            <li><strong>Scholarship:</strong> SUSTech Graduate Scholarship, three consecutive years (2020-2022).</li>
+            <li><strong>Competitions:</strong> Provincial Special Prize, National College Student Smart Car Competition; Provincial Second Prize, National Undergraduate Electronic Design Contest.</li>
+            <li><strong>Technical skills:</strong> C/C++, Python, CUDA GPU parallel computing, and NS-3 network simulation.</li>
+          </ul>
+        </td></tr>
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
 
-  <!-- Push down content on small screens -->
-  <div class="w3-hide-large" style="margin-top:83px"></div>
+  <section class="mountain-footer" aria-label="Footer landscape">
+    <div class="mountain-stage">
+      <picture>
+        <source type="image/webp" srcset="images/experience/background-960.webp 960w, images/experience/background-1440.webp 1440w, images/experience/background-1920.webp 1920w" sizes="100vw">
+        <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape" loading="lazy" decoding="async" onerror="this.style.display='none';this.closest('picture').nextElementSibling.style.display='block';">
+      </picture>
+      <div class="mountain-fallback" style="display:none"></div>
+      <div class="mountain-content">
+        <h2>Explore. Build. Measure.</h2>
+        <p class="mountain-sub">Turning research ideas into efficient and reliable systems.</p>
+        <a href="mailto:xunqlin@mail2.sysu.edu.cn" class="mountain-cta"><span>Get in Touch</span></a>
+        <p class="mountain-footnote"><span>Qinglin Xun · 荀清林</span><span class="mountain-updated">Last updated: August 11, 2026.</span></p>
+      </div>
+    </div>
+  </section>
 
-<!-- The Home Section -->
-    <div class="w3-container w3-center w3-padding-32" id="home">
-      <img  alt="profile photo" src="images/Qinglin.jpg" width="100" height="150">
-      <h1>Qinglin Xun (荀清林)</h1>
-        <p class="w3-justify" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;max-width:600px">
-          
-		  I am currently pursuing my Ph.D. in the Department of Electronics & Telecommunications Engineering at Sun Yat-sen University, Shenzhen.
-		  My research is dedicated to network faults monitoring in datacentes.
-        </p>
-        <p class="w3-center">
-          <a href="mailto:xunql2023@gmail.com" >Email</a> 
-		  <a href="https://ql-xun.github.io/data/CV_Qinglin.pdf" >CV</a> 
-        </p>
-        </tbody></table>
-  </div>
-
-<!-- The Projects Section -->
-  <div class="w3-container w3-padding-32" id="projects">
-    <h2>Recent Projects</h2>
-    <p class="w3-justify">
-       Todo   </p>
-	
- <!-- The Publications Section -->
-  <div class="w3-container w3-padding-32"" id="publications">
-    <h2>Research</h2>
-      <p class="w3-left-align" style="line-height:200%">
-        todo
-    </p>
-    <h4> Conference Papers:</h4>
-
-	<ol>
-   </div>
-
-
-  <!-- The Awards Section -->
-  <div class="w3-container w3-padding-32" id="award">
-    <h2>Awards</h2>
-    <p><li> todo</p>
-  </div>  
-
-  <div class="w3-light-grey w3-center w3-padding-24">
-
-    Welcome to use this website's <a href="https://github.com/QINGLINWang/HomePage">source code</a>, just add a link back to here. <a href="https://www.wangQINGLIN.site/">&#10025;</a></br>
-
-  <!-- Default Statcounter code for Qinglin Xun's Homepage
-  https://www.wangQINGLIN.site -->
-  No.
-  <script type="text/javascript">
-  var sc_project=12347113; 
-  var sc_invisible=0; 
-  var sc_security="21aca5d1"; 
-  var sc_https=1; 
-  var scJsHost = "https://";
-  document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+
-  "statcounter.com/counter/counter.js'></"+"script>");
-  </script> Visitor Since Feb 2022. Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
-  <noscript>
-    <div class="statcounter"><a title="Web Analytics Made Easy -
-  StatCounter" href="https://statcounter.com/" target="_blank"><img
-  class="statcounter" src="https://c.statcounter.com/12347113/0/21aca5d1/0/"
-  alt="Web Analytics Made Easy - StatCounter"></a></div>
-  </noscript>
-  <!-- End of Statcounter Code -->
-
-  </div>
-
-  <!-- End page content -->
-</div>
-
-<script>
-// Accordion 
-function myAccFunc() {
-  var x = document.getElementById("demoAcc");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else {
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-// Click on the "Jeans" link on page load to open the accordion for demo purposes
-document.getElementById("myBtn").click();
-
-
-// Open and close sidebar
-function w3_open() {
-  document.getElementById("mySidebar").style.display = "block";
-  document.getElementById("myOverlay").style.display = "block";
-}
- 
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
-  document.getElementById("myOverlay").style.display = "none";
-}
-</script>
-
+  <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+    (function () {
+      const button = document.getElementById('backToTop');
+      const nav = document.querySelector('.section-drip-nav');
+      const footer = document.querySelector('.mountain-footer');
+      function update() {
+        button.classList.toggle('visible', window.scrollY > 300);
+        if (nav && footer) nav.classList.toggle('is-footer-visible', footer.getBoundingClientRect().top < nav.getBoundingClientRect().bottom + 28);
+      }
+      window.addEventListener('scroll', update, {passive:true});
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
 </body>
 </html>
