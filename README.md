@@ -16,7 +16,6 @@ Then open `http://127.0.0.1:8080/`.
 - Main page: `index.html`
 - Styles: `stylesheet.css`
 - Profile photo: `images/Qinglin.png`
-- Curriculum vitae: `data/resume.pdf`
 - GitHub Pages workflow: `.github/workflows/static.yml`
 
 The page is based on the open-source
