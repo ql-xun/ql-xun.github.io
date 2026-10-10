@@ -89,6 +89,7 @@
     gallery.forEach(function (place) {
       const placeSection = document.createElement("section");
       placeSection.className = "hobby-place";
+      if (place.photos.length > 1) placeSection.classList.add("hobby-place--multi");
 
       const heading = document.createElement("div");
       heading.className = "hobby-place-heading";
