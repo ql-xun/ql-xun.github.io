@@ -6,6 +6,7 @@
   const toggle = document.getElementById("languageToggle");
   const backToTop = document.getElementById("backToTop");
   const page = root.dataset.page || "home";
+  const contentVersion = "20261011-3";
   const chineseRegions = new Set(["CN", "HK", "MO", "TW"]);
   const queryLanguage = new URLSearchParams(window.location.search).get("lang");
   let savedLanguage = null;
@@ -224,8 +225,8 @@
   window.addEventListener("scroll", updateBackToTop, { passive: true });
   updateBackToTop();
 
-  loadCollection("content/hobbies.json", "hobbiesContent", renderHobby);
-  loadCollection("content/thoughts.json", "thoughtsContent", renderThought);
+  loadCollection("content/hobbies.json?v=" + contentVersion, "hobbiesContent", renderHobby);
+  loadCollection("content/thoughts.json?v=" + contentVersion, "thoughtsContent", renderThought);
 
   if (!explicitLanguage && !savedLanguage) {
     const controller = new AbortController();

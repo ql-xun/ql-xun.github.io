@@ -173,16 +173,16 @@ def main() -> int:
         (hobbies_page, "hobbies.html"),
         (thoughts_page, "thoughts.html"),
     ):
-        require_text(page_content, "assets/css/site.css?v=20261011-2", page_label)
-        require_text(page_content, "assets/js/site.js?v=20261011-2", page_label)
+        require_text(page_content, "assets/css/site.css?v=20261011-3", page_label)
+        require_text(page_content, "assets/js/site.js?v=20261011-3", page_label)
     require_text(homepage, 'href="hobbies.html"', "index.html")
     require_text(homepage, 'href="thoughts.html"', "index.html")
     require_text(hobbies_page, 'id="hobbiesContent"', "hobbies.html")
     require_text(hobbies_page, 'data-page="hobbies"', "hobbies.html")
     require_text(thoughts_page, 'id="thoughtsContent"', "thoughts.html")
     require_text(thoughts_page, 'data-page="thoughts"', "thoughts.html")
-    require_text(script, 'content/hobbies.json', "assets/js/site.js")
-    require_text(script, 'content/thoughts.json', "assets/js/site.js")
+    require_text(script, 'content/hobbies.json?v=', "assets/js/site.js")
+    require_text(script, 'content/thoughts.json?v=', "assets/js/site.js")
     require_text(script, "appendGallery", "assets/js/site.js")
     require_text(script, 'bilingualElement("figcaption", "hobby-photo-caption"', "assets/js/site.js")
     require_text(stylesheet, ".content-state", "assets/css/site.css")
