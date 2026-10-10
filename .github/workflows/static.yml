@@ -38,6 +38,8 @@ jobs:
           python-version: "3.x"
       - name: Check site contract
         run: python scripts/check_site_contract.py
+      - name: Check JavaScript syntax
+        run: node --check assets/js/site.js
 
   deploy:
     if: github.event_name != 'pull_request'
