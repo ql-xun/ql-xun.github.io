@@ -39,6 +39,7 @@
       --muted: #69635b;
       --accent: #9b5b1f;
       --accent-dark: #6e3519;
+      --link-blue: #2563b8;
       --line: rgba(67, 54, 39, .15);
       --paper: #fffdf8;
       --wash: #f7f1e8;
@@ -72,6 +73,8 @@
     .about-layout h1 span { color: var(--muted); font-weight: 400; }
     .about-copy { font-size: 16px; line-height: 1.72; }
     .about-copy p { margin: 0 0 14px; font-size: inherit; }
+    .email-line { margin-top: 18px !important; }
+    .email-line a { white-space: nowrap; }
     .profile-photo { width: 100%; border-radius: 18px; box-shadow: 0 18px 42px rgba(61, 44, 25, .18); }
     .research-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .research-tag { padding: 6px 11px; border: 1px solid rgba(155, 91, 31, .2); border-radius: 999px; color: var(--accent-dark); background: rgba(246, 197, 110, .12); font-size: 13px; }
@@ -79,17 +82,17 @@
     .section-heading::after { content: ''; display: block; width: 44px; height: 3px; margin-top: 10px; border-radius: 2px; background: #fba524; }
     .section-copy { max-width: 700px; margin: 0 0 24px; color: var(--muted); line-height: 1.65; }
     .publication-list { display: grid; gap: 16px; }
-    .publication-card { display: grid; grid-template-columns: 78px 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, .86); box-shadow: 0 7px 24px rgba(74, 52, 28, .045); }
-    .publication-card.featured { border-color: rgba(155, 91, 31, .28); background: linear-gradient(135deg, #fffdf1, #fff); }
-    .publication-year { display: flex; align-items: center; justify-content: center; color: #fff; background: linear-gradient(155deg, #d8973c, #8f5119); font-size: 15px; font-weight: 800; }
-    .publication-details { padding: 21px 22px; line-height: 1.55; }
+    .publication-card { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, .86); box-shadow: 0 7px 24px rgba(74, 52, 28, .045); }
+    .publication-details { padding: 22px 24px; line-height: 1.55; }
     .publication-details h3 { margin: 0 0 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.35; }
-    .publication-details h3 a { color: var(--ink); }
-    .publication-details h3 a:hover, .publication-details h3 a:focus-visible { color: var(--accent-dark); }
-    .publication-details p { margin: 10px 0 0; color: #5d574f; line-height: 1.6; }
-    .venue { color: #824919; font-weight: 700; }
-    .paper-links { display: inline-flex; flex-wrap: wrap; gap: 8px; margin-left: 8px; }
-    .paper-links a { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .publication-authors { margin: 0 0 8px; color: #858b95; line-height: 1.55; }
+    .publication-authors .self { color: var(--ink); font-weight: 800; }
+    .publication-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; color: var(--link-blue); }
+    .venue { color: var(--link-blue); font-weight: 700; }
+    .ccf-badge { padding: 2px 7px; border: 1px solid rgba(37, 99, 184, .24); border-radius: 999px; color: var(--link-blue); background: rgba(37, 99, 184, .07); font-size: 12px; font-weight: 800; }
+    .paper-links { display: inline-flex; }
+    .paper-links a { color: var(--link-blue); font-size: 13px; font-weight: 800; }
+    .paper-links a:hover, .paper-links a:focus-visible { color: #123f80; text-decoration: underline; }
     .content-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
     .content-card { min-height: 150px; padding: 20px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255, 255, 255, .76); }
     .content-card h3 { margin: 0 0 9px; font-size: 17px; }
@@ -115,9 +118,7 @@
       .about-portrait { order: -1; width: 176px; margin: auto; }
       .about-layout h1, .eyebrow { text-align: center; }
       .content-grid, .reflection-grid { grid-template-columns: 1fr; }
-      .publication-card { grid-template-columns: 1fr; }
-      .publication-year { justify-content: flex-start; padding: 7px 18px; }
-      .paper-links { display: flex; margin: 10px 0 0; }
+      .publication-details { padding: 19px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
@@ -144,12 +145,14 @@
         <p class="eyebrow"><span class="lang-en">About me</span><span class="lang-zh">关于我</span></p>
         <h1>Qinglin Xun <span>荀清林</span></h1>
         <div class="lang-en">
-          <p>I am a Ph.D. candidate in Information and Communication Engineering at <a href="https://www.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a>, advised by Prof. Weichao Li and Prof. Jinbei Zhang. I also work as a research assistant at <a href="https://www.pcl.ac.cn/" target="_blank" rel="noopener">Pengcheng Laboratory</a>.</p>
-          <p>My research focuses on efficient and reliable network measurement, GPU-accelerated parallel computing, and wireless physical-layer systems. I am especially interested in turning algorithmic ideas into practical, low-latency systems.</p>
+          <p>I am currently pursuing a Ph.D. in Information and Communication Engineering at Sun Yat-sen University. My academic advisor is <a href="https://sece.sysu.edu.cn/szll/js/rztx/1135748.htm" target="_blank" rel="noopener">Prof. Jinbei Zhang</a>. I also work as a research assistant at Pengcheng Laboratory, where I conduct research under the guidance of <a href="https://liweichao.github.io/" target="_blank" rel="noopener">Associate Research Fellow Weichao Li</a>.</p>
+          <p>During this period, I have contributed to several projects associated with the National Key Research and Development Program of China. My research focuses primarily on communication algorithm acceleration and network measurement, particularly GPU-parallel acceleration of physical-layer algorithms and network performance monitoring.</p>
+          <p class="email-line"><strong>Email:</strong> <a href="mailto:xunqlin@mail2.sysu.edu.cn">xunqlin@mail2.sysu.edu.cn</a> or <a href="mailto:xunql2023@gmail.com">xunql2023@gmail.com</a></p>
         </div>
         <div class="lang-zh">
-          <p>我是<a href="https://www.sysu.edu.cn/" target="_blank" rel="noopener">中山大学</a>信息与通信工程专业博士研究生，导师为李伟超教授和张金钡教授。我同时在<a href="https://www.pcl.ac.cn/" target="_blank" rel="noopener">鹏城实验室</a>担任研究助理。</p>
-          <p>我的研究聚焦于高效可靠的网络测量、GPU 加速并行计算及无线物理层系统，尤其关注如何将算法思想转化为实用的低时延系统。</p>
+          <p>我目前在中山大学攻读信息与通信工程专业博士学位，指导导师为<a href="https://sece.sysu.edu.cn/szll/js/rztx/1135748.htm" target="_blank" rel="noopener">张金钡教授</a>。同时，我在鹏城实验室担任研究助理并开展科研工作，指导老师为<a href="https://liweichao.github.io/" target="_blank" rel="noopener">李伟超副研究员</a>。</p>
+          <p>在此期间，我参与了多项国家重点研发计划相关项目，研究主要聚焦于通信算法加速与网络测量，并在基于 GPU 并行加速的物理层算法及网络性能监测方面积累了研究成果。</p>
+          <p class="email-line"><strong>Email:</strong> <a href="mailto:xunqlin@mail2.sysu.edu.cn">xunqlin@mail2.sysu.edu.cn</a> or <a href="mailto:xunql2023@gmail.com">xunql2023@gmail.com</a></p>
         </div>
         <div class="research-tags" aria-label="Research interests">
           <span class="research-tag"><span class="lang-en">Network Measurement</span><span class="lang-zh">网络测量</span></span>
@@ -163,46 +166,49 @@
 
     <section id="publications" class="page-section">
       <h2 class="section-heading"><span class="lang-en">Selected Publications</span><span class="lang-zh">代表性论文</span></h2>
-      <p class="section-copy"><span class="lang-en">Published and accepted work. My name is shown in bold.</span><span class="lang-zh">已发表及已接收的研究成果；我的姓名以粗体标出。</span></p>
       <div class="publication-list">
-        <article class="publication-card featured">
-          <div class="publication-year">2026</div>
+        <article class="publication-card">
           <div class="publication-details">
-            <h3><a href="https://doi.org/10.1109/TCOMM.2026.3738510" target="_blank" rel="noopener">ParaNeumann: An Efficient Parallel GPU-Accelerated Framework for Approximate Matrix Inversion in Large-Scale MIMO Transceivers</a></h3>
-            <strong>Qinglin Xun</strong>, Xueting Xu, Fan Jiang, Ke Luo, Jingpu Duan, Weichao Li, Jinbei Zhang, and Xiaofeng Tao<br>
-            <span class="venue">IEEE Transactions on Communications, 2026</span>
-            <span class="paper-links"><a href="https://doi.org/10.1109/TCOMM.2026.3738510" target="_blank" rel="noopener">DOI</a></span>
-            <p><span class="lang-en">A parallel GPU framework for efficient approximate matrix inversion in large-scale MIMO transceivers.</span><span class="lang-zh">面向大规模 MIMO 收发机近似矩阵求逆的高效并行 GPU 加速框架。</span></p>
-          </div>
-        </article>
-        <article class="publication-card featured">
-          <div class="publication-year">2026</div>
-          <div class="publication-details">
-            <h3><a href="/papers/xun2026efficient/">An Efficient Hierarchically Parallel GPU-Accelerated Framework in Large-Scale MIMO Detection</a></h3>
-            <strong>Qinglin Xun</strong>, Xueting Xu, Fan Jiang, Ke Luo, Jingpu Duan, Weichao Li, Jinbei Zhang, and Xiaofeng Tao<br>
-            <span class="venue">IEEE Symposium on Computers and Communications (ISCC), 2026</span>
-            <span class="paper-links"><a href="/papers/xun2026efficient/"><span class="lang-en">Manuscript</span><span class="lang-zh">论文</span></a></span>
-            <p><span class="lang-en">A hierarchically parallel GPU execution framework designed to reduce the latency of large-scale MIMO detection.</span><span class="lang-zh">采用层次化并行 GPU 执行机制，降低大规模 MIMO 检测时延。</span></p>
+            <h3>Efficient Data Center Network Monitoring and Troubleshooting With LMon: Leveraging ECMP Hashing Linearity and Lightweight Probing</h3>
+            <p class="publication-authors"><span class="self">Qinglin Xun</span>, Weichao Li, Jianer Zhou, Jingpu Duan, Yi Wang, Xiaofeng Tao, and Jinbei Zhang</p>
+            <div class="publication-meta">
+              <span class="venue">IEEE Transactions on Networking (TON), 2025</span>
+              <span class="ccf-badge">CCF-A</span><span aria-hidden="true">·</span>
+              <span class="paper-links"><a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener"><span class="lang-en">Paper download</span><span class="lang-zh">Paper 下载</span></a></span>
+            </div>
           </div>
         </article>
         <article class="publication-card">
-          <div class="publication-year">2025</div>
           <div class="publication-details">
-            <h3><a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener">Efficient Data Center Network Monitoring and Troubleshooting With LMon: Leveraging ECMP Hashing Linearity and Lightweight Probing</a></h3>
-            <strong>Qinglin Xun</strong>, Weichao Li, Jianer Zhou, Jingpu Duan, Yi Wang, Xiaofeng Tao, and Jinbei Zhang<br>
-            <span class="venue">IEEE Transactions on Networking, 33(5): 2601–2616</span>
-            <span class="paper-links"><a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener">DOI</a></span>
-            <p><span class="lang-en">A lightweight monitoring and troubleshooting system that exploits ECMP hashing linearity for controllable path probing and reliable failure localization.</span><span class="lang-zh">利用 ECMP 哈希线性特征进行可控路径探测，实现轻量、可靠的网络监测与故障定位。</span></p>
+            <h3>ParaNeumann: An Efficient Parallel GPU-Accelerated Framework for Approximate Matrix Inversion in Large-Scale MIMO Transceivers</h3>
+            <p class="publication-authors"><span class="self">Qinglin Xun</span>, Xueting Xu, Fan Jiang, Ke Luo, Jingpu Duan, Weichao Li, Jinbei Zhang, and Xiaofeng Tao</p>
+            <div class="publication-meta">
+              <span class="venue">IEEE Transactions on Communications (TCOM), 2026</span>
+              <span class="ccf-badge">CCF-B</span><span aria-hidden="true">·</span>
+              <span class="paper-links"><a href="https://doi.org/10.1109/TCOMM.2026.3738510" target="_blank" rel="noopener"><span class="lang-en">Paper download</span><span class="lang-zh">Paper 下载</span></a></span>
+            </div>
           </div>
         </article>
         <article class="publication-card">
-          <div class="publication-year">2023</div>
           <div class="publication-details">
-            <h3><a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener">Enabling Reliable and Efficient Performance Monitoring and Troubleshooting in Datacenter Networks</a></h3>
-            <strong>Qinglin Xun</strong>, Weichao Li, Haorui Guo, Qianyi Huang, Jianer Zhou, Jingpu Duan, Yi Wang, and Jinbei Zhang<br>
-            <span class="venue">IEEE/ACM IWQoS 2023, pp. 1–4</span>
-            <span class="paper-links"><a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener">DOI</a></span>
-            <p><span class="lang-en">Efficient and reliable network performance monitoring and troubleshooting in data-center environments.</span><span class="lang-zh">面向数据中心环境的高效可靠网络性能监测与故障排查方法。</span></p>
+            <h3>Enabling Reliable and Efficient Performance Monitoring and Troubleshooting in Datacenter Networks</h3>
+            <p class="publication-authors"><span class="self">Qinglin Xun</span>, Weichao Li, Haorui Guo, Qianyi Huang, Jianer Zhou, Jingpu Duan, Yi Wang, and Jinbei Zhang</p>
+            <div class="publication-meta">
+              <span class="venue">IEEE/ACM International Symposium on Quality of Service (IWQoS), 2023</span>
+              <span class="ccf-badge">CCF-B</span><span aria-hidden="true">·</span>
+              <span class="paper-links"><a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener"><span class="lang-en">Paper download</span><span class="lang-zh">Paper 下载</span></a></span>
+            </div>
+          </div>
+        </article>
+        <article class="publication-card">
+          <div class="publication-details">
+            <h3>An Efficient Hierarchically Parallel GPU-Accelerated Framework in Large-Scale MIMO Detection</h3>
+            <p class="publication-authors"><span class="self">Qinglin Xun</span>, Xueting Xu, Fan Jiang, Ke Luo, Jingpu Duan, Weichao Li, Jinbei Zhang, and Xiaofeng Tao</p>
+            <div class="publication-meta">
+              <span class="venue">IEEE Symposium on Computers and Communications (ISCC), 2026</span>
+              <span class="ccf-badge">CCF-C</span><span aria-hidden="true">·</span>
+              <span class="paper-links"><a href="/papers/xun2026efficient/"><span class="lang-en">Paper download</span><span class="lang-zh">Paper 下载</span></a></span>
+            </div>
           </div>
         </article>
       </div>
