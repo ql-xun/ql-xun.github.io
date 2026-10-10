@@ -5,6 +5,7 @@
   const root = document.documentElement;
   const toggle = document.getElementById("languageToggle");
   const backToTop = document.getElementById("backToTop");
+  const page = root.dataset.page || "home";
   const chineseRegions = new Set(["CN", "HK", "MO", "TW"]);
   const queryLanguage = new URLSearchParams(window.location.search).get("lang");
   let savedLanguage = null;
@@ -25,7 +26,12 @@
     root.lang = selected === "zh" ? "zh-CN" : "en";
     toggle.textContent = selected === "zh" ? "English" : "中文";
     toggle.setAttribute("aria-label", selected === "zh" ? "Switch to English" : "切换至中文");
-    document.title = selected === "zh" ? "荀清林｜学术主页" : "Qinglin Xun | Academic Homepage";
+    const titles = {
+      home: { en: "Qinglin Xun | Academic Homepage", zh: "荀清林｜学术主页" },
+      hobbies: { en: "Hobbies | Qinglin Xun", zh: "兴趣爱好｜荀清林" },
+      thoughts: { en: "Thoughts & Advice | Qinglin Xun", zh: "思考与建议｜荀清林" }
+    };
+    document.title = titles[page][selected];
 
     document.querySelectorAll("[data-alt-en][data-alt-zh]").forEach(function (image) {
       image.alt = selected === "zh" ? image.dataset.altZh : image.dataset.altEn;
@@ -91,24 +97,16 @@
       placeSection.className = "hobby-place";
       if (place.photos.length > 1) placeSection.classList.add("hobby-place--multi");
 
-      const heading = document.createElement("div");
-      heading.className = "hobby-place-heading";
-      heading.appendChild(bilingualElement("h4", "", place.location));
-
-      if (place.year) {
-        const year = document.createElement("span");
-        year.className = "hobby-year";
-        year.textContent = place.year;
-        heading.appendChild(year);
-      }
-
       const photos = document.createElement("div");
       photos.className = "hobby-photo-grid";
       photos.dataset.count = String(place.photos.length);
 
       place.photos.forEach(function (photo) {
+        const figure = document.createElement("figure");
+        figure.className = "hobby-photo hobby-photo--" + (photo.orientation || "standard");
+
         const photoLink = document.createElement("a");
-        photoLink.className = "hobby-photo hobby-photo--" + (photo.orientation || "standard");
+        photoLink.className = "hobby-photo-link";
         photoLink.href = photo.src;
         photoLink.target = "_blank";
         photoLink.rel = "noopener";
@@ -121,10 +119,16 @@
         image.dataset.altZh = photo.alt.zh;
         image.alt = root.dataset.lang === "zh" ? photo.alt.zh : photo.alt.en;
         photoLink.appendChild(image);
-        photos.appendChild(photoLink);
+
+        const caption = bilingualElement("figcaption", "hobby-photo-caption", {
+          en: place.location.en + (place.year ? ", " + place.year : ""),
+          zh: place.location.zh + (place.year ? "，" + place.year : "")
+        });
+        figure.append(photoLink, caption);
+        photos.appendChild(figure);
       });
 
-      placeSection.append(heading, photos);
+      placeSection.appendChild(photos);
       galleryContainer.appendChild(placeSection);
     });
 
@@ -176,6 +180,7 @@
 
   function loadCollection(url, containerId, renderItem) {
     const container = document.getElementById(containerId);
+    if (!container) return Promise.resolve();
     return fetch(url, { headers: { Accept: "application/json" } })
       .then(function (response) {
         if (!response.ok) throw new Error("Unable to load " + url);
@@ -200,16 +205,20 @@
   const browserLanguage = normalizeLanguage(navigator.language || "en");
   applyLanguage(explicitLanguage || savedLanguage || browserLanguage, Boolean(explicitLanguage));
 
-  toggle.addEventListener("click", function () {
-    applyLanguage(root.dataset.lang === "zh" ? "en" : "zh", true);
-  });
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      applyLanguage(root.dataset.lang === "zh" ? "en" : "zh", true);
+    });
+  }
 
-  backToTop.addEventListener("click", function () {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  if (backToTop) {
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 
   function updateBackToTop() {
-    backToTop.classList.toggle("visible", window.scrollY > 320);
+    if (backToTop) backToTop.classList.toggle("visible", window.scrollY > 320);
   }
 
   window.addEventListener("scroll", updateBackToTop, { passive: true });

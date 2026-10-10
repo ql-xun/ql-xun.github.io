@@ -135,6 +135,8 @@ def require_order(content: str, markers: list[str], label: str) -> None:
 
 def main() -> int:
     homepage = require_file("index.html")
+    hobbies_page = require_file("hobbies.html")
+    thoughts_page = require_file("thoughts.html")
     stylesheet = require_file("assets/css/site.css")
     script = require_file("assets/js/site.js")
     require_file("assets/favicon.svg")
@@ -166,16 +168,24 @@ def main() -> int:
     require_text(homepage, "xunql2023@gmail.com", "index.html")
     require_text(homepage, "assets/css/site.css", "index.html")
     require_text(homepage, "assets/js/site.js", "index.html")
-    require_text(homepage, 'id="hobbiesContent"', "index.html")
-    require_text(homepage, 'id="thoughtsContent"', "index.html")
+    require_text(homepage, 'href="hobbies.html"', "index.html")
+    require_text(homepage, 'href="thoughts.html"', "index.html")
+    require_text(hobbies_page, 'id="hobbiesContent"', "hobbies.html")
+    require_text(hobbies_page, 'data-page="hobbies"', "hobbies.html")
+    require_text(thoughts_page, 'id="thoughtsContent"', "thoughts.html")
+    require_text(thoughts_page, 'data-page="thoughts"', "thoughts.html")
     require_text(script, 'content/hobbies.json', "assets/js/site.js")
     require_text(script, 'content/thoughts.json', "assets/js/site.js")
     require_text(script, "appendGallery", "assets/js/site.js")
+    require_text(script, 'bilingualElement("figcaption", "hobby-photo-caption"', "assets/js/site.js")
     require_text(stylesheet, ".content-state", "assets/css/site.css")
     require_text(stylesheet, ".hobby-photo-grid", "assets/css/site.css")
+    require_text(stylesheet, "width: min(1170px, calc(100% - 38px));", "assets/css/site.css")
     require_text(robots, "Allow: /", "robots.txt")
     require_text(robots, "Sitemap: https://ql-xun.github.io/sitemap.xml", "robots.txt")
     require_text(sitemap, "<loc>https://ql-xun.github.io/</loc>", "sitemap.xml")
+    require_text(sitemap, "<loc>https://ql-xun.github.io/hobbies.html</loc>", "sitemap.xml")
+    require_text(sitemap, "<loc>https://ql-xun.github.io/thoughts.html</loc>", "sitemap.xml")
     require_text(
         google_verification,
         "google-site-verification: googleceb99c875e0d20ae.html",
@@ -199,6 +209,8 @@ def main() -> int:
 
     if "<style>" in homepage:
         raise AssertionError("Homepage styles must remain in assets/css/site.css")
+    if 'id="hobbiesContent"' in homepage or 'id="thoughtsContent"' in homepage:
+        raise AssertionError("Hobbies and Thoughts must remain on standalone pages")
     if "Beyond research" in homepage or "Notes in progress" in homepage:
         raise AssertionError("Generic placeholder content must not return to the homepage")
 

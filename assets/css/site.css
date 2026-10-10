@@ -95,7 +95,8 @@ html[data-lang="zh"] .lang-zh {
 }
 
 .topnav a:hover,
-.topnav a:focus-visible {
+.topnav a:focus-visible,
+.topnav a[aria-current="page"] {
   color: var(--accent-dark);
   background: var(--wash);
 }
@@ -123,13 +124,25 @@ html[data-lang="zh"] .lang-zh {
 }
 
 .site-shell {
-  width: min(900px, calc(100% - 38px));
+  width: min(1170px, calc(100% - 38px));
   margin: auto;
 }
 
 .page-section {
   padding: 58px 0 10px;
   scroll-margin-top: calc(var(--header-height) + 12px);
+}
+
+.standalone-page {
+  min-height: calc(100vh - var(--header-height) - 130px);
+}
+
+.standalone-section {
+  padding-top: 64px;
+}
+
+.standalone-section > .section-heading {
+  margin-bottom: 28px;
 }
 
 .about-layout {
@@ -400,37 +413,10 @@ html[data-lang="zh"] .lang-zh {
 
 .hobby-place {
   min-width: 0;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
 }
 
 .hobby-place--multi {
   grid-column: 1 / -1;
-}
-
-.hobby-place-heading {
-  display: flex;
-  margin-bottom: 14px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.hobby-place-heading h4 {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 19px;
-}
-
-.hobby-year {
-  flex: 0 0 auto;
-  padding: 4px 9px;
-  border: 1px solid rgba(155, 91, 31, 0.2);
-  border-radius: 999px;
-  color: var(--accent-dark);
-  background: rgba(246, 197, 110, 0.12);
-  font-size: 12px;
-  font-weight: 700;
 }
 
 .hobby-photo-grid {
@@ -442,9 +428,17 @@ html[data-lang="zh"] .lang-zh {
 }
 
 .hobby-photo {
+  display: flex;
+  flex: 0 1 auto;
+  margin: 0;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.hobby-photo-link {
   position: relative;
   display: block;
-  flex: 0 1 auto;
   overflow: hidden;
   max-width: 100%;
   border-radius: 9px;
@@ -462,14 +456,22 @@ html[data-lang="zh"] .lang-zh {
   transition: transform 0.35s ease;
 }
 
-.hobby-photo:hover img,
-.hobby-photo:focus-visible img {
+.hobby-photo-link:hover img,
+.hobby-photo-link:focus-visible img {
   transform: scale(1.025);
 }
 
-.hobby-photo:focus-visible {
+.hobby-photo-link:focus-visible {
   outline: 3px solid rgba(37, 99, 184, 0.45);
   outline-offset: 3px;
+}
+
+.hobby-photo-caption {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 11px;
+  font-style: italic;
+  line-height: 1.45;
 }
 
 .content-state {
