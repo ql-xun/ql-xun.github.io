@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Qinglin Xun | Academic Homepage</title>
   <meta name="author" content="Qinglin Xun">
-  <meta name="description" content="Qinglin Xun is a Ph.D. candidate at Sun Yat-sen University researching wireless physical-layer systems, GPU-accelerated computing, and network measurement.">
+  <meta name="description" content="Qinglin Xun is a Ph.D. candidate at Sun Yat-sen University researching network measurement, GPU-accelerated computing, and wireless physical-layer systems.">
   <meta name="keywords" content="Qinglin Xun, 荀清林, network measurement, data center networks, GPU computing, massive MIMO">
   <meta property="og:title" content="Qinglin Xun | Academic Homepage">
   <meta property="og:description" content="Research in network measurement, GPU-accelerated computing, and wireless physical-layer systems.">
@@ -13,182 +13,311 @@
   <meta property="og:url" content="https://ql-xun.github.io/">
   <meta property="og:image" content="https://ql-xun.github.io/images/Qinglin.png">
   <link rel="canonical" href="https://ql-xun.github.io/">
+  <link rel="alternate" hreflang="en" href="https://ql-xun.github.io/?lang=en">
+  <link rel="alternate" hreflang="zh-CN" href="https://ql-xun.github.io/?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://ql-xun.github.io/">
   <link rel="icon" type="image/png" href="images/icons.png">
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Qinglin Xun",
+      "alternateName": "荀清林",
+      "url": "https://ql-xun.github.io/",
+      "image": "https://ql-xun.github.io/images/Qinglin.png",
+      "affiliation": [
+        {"@type": "CollegeOrUniversity", "name": "Sun Yat-sen University"},
+        {"@type": "Organization", "name": "Pengcheng Laboratory"}
+      ],
+      "knowsAbout": ["Network measurement", "GPU computing", "Massive MIMO", "Wireless communications"]
+    }
+  </script>
   <style>
+    :root {
+      --ink: #26231f;
+      --muted: #69635b;
+      --accent: #9b5b1f;
+      --accent-dark: #6e3519;
+      --line: rgba(67, 54, 39, .15);
+      --paper: #fffdf8;
+      --wash: #f7f1e8;
+      --header-height: 66px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-height) + 24px); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: radial-gradient(circle at 8% 0, rgba(246, 197, 110, .16), transparent 30rem), linear-gradient(180deg, #fff 0, var(--paper) 100%);
+    }
     body, * { cursor: url('images/icon/cursor.png'), auto; }
     a, a * { cursor: url('images/icon/cursor-pointer.png'), pointer !important; }
-    html { scroll-behavior: smooth; }
-    .profile-photo { width: 88%; max-width: 245px; border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,.14); }
-    .research-tags { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px; }
-    .research-tag { padding:5px 11px; border-radius:16px; background:rgba(173,112,32,.1); color:#6e3519; border:1px solid rgba(173,112,32,.22); font-size:13px; }
-    .publication-card { border:1px solid rgba(0,0,0,.13); border-radius:10px; background:#fff; }
-    .publication-card.featured { background:#fffde8; }
-    .publication-year { width:16%; text-align:center; vertical-align:middle; padding:20px 10px; }
-    .year-badge { display:inline-flex; width:66px; height:66px; align-items:center; justify-content:center; border-radius:50%; background:linear-gradient(145deg,#f6c56e,#ad7020); color:white; font-weight:700; box-shadow:0 4px 12px rgba(173,112,32,.22); }
-    .publication-details { width:84%; padding:20px 18px 20px 8px; vertical-align:middle; }
-    .venue { color:#8a4e20; font-weight:600; }
-    .project-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:14px; }
-    .project-card { padding:18px; border:1px solid rgba(0,0,0,.12); border-radius:10px; background:rgba(255,255,255,.85); box-shadow:0 5px 15px rgba(0,0,0,.045); }
-    .project-card h3 { margin:0 0 7px; font-size:17px; }
-    .project-card p { margin:0; }
-    .timeline-item { display:grid; grid-template-columns:140px 1fr; gap:20px; padding:13px 0; border-bottom:1px solid rgba(0,0,0,.1); }
-    .timeline-item:last-child { border-bottom:0; }
-    .timeline-date { color:#805023; font-weight:600; }
-    .compact-list li { margin-bottom:9px; }
-    .section-copy { color:#555; margin-top:5px; }
-    .status-pill { display:inline-block; padding:2px 8px; border-radius:12px; background:#f2eadb; color:#73451d; font-size:12px; font-weight:600; }
-    @media (max-width:700px) {
-      .about-row { display:flex; flex-direction:column-reverse; }
-      .about-copy, .about-photo { width:auto !important; text-align:center; }
-      .profile-photo { width:170px; }
-      .project-grid { grid-template-columns:1fr; }
-      .timeline-item { grid-template-columns:1fr; gap:3px; }
-      .publication-year { display:none; }
-      .publication-details { width:100%; padding:17px; }
+    .lang-zh { display: none; }
+    html[data-lang="zh"] .lang-en { display: none; }
+    html[data-lang="zh"] .lang-zh { display: revert; }
+    .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(67, 54, 39, .1); background: rgba(255, 253, 248, .93); box-shadow: 0 5px 24px rgba(70, 49, 24, .05); backdrop-filter: blur(14px); }
+    .topbar { width: min(1040px, calc(100% - 36px)); min-height: var(--header-height); margin: auto; display: flex; align-items: center; gap: 22px; }
+    .brand { flex: 0 0 auto; color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 18px; font-weight: 700; letter-spacing: .01em; }
+    .topnav { margin-left: auto; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+    .topnav a { padding: 8px 9px; border-radius: 8px; color: #4e4942; font-size: 13px; font-weight: 600; white-space: nowrap; }
+    .topnav a:hover, .topnav a:focus-visible { color: var(--accent-dark); background: var(--wash); }
+    .language-toggle { flex: 0 0 auto; min-width: 74px; min-height: 34px; padding: 6px 11px; border: 1px solid rgba(155, 91, 31, .32); border-radius: 999px; color: var(--accent-dark); background: #fff; font: 700 12px/1 'Lato', Verdana, sans-serif; cursor: pointer; }
+    .language-toggle:hover, .language-toggle:focus-visible { background: #fff7e8; outline: 2px solid rgba(155, 91, 31, .18); }
+    .site-shell { width: min(900px, calc(100% - 38px)); margin: auto; }
+    .page-section { padding: 58px 0 10px; scroll-margin-top: calc(var(--header-height) + 12px); }
+    .about-layout { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 52px; align-items: center; padding-top: 64px; }
+    .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .about-layout h1 { margin: 0 0 20px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(32px, 6vw, 50px); line-height: 1.05; }
+    .about-layout h1 span { color: var(--muted); font-weight: 400; }
+    .about-copy { font-size: 16px; line-height: 1.72; }
+    .about-copy p { margin: 0 0 14px; font-size: inherit; }
+    .profile-photo { width: 100%; border-radius: 18px; box-shadow: 0 18px 42px rgba(61, 44, 25, .18); }
+    .research-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .research-tag { padding: 6px 11px; border: 1px solid rgba(155, 91, 31, .2); border-radius: 999px; color: var(--accent-dark); background: rgba(246, 197, 110, .12); font-size: 13px; }
+    .section-heading { margin: 0 0 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 29px; line-height: 1.2; }
+    .section-heading::after { content: ''; display: block; width: 44px; height: 3px; margin-top: 10px; border-radius: 2px; background: #fba524; }
+    .section-copy { max-width: 700px; margin: 0 0 24px; color: var(--muted); line-height: 1.65; }
+    .news-list { display: grid; gap: 10px; margin: 24px 0 0; padding: 0; list-style: none; }
+    .news-entry { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); line-height: 1.55; }
+    .news-year { color: var(--accent); font-weight: 800; }
+    .publication-list { display: grid; gap: 16px; }
+    .publication-card { display: grid; grid-template-columns: 78px 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, .86); box-shadow: 0 7px 24px rgba(74, 52, 28, .045); }
+    .publication-card.featured { border-color: rgba(155, 91, 31, .28); background: linear-gradient(135deg, #fffdf1, #fff); }
+    .publication-year { display: flex; align-items: center; justify-content: center; color: #fff; background: linear-gradient(155deg, #d8973c, #8f5119); font-size: 15px; font-weight: 800; }
+    .publication-details { padding: 21px 22px; line-height: 1.55; }
+    .publication-details h3 { margin: 0 0 8px; font-family: Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.35; }
+    .publication-details h3 a { color: var(--ink); }
+    .publication-details h3 a:hover, .publication-details h3 a:focus-visible { color: var(--accent-dark); }
+    .publication-details p { margin: 10px 0 0; color: #5d574f; line-height: 1.6; }
+    .venue { color: #824919; font-weight: 700; }
+    .paper-links { display: inline-flex; flex-wrap: wrap; gap: 8px; margin-left: 8px; }
+    .paper-links a { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    .content-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .content-card { min-height: 150px; padding: 20px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255, 255, 255, .76); }
+    .content-card h3 { margin: 0 0 9px; font-size: 17px; }
+    .content-card p { margin: 0; color: #5c564e; line-height: 1.62; }
+    .compact-list { margin: 20px 0 0; padding-left: 20px; }
+    .compact-list li { margin-bottom: 10px; line-height: 1.58; }
+    .reflection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .reflection-card { padding: 25px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(145deg, rgba(247, 241, 232, .8), rgba(255, 255, 255, .9)); }
+    .reflection-card h3 { margin: 0 0 10px; font-family: Georgia, 'Times New Roman', serif; font-size: 21px; }
+    .reflection-card p { margin: 0; color: #5c564e; line-height: 1.68; }
+    .site-footer { margin-top: 70px; padding: 28px 20px 32px; border-top: 1px solid var(--line); color: #716b63; text-align: center; }
+    .site-footer p { margin: 4px 0; font-size: 12px; }
+    #backToTop { right: 24px; bottom: 24px; }
+    @media (max-width: 900px) {
+      :root { --header-height: 104px; }
+      .topbar { width: min(100% - 24px, 760px); padding: 10px 0; flex-wrap: wrap; gap: 8px 14px; }
+      .topnav { order: 3; width: 100%; margin: 0; justify-content: flex-start; overflow-x: auto; padding-bottom: 2px; }
+      .language-toggle { margin-left: auto; }
+      .site-shell { width: min(100% - 32px, 760px); }
     }
+    @media (max-width: 680px) {
+      .about-layout { grid-template-columns: 1fr; gap: 26px; padding-top: 42px; }
+      .about-portrait { order: -1; width: 176px; margin: auto; }
+      .about-layout h1, .eyebrow { text-align: center; }
+      .content-grid, .reflection-grid { grid-template-columns: 1fr; }
+      .publication-card { grid-template-columns: 1fr; }
+      .publication-year { justify-content: flex-start; padding: 7px 18px; }
+      .paper-links { display: flex; margin: 10px 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
-  <nav class="section-drip-nav" aria-label="Section navigation">
-    <a href="#about"><span>About</span></a>
-    <a href="#news"><span>News</span></a>
-    <a href="#publications"><span>Publications</span></a>
-    <a href="#experience"><span>Experience</span></a>
-    <a href="#projects"><span>Projects</span></a>
-    <a href="#service"><span>Service</span></a>
-  </nav>
-
-  <table id="about" class="page-section" style="width:100%;max-width:800px;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
-    <tr><td style="padding:0">
-      <table style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
-        <tr class="about-row">
-          <td class="about-copy" style="padding:2.5%;width:65%;vertical-align:middle">
-            <p style="text-align:center"><name>Qinglin Xun &nbsp;|&nbsp; 荀清林</name></p>
-            <p>
-              I am a Ph.D. candidate in Information and Communication Engineering at
-              <a href="https://www.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a>,
-              advised by Prof. Weichao Li and Prof. Jinbei Zhang. I also work as a research assistant at
-              <a href="https://www.pcl.ac.cn/" target="_blank" rel="noopener">Peng Cheng Laboratory</a>.
-            </p>
-            <p>
-              My research focuses on efficient and reliable network measurement, GPU-accelerated parallel computing,
-              and wireless physical-layer systems. I am especially interested in turning algorithmic ideas into
-              practical, low-latency systems.
-            </p>
-            <div class="research-tags" aria-label="Research interests">
-              <span class="research-tag">Network Measurement</span>
-              <span class="research-tag">Data Center Networks</span>
-              <span class="research-tag">GPU Computing</span>
-              <span class="research-tag">Massive MIMO</span>
-            </div>
-          </td>
-          <td class="about-photo" style="padding:2.5%;width:35%;vertical-align:middle;text-align:center">
-            <img class="profile-photo" src="images/Qinglin.png" alt="Portrait of Qinglin Xun">
-          </td>
-        </tr>
-      </tbody></table>
-
-      <table id="news" class="page-section" style="width:96%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
-        <tr><td style="padding:0;width:100%;vertical-align:middle">
-          <heading>News</heading><br><br>
-          <ul class="compact-list">
-            <li class="news-entry"><span class="news-date-badge">2025</span> LMon was published in <span class="news-highlight">IEEE Transactions on Networking</span>.</li>
-            <li class="news-entry"><span class="news-date-badge">2023</span> Our data-center network monitoring work appeared at <span class="news-highlight">IEEE/ACM IWQoS 2023</span>.</li>
-          </ul>
-        </td></tr>
-      </tbody></table>
-
-      <table id="publications" class="publications-table page-section" style="width:100%;border:0;border-spacing:0 16px;border-collapse:separate;margin:auto"><tbody>
-        <tr><td colspan="2"><heading>Selected Publications</heading><br><p class="section-copy">Published and accepted work listed in the curriculum vitae. My name is shown in bold.</p></td></tr>
-        <tr class="publication-card featured">
-          <td class="publication-year"><span class="year-badge">2025</span></td>
-          <td class="publication-details">
-            <a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener"><papertitle>Efficient Data Center Network Monitoring and Troubleshooting With LMon: Leveraging ECMP Hashing Linearity and Lightweight Probing</papertitle></a><br>
-            <strong>Qinglin Xun</strong>, Weichao Li, Jianer Zhou, Jingpu Duan, Yi Wang, Xiaofeng Tao, Jinbei Zhang<br>
-            <span class="venue">IEEE Transactions on Networking, 33(5): 2601-2616</span> &nbsp; <span class="status-pill">CCF-A Journal</span>
-            <p>A lightweight monitoring and troubleshooting system that exploits ECMP hashing linearity for controllable path probing and reliable failure localization.</p>
-          </td>
-        </tr>
-        <tr class="publication-card">
-          <td class="publication-year"><span class="year-badge">2023</span></td>
-          <td class="publication-details">
-            <a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener"><papertitle>Enabling Reliable and Efficient Performance Monitoring and Troubleshooting in Datacenter Networks</papertitle></a><br>
-            <strong>Qinglin Xun</strong>, Weichao Li, Haorui Guo, Qianyi Huang, Jianer Zhou, Jingpu Duan, Yi Wang, Jinbei Zhang<br>
-            <span class="venue">IEEE/ACM IWQoS 2023, pp. 1-4</span> &nbsp; <span class="status-pill">CCF-B Conference</span>
-            <p>A short paper on efficient, reliable network performance monitoring and troubleshooting in data-center environments.</p>
-          </td>
-        </tr>
-      </tbody></table>
-
-      <table id="experience" class="page-section" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
-        <tr><td style="padding:10px 20px">
-          <heading>Education &amp; Experience</heading><br><br>
-          <div class="timeline-item"><div class="timeline-date">Sep. 2023 - Present</div><div><strong>Sun Yat-sen University</strong><br>Ph.D. Candidate, Information and Communication Engineering<br>Advisors: Prof. Weichao Li and Prof. Jinbei Zhang</div></div>
-          <div class="timeline-item"><div class="timeline-date">Sep. 2020 - Present</div><div><strong>Peng Cheng Laboratory, Shenzhen</strong><br>Research Assistant · C/C++, CUDA, Python</div></div>
-          <div class="timeline-item"><div class="timeline-date">Sep. 2020 - Jul. 2023</div><div><strong>Southern University of Science and Technology</strong><br>M.Eng. in Computer Networks · Outstanding Graduate<br>Advisors: Prof. Weichao Li and Prof. Yi Wang</div></div>
-          <div class="timeline-item"><div class="timeline-date">Sep. 2016 - Jul. 2020</div><div><strong>Jimei University</strong><br>B.Eng. in Communication Engineering · Outstanding Graduate</div></div>
-        </td></tr>
-      </tbody></table>
-
-      <table id="projects" class="page-section" style="width:100%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
-        <tr><td style="padding:10px 20px">
-          <heading>Research Projects</heading><br>
-          <div class="project-grid">
-            <article class="project-card"><h3>GPU-Accelerated Massive MIMO Detection</h3><p>Designed a Neumann-series approximate inverse and a hierarchical CUDA execution framework to reduce detection latency and improve throughput.</p></article>
-            <article class="project-card"><h3>5D Wireless Channel Estimation</h3><p>Implemented GPU-accelerated SVD and Lanczos methods for high-dimensional channel parameters including AoD, AoA, and propagation delay, reaching 10 ms-level processing.</p></article>
-            <article class="project-card"><h3>Data-Center Network Monitoring</h3><p>Built LMon around controllable ECMP probing, Lasso regression, and hypothesis testing to identify potential network failures with low monitoring overhead.</p></article>
-            <article class="project-card"><h3>Embedded Intelligent Vehicles</h3><p>Developed a CMOS-camera line-following vehicle with PID control and a 555-timer/H-bridge wireless-charging vehicle during undergraduate research.</p></article>
-          </div>
-        </td></tr>
-      </tbody></table>
-
-      <table id="service" class="page-section" style="width:90%;border:0;border-spacing:0;border-collapse:separate;margin:auto"><tbody>
-        <tr><td style="padding:10px 0;width:100%;vertical-align:middle">
-          <heading>Service, Honors &amp; Skills</heading><br><br>
-          <ul class="compact-list">
-            <li><strong>Peer review:</strong> IEEE GLOBECOM, ISCC, and WCNC (2025-2026).</li>
-            <li><strong>Patents:</strong> First inventor on two core patent applications; one granted.</li>
-            <li><strong>Scholarship:</strong> SUSTech Graduate Scholarship, three consecutive years (2020-2022).</li>
-            <li><strong>Competitions:</strong> Provincial Special Prize, National College Student Smart Car Competition; Provincial Second Prize, National Undergraduate Electronic Design Contest.</li>
-            <li><strong>Technical skills:</strong> C/C++, Python, CUDA GPU parallel computing, and NS-3 network simulation.</li>
-          </ul>
-        </td></tr>
-      </tbody></table>
-    </td></tr>
-  </tbody></table>
-
-  <section class="mountain-footer" aria-label="Footer landscape">
-    <div class="mountain-stage">
-      <picture>
-        <source type="image/webp" srcset="images/experience/background-960.webp 960w, images/experience/background-1440.webp 1440w, images/experience/background-1920.webp 1920w" sizes="100vw">
-        <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape" loading="lazy" decoding="async" onerror="this.style.display='none';this.closest('picture').nextElementSibling.style.display='block';">
-      </picture>
-      <div class="mountain-fallback" style="display:none"></div>
-      <div class="mountain-content">
-        <h2>Explore. Build. Measure.</h2>
-        <p class="mountain-sub">Turning research ideas into efficient and reliable systems.</p>
-        <a href="mailto:xunqlin@mail2.sysu.edu.cn" class="mountain-cta"><span>Get in Touch</span></a>
-        <p class="mountain-footnote"><span>Qinglin Xun · 荀清林</span><span class="mountain-updated">Last updated: August 11, 2026.</span></p>
-      </div>
+  <header class="site-header">
+    <div class="topbar">
+      <a class="brand" href="#about" aria-label="Qinglin Xun home">Qinglin Xun</a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a href="#about"><span class="lang-en">About me</span><span class="lang-zh">关于我</span></a>
+        <a href="#publications"><span class="lang-en">Publications</span><span class="lang-zh">论文发表</span></a>
+        <a href="#projects"><span class="lang-en">Research</span><span class="lang-zh">研究项目</span></a>
+        <a href="#service"><span class="lang-en">Service</span><span class="lang-zh">服务与荣誉</span></a>
+        <a href="#hobbies"><span class="lang-en">Hobbies</span><span class="lang-zh">兴趣爱好</span></a>
+        <a href="#thoughts"><span class="lang-en">Thoughts &amp; Advice</span><span class="lang-zh">思考与建议</span></a>
+      </nav>
+      <button id="languageToggle" class="language-toggle" type="button" aria-label="切换至中文" aria-live="polite">中文</button>
     </div>
-  </section>
+  </header>
 
-  <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
+  <main class="site-shell">
+    <section id="about" class="page-section about-layout">
+      <div class="about-copy">
+        <p class="eyebrow"><span class="lang-en">About me</span><span class="lang-zh">关于我</span></p>
+        <h1>Qinglin Xun <span>荀清林</span></h1>
+        <div class="lang-en">
+          <p>I am a Ph.D. candidate in Information and Communication Engineering at <a href="https://www.sysu.edu.cn/" target="_blank" rel="noopener">Sun Yat-sen University</a>, advised by Prof. Weichao Li and Prof. Jinbei Zhang. I also work as a research assistant at <a href="https://www.pcl.ac.cn/" target="_blank" rel="noopener">Pengcheng Laboratory</a>.</p>
+          <p>My research focuses on efficient and reliable network measurement, GPU-accelerated parallel computing, and wireless physical-layer systems. I am especially interested in turning algorithmic ideas into practical, low-latency systems.</p>
+        </div>
+        <div class="lang-zh">
+          <p>我是<a href="https://www.sysu.edu.cn/" target="_blank" rel="noopener">中山大学</a>信息与通信工程专业博士研究生，导师为李伟超教授和张金贝教授。我同时在<a href="https://www.pcl.ac.cn/" target="_blank" rel="noopener">鹏城实验室</a>担任研究助理。</p>
+          <p>我的研究聚焦于高效可靠的网络测量、GPU 加速并行计算及无线物理层系统，尤其关注如何将算法思想转化为实用的低时延系统。</p>
+        </div>
+        <div class="research-tags" aria-label="Research interests">
+          <span class="research-tag"><span class="lang-en">Network Measurement</span><span class="lang-zh">网络测量</span></span>
+          <span class="research-tag"><span class="lang-en">Data Center Networks</span><span class="lang-zh">数据中心网络</span></span>
+          <span class="research-tag"><span class="lang-en">GPU Computing</span><span class="lang-zh">GPU 计算</span></span>
+          <span class="research-tag"><span class="lang-en">Massive MIMO</span><span class="lang-zh">大规模 MIMO</span></span>
+        </div>
+      </div>
+      <div class="about-portrait"><img class="profile-photo" src="images/Qinglin.png" alt="Portrait of Qinglin Xun"></div>
+    </section>
+
+    <section id="news" class="page-section">
+      <h2 class="section-heading"><span class="lang-en">News</span><span class="lang-zh">最新动态</span></h2>
+      <ul class="news-list">
+        <li class="news-entry"><span class="news-year">2026</span><span><span class="lang-en">ParaNeumann was published in <strong>IEEE Transactions on Communications</strong>.</span><span class="lang-zh">ParaNeumann 已发表于 <strong>IEEE Transactions on Communications</strong>。</span></span></li>
+        <li class="news-entry"><span class="news-year">2026</span><span><span class="lang-en">Our hierarchically parallel GPU-accelerated large-scale MIMO detection framework was accepted by <strong>IEEE ISCC 2026</strong>.</span><span class="lang-zh">面向大规模 MIMO 检测的层次化并行 GPU 加速框架已被 <strong>IEEE ISCC 2026</strong> 接收。</span></span></li>
+        <li class="news-entry"><span class="news-year">2025</span><span><span class="lang-en">LMon was published in <strong>IEEE Transactions on Networking</strong>.</span><span class="lang-zh">LMon 已发表于 <strong>IEEE Transactions on Networking</strong>。</span></span></li>
+        <li class="news-entry"><span class="news-year">2023</span><span><span class="lang-en">Our data-center network monitoring work appeared at <strong>IEEE/ACM IWQoS 2023</strong>.</span><span class="lang-zh">数据中心网络监测工作发表于 <strong>IEEE/ACM IWQoS 2023</strong>。</span></span></li>
+      </ul>
+    </section>
+
+    <section id="publications" class="page-section">
+      <h2 class="section-heading"><span class="lang-en">Selected Publications</span><span class="lang-zh">代表性论文</span></h2>
+      <p class="section-copy"><span class="lang-en">Published and accepted work. My name is shown in bold.</span><span class="lang-zh">已发表及已接收的研究成果；我的姓名以粗体标出。</span></p>
+      <div class="publication-list">
+        <article class="publication-card featured">
+          <div class="publication-year">2026</div>
+          <div class="publication-details">
+            <h3><a href="https://doi.org/10.1109/TCOMM.2026.3738510" target="_blank" rel="noopener">ParaNeumann: An Efficient Parallel GPU-Accelerated Framework for Approximate Matrix Inversion in Large-Scale MIMO Transceivers</a></h3>
+            <strong>Qinglin Xun</strong>, Xueting Xu, Fan Jiang, Ke Luo, Jingpu Duan, Weichao Li, Jinbei Zhang, and Xiaofeng Tao<br>
+            <span class="venue">IEEE Transactions on Communications, 2026</span>
+            <span class="paper-links"><a href="https://doi.org/10.1109/TCOMM.2026.3738510" target="_blank" rel="noopener">DOI</a></span>
+            <p><span class="lang-en">A parallel GPU framework for efficient approximate matrix inversion in large-scale MIMO transceivers.</span><span class="lang-zh">面向大规模 MIMO 收发机近似矩阵求逆的高效并行 GPU 加速框架。</span></p>
+          </div>
+        </article>
+        <article class="publication-card featured">
+          <div class="publication-year">2026</div>
+          <div class="publication-details">
+            <h3><a href="/papers/xun2026efficient/">An Efficient Hierarchically Parallel GPU-Accelerated Framework in Large-Scale MIMO Detection</a></h3>
+            <strong>Qinglin Xun</strong>, Xueting Xu, Fan Jiang, Ke Luo, Jingpu Duan, Weichao Li, Jinbei Zhang, and Xiaofeng Tao<br>
+            <span class="venue">IEEE Symposium on Computers and Communications (ISCC), 2026</span>
+            <span class="paper-links"><a href="/papers/xun2026efficient/"><span class="lang-en">Manuscript</span><span class="lang-zh">论文</span></a></span>
+            <p><span class="lang-en">A hierarchically parallel GPU execution framework designed to reduce the latency of large-scale MIMO detection.</span><span class="lang-zh">采用层次化并行 GPU 执行机制，降低大规模 MIMO 检测时延。</span></p>
+          </div>
+        </article>
+        <article class="publication-card">
+          <div class="publication-year">2025</div>
+          <div class="publication-details">
+            <h3><a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener">Efficient Data Center Network Monitoring and Troubleshooting With LMon: Leveraging ECMP Hashing Linearity and Lightweight Probing</a></h3>
+            <strong>Qinglin Xun</strong>, Weichao Li, Jianer Zhou, Jingpu Duan, Yi Wang, Xiaofeng Tao, and Jinbei Zhang<br>
+            <span class="venue">IEEE Transactions on Networking, 33(5): 2601–2616</span>
+            <span class="paper-links"><a href="https://doi.org/10.1109/TON.2025.3570008" target="_blank" rel="noopener">DOI</a></span>
+            <p><span class="lang-en">A lightweight monitoring and troubleshooting system that exploits ECMP hashing linearity for controllable path probing and reliable failure localization.</span><span class="lang-zh">利用 ECMP 哈希线性特征进行可控路径探测，实现轻量、可靠的网络监测与故障定位。</span></p>
+          </div>
+        </article>
+        <article class="publication-card">
+          <div class="publication-year">2023</div>
+          <div class="publication-details">
+            <h3><a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener">Enabling Reliable and Efficient Performance Monitoring and Troubleshooting in Datacenter Networks</a></h3>
+            <strong>Qinglin Xun</strong>, Weichao Li, Haorui Guo, Qianyi Huang, Jianer Zhou, Jingpu Duan, Yi Wang, and Jinbei Zhang<br>
+            <span class="venue">IEEE/ACM IWQoS 2023, pp. 1–4</span>
+            <span class="paper-links"><a href="https://doi.org/10.1109/IWQoS57198.2023.10188787" target="_blank" rel="noopener">DOI</a></span>
+            <p><span class="lang-en">Efficient and reliable network performance monitoring and troubleshooting in data-center environments.</span><span class="lang-zh">面向数据中心环境的高效可靠网络性能监测与故障排查方法。</span></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="page-section">
+      <h2 class="section-heading"><span class="lang-en">Research Projects</span><span class="lang-zh">研究项目</span></h2>
+      <p class="section-copy"><span class="lang-en">Selected systems and research directions.</span><span class="lang-zh">部分研究方向与系统项目。</span></p>
+      <div class="content-grid">
+        <article class="content-card"><h3><span class="lang-en">GPU-Accelerated Massive MIMO Detection</span><span class="lang-zh">GPU 加速大规模 MIMO 检测</span></h3><p><span class="lang-en">Designed a Neumann-series approximate inverse and a hierarchical CUDA execution framework to reduce detection latency and improve throughput.</span><span class="lang-zh">设计 Neumann 级数近似求逆与层次化 CUDA 执行框架，以降低检测时延并提高吞吐率。</span></p></article>
+        <article class="content-card"><h3><span class="lang-en">5D Wireless Channel Estimation</span><span class="lang-zh">五维无线信道估计</span></h3><p><span class="lang-en">Implemented GPU-accelerated SVD and Lanczos methods for high-dimensional channel parameters, reaching 10 ms-level processing.</span><span class="lang-zh">面向高维信道参数实现 GPU 加速的 SVD 与 Lanczos 方法，达到 10 毫秒级处理时延。</span></p></article>
+        <article class="content-card"><h3><span class="lang-en">Data-Center Network Monitoring</span><span class="lang-zh">数据中心网络监测</span></h3><p><span class="lang-en">Built LMon around controllable ECMP probing, Lasso regression, and hypothesis testing to identify network failures with low monitoring overhead.</span><span class="lang-zh">基于可控 ECMP 探测、Lasso 回归和假设检验构建 LMon，以较低监测开销识别潜在网络故障。</span></p></article>
+        <article class="content-card"><h3><span class="lang-en">Embedded Intelligent Vehicles</span><span class="lang-zh">嵌入式智能车</span></h3><p><span class="lang-en">Developed a CMOS-camera line-following vehicle with PID control and a wireless-charging vehicle during undergraduate research.</span><span class="lang-zh">本科期间开发基于 CMOS 摄像头与 PID 控制的循迹车，以及无线充电智能车。</span></p></article>
+      </div>
+    </section>
+
+    <section id="service" class="page-section">
+      <h2 class="section-heading"><span class="lang-en">Service, Honors &amp; Skills</span><span class="lang-zh">学术服务、荣誉与技能</span></h2>
+      <ul class="compact-list lang-en">
+        <li><strong>Peer review:</strong> IEEE GLOBECOM, ISCC, and WCNC (2025–2026).</li>
+        <li><strong>Patents:</strong> First inventor on two core patent applications; one granted.</li>
+        <li><strong>Scholarship:</strong> SUSTech Graduate Scholarship, three consecutive years (2020–2022).</li>
+        <li><strong>Competitions:</strong> Provincial Special Prize, National College Student Smart Car Competition; Provincial Second Prize, National Undergraduate Electronic Design Contest.</li>
+        <li><strong>Technical skills:</strong> C/C++, Python, CUDA GPU parallel computing, and NS-3 network simulation.</li>
+      </ul>
+      <ul class="compact-list lang-zh">
+        <li><strong>同行评审：</strong>IEEE GLOBECOM、ISCC 与 WCNC（2025–2026）。</li>
+        <li><strong>专利：</strong>两项核心专利申请第一发明人，其中一项已授权。</li>
+        <li><strong>奖学金：</strong>连续三年获得南方科技大学研究生奖学金（2020–2022）。</li>
+        <li><strong>竞赛：</strong>全国大学生智能汽车竞赛省级特等奖；全国大学生电子设计竞赛省级二等奖。</li>
+        <li><strong>技术技能：</strong>C/C++、Python、CUDA GPU 并行计算及 NS-3 网络仿真。</li>
+      </ul>
+    </section>
+
+    <section id="hobbies" class="page-section">
+      <h2 class="section-heading"><span class="lang-en">Hobbies</span><span class="lang-zh">兴趣爱好</span></h2>
+      <div class="reflection-grid">
+        <article class="reflection-card"><h3><span class="lang-en">Beyond research</span><span class="lang-zh">科研之外</span></h3><p><span class="lang-en">Outside the lab, I value activities that create room to recharge, observe, and think. I will gradually share the interests and small projects that shape my life beyond research here.</span><span class="lang-zh">在科研之外，我也重视能够让自己放松、观察与思考的活动。之后会在这里逐步分享塑造我科研之外生活的兴趣和小项目。</span></p></article>
+        <article class="reflection-card"><h3><span class="lang-en">Always exploring</span><span class="lang-zh">持续探索</span></h3><p><span class="lang-en">This section will continue to grow as I document more of the people, places, and ideas that inspire me.</span><span class="lang-zh">我会持续记录那些给予我启发的人、地方与想法，并逐步丰富这个板块。</span></p></article>
+      </div>
+    </section>
+
+    <section id="thoughts" class="page-section">
+      <h2 class="section-heading"><span class="lang-en">Thoughts &amp; Advice</span><span class="lang-zh">思考与建议</span></h2>
+      <div class="reflection-card">
+        <h3><span class="lang-en">Notes in progress</span><span class="lang-zh">持续记录</span></h3>
+        <p><span class="lang-en">I plan to share concise notes on research practice, graduate study, engineering craft, and lessons learned along the way. I hope these reflections can be useful to students and fellow researchers facing similar questions.</span><span class="lang-zh">我计划在这里分享关于科研实践、研究生学习、工程方法以及沿途经验的简短笔记，希望这些思考能为面临相似问题的同学和研究者提供一些帮助。</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Qinglin Xun · 荀清林</p>
+    <p><span class="lang-en">Last updated: October 2026.</span><span class="lang-zh">最后更新：2026 年 10 月。</span></p>
+  </footer>
+
+  <button id="backToTop" type="button" title="Back to top" aria-label="Back to top">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
+
   <script>
     (function () {
-      const button = document.getElementById('backToTop');
-      const nav = document.querySelector('.section-drip-nav');
-      const footer = document.querySelector('.mountain-footer');
-      function update() {
-        button.classList.toggle('visible', window.scrollY > 300);
-        if (nav && footer) nav.classList.toggle('is-footer-visible', footer.getBoundingClientRect().top < nav.getBoundingClientRect().bottom + 28);
+      const storageKey = 'qlx-site-language';
+      const root = document.documentElement;
+      const toggle = document.getElementById('languageToggle');
+      const backToTop = document.getElementById('backToTop');
+      const chineseRegions = new Set(['CN', 'HK', 'MO', 'TW']);
+      const queryLanguage = new URLSearchParams(window.location.search).get('lang');
+      let savedLanguage = null;
+      try { savedLanguage = window.localStorage.getItem(storageKey); } catch (_) { /* storage can be unavailable */ }
+
+      function normalizeLanguage(value) { return value && value.toLowerCase().startsWith('zh') ? 'zh' : 'en'; }
+      function applyLanguage(language, remember) {
+        const selected = normalizeLanguage(language);
+        root.dataset.lang = selected;
+        root.lang = selected === 'zh' ? 'zh-CN' : 'en';
+        toggle.textContent = selected === 'zh' ? 'English' : '中文';
+        toggle.setAttribute('aria-label', selected === 'zh' ? 'Switch to English' : '切换至中文');
+        document.title = selected === 'zh' ? '荀清林｜学术主页' : 'Qinglin Xun | Academic Homepage';
+        if (remember) {
+          try { window.localStorage.setItem(storageKey, selected); } catch (_) { /* storage can be unavailable */ }
+        }
       }
-      window.addEventListener('scroll', update, {passive:true});
-      window.addEventListener('resize', update);
-      update();
+
+      const explicitLanguage = queryLanguage === 'zh' || queryLanguage === 'en' ? queryLanguage : null;
+      const browserLanguage = normalizeLanguage(navigator.language || 'en');
+      applyLanguage(explicitLanguage || savedLanguage || browserLanguage, Boolean(explicitLanguage));
+      toggle.addEventListener('click', function () { applyLanguage(root.dataset.lang === 'zh' ? 'en' : 'zh', true); });
+      backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      function updateBackToTop() { backToTop.classList.toggle('visible', window.scrollY > 320); }
+      window.addEventListener('scroll', updateBackToTop, { passive: true });
+      updateBackToTop();
+
+      if (!explicitLanguage && !savedLanguage) {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(function () { controller.abort(); }, 1800);
+        fetch('https://api.country.is/', { signal: controller.signal, referrerPolicy: 'no-referrer', headers: { 'Accept': 'application/json' } })
+          .then(function (response) { if (!response.ok) throw new Error('Country lookup failed'); return response.json(); })
+          .then(function (data) { if (data && data.country) applyLanguage(chineseRegions.has(String(data.country).toUpperCase()) ? 'zh' : 'en', false); })
+          .catch(function () { /* browser language remains the fallback */ })
+          .finally(function () { window.clearTimeout(timeout); });
+      }
     })();
   </script>
 </body>
