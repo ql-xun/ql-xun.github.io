@@ -1,1 +1,127 @@
-[]
+[
+  {
+    "title": {
+      "en": "Hiking",
+      "zh": "徒步"
+    },
+    "description": {
+      "en": "After spending long hours at my desk, I enjoy heading into the mountains for a hike during my time off. Hiking helps me clear my mind, relax, and recharge. Here are some photos from my hikes:",
+      "zh": "长时间伏案工作之后，我喜欢在假期走进山野，享受徒步的乐趣。徒步让我能够放空思绪、放松身心，并重新恢复活力。下面分享一些徒步时拍摄的风景照片，以及沿途留下的自拍。"
+    },
+    "image": "",
+    "image_alt": {
+      "en": "",
+      "zh": ""
+    },
+    "link": {
+      "url": "",
+      "label": {
+        "en": "View more",
+        "zh": "查看更多"
+      }
+    },
+    "gallery": [
+      {
+        "location": {
+          "en": "Guilin",
+          "zh": "桂林"
+        },
+        "year": "2025",
+        "photos": [
+          {
+            "src": "images/hobbies/hiking/guilin-2025.webp",
+            "alt": {
+              "en": "A personal moment beside the water and karst mountains in Guilin",
+              "zh": "在桂林山水间拍摄的个人照片"
+            },
+            "orientation": "portrait"
+          }
+        ]
+      },
+      {
+        "location": {
+          "en": "Dapeng · Xichong",
+          "zh": "大鹏·溪涌"
+        },
+        "year": "2026",
+        "photos": [
+          {
+            "src": "images/hobbies/hiking/dapeng-xichong-2026.webp",
+            "alt": {
+              "en": "A turquoise coastline along the Xichong trail in Dapeng",
+              "zh": "大鹏溪涌徒步途中拍摄的碧蓝海岸"
+            },
+            "orientation": "portrait"
+          }
+        ]
+      },
+      {
+        "location": {
+          "en": "Jiuzhaigou",
+          "zh": "九寨沟"
+        },
+        "year": "2026",
+        "photos": [
+          {
+            "src": "images/hobbies/hiking/jiuzhaigou-overlook-2026.webp",
+            "alt": {
+              "en": "Turquoise lakes and forested mountains viewed from above in Jiuzhaigou",
+              "zh": "从观景台俯瞰九寨沟的碧湖与群山"
+            },
+            "orientation": "wide"
+          },
+          {
+            "src": "images/hobbies/hiking/jiuzhaigou-stream-2026.webp",
+            "alt": {
+              "en": "A moss-covered fallen tree in a flowing stream in Jiuzhaigou",
+              "zh": "九寨沟溪流中的覆苔倒木"
+            },
+            "orientation": "portrait"
+          },
+          {
+            "src": "images/hobbies/hiking/jiuzhaigou-portrait-2026.webp",
+            "alt": {
+              "en": "A hiking portrait beside a turquoise lake in Jiuzhaigou",
+              "zh": "在九寨沟碧湖旁拍摄的徒步照片"
+            },
+            "orientation": "portrait"
+          }
+        ]
+      },
+      {
+        "location": {
+          "en": "Portugal",
+          "zh": "葡萄牙"
+        },
+        "year": "2026",
+        "photos": [
+          {
+            "src": "images/hobbies/hiking/portugal-coast-2026.webp",
+            "alt": {
+              "en": "A coastal hiking trail above layered cliffs in Portugal",
+              "zh": "葡萄牙海岸峭壁上的徒步路线"
+            },
+            "orientation": "wide"
+          }
+        ]
+      },
+      {
+        "location": {
+          "en": "Xiamen · Mountains-to-Sea Trail Park",
+          "zh": "厦门·山海步道公园"
+        },
+        "year": "2026",
+        "photos": [
+          {
+            "src": "images/hobbies/hiking/xiamen-mountains-to-sea-2026.webp",
+            "alt": {
+              "en": "A mountain valley and lake seen from the Mountains-to-Sea Trail Park in Xiamen",
+              "zh": "从厦门山海步道公园俯瞰山谷与湖泊"
+            },
+            "orientation": "portrait"
+          }
+        ]
+      }
+    ]
+  }
+]

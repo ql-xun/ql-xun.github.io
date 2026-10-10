@@ -24,7 +24,8 @@ Then open `http://127.0.0.1:8080/`.
 
 The Hobbies and Thoughts & Advice sections are data-driven so they can be
 updated without editing the main page markup. Copy the valid examples in
-`content/examples/` and follow `CONTENT_GUIDE.md`.
+`content/examples/` and follow `CONTENT_GUIDE.md`. Hobbies can also contain
+responsive photo galleries grouped by location.
 
 The page is based on the open-source
 [Academic Homepage Template](https://github.com/w-r-s/academic-homepage-template).

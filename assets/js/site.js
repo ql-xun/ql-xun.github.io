@@ -79,12 +79,64 @@
     card.appendChild(anchor);
   }
 
+  function appendGallery(card, gallery) {
+    if (!Array.isArray(gallery) || !gallery.length) return;
+
+    card.classList.add("hobby-card--gallery");
+    const galleryContainer = document.createElement("div");
+    galleryContainer.className = "hobby-gallery";
+
+    gallery.forEach(function (place) {
+      const placeSection = document.createElement("section");
+      placeSection.className = "hobby-place";
+
+      const heading = document.createElement("div");
+      heading.className = "hobby-place-heading";
+      heading.appendChild(bilingualElement("h4", "", place.location));
+
+      if (place.year) {
+        const year = document.createElement("span");
+        year.className = "hobby-year";
+        year.textContent = place.year;
+        heading.appendChild(year);
+      }
+
+      const photos = document.createElement("div");
+      photos.className = "hobby-photo-grid";
+      photos.dataset.count = String(place.photos.length);
+
+      place.photos.forEach(function (photo) {
+        const photoLink = document.createElement("a");
+        photoLink.className = "hobby-photo hobby-photo--" + (photo.orientation || "standard");
+        photoLink.href = photo.src;
+        photoLink.target = "_blank";
+        photoLink.rel = "noopener";
+
+        const image = document.createElement("img");
+        image.src = photo.src;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.dataset.altEn = photo.alt.en;
+        image.dataset.altZh = photo.alt.zh;
+        image.alt = root.dataset.lang === "zh" ? photo.alt.zh : photo.alt.en;
+        photoLink.appendChild(image);
+        photos.appendChild(photoLink);
+      });
+
+      placeSection.append(heading, photos);
+      galleryContainer.appendChild(placeSection);
+    });
+
+    card.appendChild(galleryContainer);
+  }
+
   function renderHobby(item) {
     const card = document.createElement("article");
-    card.className = "reflection-card";
+    card.className = "reflection-card hobby-card";
     appendImage(card, item);
     card.appendChild(bilingualElement("h3", "", item.title));
     card.appendChild(bilingualElement("p", "", item.description));
+    appendGallery(card, item.gallery);
     appendLink(card, item.link);
     return card;
   }

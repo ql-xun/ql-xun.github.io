@@ -19,6 +19,25 @@
         "en": "Learn more",
         "zh": "了解更多"
       }
-    }
+    },
+    "gallery": [
+      {
+        "location": {
+          "en": "Location name",
+          "zh": "地点名称"
+        },
+        "year": "2026",
+        "photos": [
+          {
+            "src": "images/hobbies/example/photo.webp",
+            "alt": {
+              "en": "An accessible English description of the photo",
+              "zh": "照片的中文无障碍说明"
+            },
+            "orientation": "wide"
+          }
+        ]
+      }
+    ]
   }
 ]
