@@ -29,6 +29,9 @@ def main() -> int:
     homepage = require_file("index.html")
     speed_detector = require_file("speeddetector/index.html")
     iscc_page = require_file("papers/xun2026efficient/index.html")
+    robots = require_file("robots.txt")
+    sitemap = require_file("sitemap.xml")
+    google_verification = require_file("googleceb99c875e0d20ae.html")
     require_file("papers/files/xun2026efficient-iscc-accepted-2026-04.pdf")
 
     require_text(speed_detector, "https://gist.github.com/a6d2106a840433eefcb42edc29fe9d27", "speeddetector/index.html")
@@ -40,6 +43,14 @@ def main() -> int:
     require_text(homepage, "张金钡教授", "index.html")
     require_text(homepage, "xunqlin@mail2.sysu.edu.cn", "index.html")
     require_text(homepage, "xunql2023@gmail.com", "index.html")
+    require_text(robots, "Allow: /", "robots.txt")
+    require_text(robots, "Sitemap: https://ql-xun.github.io/sitemap.xml", "robots.txt")
+    require_text(sitemap, "<loc>https://ql-xun.github.io/</loc>", "sitemap.xml")
+    require_text(
+        google_verification,
+        "google-site-verification: googleceb99c875e0d20ae.html",
+        "googleceb99c875e0d20ae.html",
+    )
     require_order(
         homepage,
         [
