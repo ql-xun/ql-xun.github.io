@@ -168,6 +168,13 @@ def main() -> int:
     require_text(homepage, "xunql2023@gmail.com", "index.html")
     require_text(homepage, "assets/css/site.css", "index.html")
     require_text(homepage, "assets/js/site.js", "index.html")
+    for page_content, page_label in (
+        (homepage, "index.html"),
+        (hobbies_page, "hobbies.html"),
+        (thoughts_page, "thoughts.html"),
+    ):
+        require_text(page_content, "assets/css/site.css?v=20261011-2", page_label)
+        require_text(page_content, "assets/js/site.js?v=20261011-2", page_label)
     require_text(homepage, 'href="hobbies.html"', "index.html")
     require_text(homepage, 'href="thoughts.html"', "index.html")
     require_text(hobbies_page, 'id="hobbiesContent"', "hobbies.html")
