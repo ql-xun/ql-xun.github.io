@@ -1,0 +1,24 @@
+[
+  {
+    "title": {
+      "en": "Photography",
+      "zh": "摄影"
+    },
+    "description": {
+      "en": "Write a short English introduction to this hobby.",
+      "zh": "在这里填写这项兴趣爱好的中文介绍。"
+    },
+    "image": "images/hobbies/photography.jpg",
+    "image_alt": {
+      "en": "A photograph related to this hobby",
+      "zh": "与这项兴趣爱好相关的照片"
+    },
+    "link": {
+      "url": "",
+      "label": {
+        "en": "Learn more",
+        "zh": "了解更多"
+      }
+    }
+  }
+]

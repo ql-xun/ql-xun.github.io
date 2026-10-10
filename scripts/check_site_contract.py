@@ -1,6 +1,8 @@
 """Validate permanent public URLs and homepage invariants before deployment."""
 
+import json
 from pathlib import Path
+import re
 import sys
 
 
@@ -19,6 +21,73 @@ def require_text(content: str, expected: str, label: str) -> None:
         raise AssertionError(f"Required content is missing from {label}: {expected}")
 
 
+def require_absent(relative_path: str) -> None:
+    if (ROOT / relative_path).exists():
+        raise AssertionError(f"Removed template asset has returned: {relative_path}")
+
+
+def require_json_array(relative_path: str) -> list[dict]:
+    content = require_file(relative_path)
+    try:
+        data = json.loads(content)
+    except json.JSONDecodeError as error:
+        raise AssertionError(f"Invalid JSON in {relative_path}: {error}") from error
+    if not isinstance(data, list):
+        raise AssertionError(f"{relative_path} must contain a JSON array")
+    if not all(isinstance(item, dict) for item in data):
+        raise AssertionError(f"Every item in {relative_path} must be a JSON object")
+    return data
+
+
+def require_bilingual(value: object, label: str) -> None:
+    if not isinstance(value, dict):
+        raise AssertionError(f"{label} must be an object with en and zh fields")
+    for language in ("en", "zh"):
+        text = value.get(language)
+        if not isinstance(text, str) or not text.strip():
+            raise AssertionError(f"{label}.{language} must be non-empty text")
+
+
+def validate_optional_media_and_link(item: dict, label: str, check_image: bool) -> None:
+    image = item.get("image", "")
+    if not isinstance(image, str):
+        raise AssertionError(f"{label}.image must be text")
+    if image:
+        require_bilingual(item.get("image_alt"), f"{label}.image_alt")
+        if check_image:
+            image_path = (ROOT / image).resolve()
+            if ROOT.resolve() not in image_path.parents or not image_path.is_file():
+                raise AssertionError(f"{label}.image does not point to a repository file: {image}")
+
+    link = item.get("link", {})
+    if not isinstance(link, dict):
+        raise AssertionError(f"{label}.link must be an object")
+    url = link.get("url", "")
+    if not isinstance(url, str):
+        raise AssertionError(f"{label}.link.url must be text")
+    if url:
+        require_bilingual(link.get("label"), f"{label}.link.label")
+
+
+def validate_hobbies(items: list[dict], label: str, check_images: bool) -> None:
+    for index, item in enumerate(items):
+        item_label = f"{label}[{index}]"
+        require_bilingual(item.get("title"), f"{item_label}.title")
+        require_bilingual(item.get("description"), f"{item_label}.description")
+        validate_optional_media_and_link(item, item_label, check_images)
+
+
+def validate_thoughts(items: list[dict], label: str, check_images: bool) -> None:
+    for index, item in enumerate(items):
+        item_label = f"{label}[{index}]"
+        date = item.get("date")
+        if not isinstance(date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            raise AssertionError(f"{item_label}.date must use YYYY-MM-DD")
+        require_bilingual(item.get("title"), f"{item_label}.title")
+        require_bilingual(item.get("body"), f"{item_label}.body")
+        validate_optional_media_and_link(item, item_label, check_images)
+
+
 def require_order(content: str, markers: list[str], label: str) -> None:
     positions = [content.find(marker) for marker in markers]
     if -1 in positions or positions != sorted(positions):
@@ -27,12 +96,25 @@ def require_order(content: str, markers: list[str], label: str) -> None:
 
 def main() -> int:
     homepage = require_file("index.html")
+    stylesheet = require_file("assets/css/site.css")
+    script = require_file("assets/js/site.js")
+    require_file("assets/favicon.svg")
     speed_detector = require_file("speeddetector/index.html")
     iscc_page = require_file("papers/xun2026efficient/index.html")
     robots = require_file("robots.txt")
     sitemap = require_file("sitemap.xml")
     google_verification = require_file("googleceb99c875e0d20ae.html")
+    legacy_google_verification = require_file("google6e027989c2c8311c.html")
     require_file("papers/files/xun2026efficient-iscc-accepted-2026-04.pdf")
+    hobbies = require_json_array("content/hobbies.json")
+    thoughts = require_json_array("content/thoughts.json")
+    hobby_example = require_json_array("content/examples/hobbies.example.json")
+    thought_example = require_json_array("content/examples/thoughts.example.json")
+
+    validate_hobbies(hobbies, "content/hobbies.json", check_images=True)
+    validate_thoughts(thoughts, "content/thoughts.json", check_images=True)
+    validate_hobbies(hobby_example, "content/examples/hobbies.example.json", check_images=False)
+    validate_thoughts(thought_example, "content/examples/thoughts.example.json", check_images=False)
 
     require_text(speed_detector, "https://gist.github.com/a6d2106a840433eefcb42edc29fe9d27", "speeddetector/index.html")
     require_text(iscc_page, "/papers/files/xun2026efficient-iscc-accepted-2026-04.pdf", "papers/xun2026efficient/index.html")
@@ -43,6 +125,13 @@ def main() -> int:
     require_text(homepage, "张金钡教授", "index.html")
     require_text(homepage, "xunqlin@mail2.sysu.edu.cn", "index.html")
     require_text(homepage, "xunql2023@gmail.com", "index.html")
+    require_text(homepage, "assets/css/site.css", "index.html")
+    require_text(homepage, "assets/js/site.js", "index.html")
+    require_text(homepage, 'id="hobbiesContent"', "index.html")
+    require_text(homepage, 'id="thoughtsContent"', "index.html")
+    require_text(script, 'content/hobbies.json', "assets/js/site.js")
+    require_text(script, 'content/thoughts.json', "assets/js/site.js")
+    require_text(stylesheet, ".content-state", "assets/css/site.css")
     require_text(robots, "Allow: /", "robots.txt")
     require_text(robots, "Sitemap: https://ql-xun.github.io/sitemap.xml", "robots.txt")
     require_text(sitemap, "<loc>https://ql-xun.github.io/</loc>", "sitemap.xml")
@@ -50,6 +139,11 @@ def main() -> int:
         google_verification,
         "google-site-verification: googleceb99c875e0d20ae.html",
         "googleceb99c875e0d20ae.html",
+    )
+    require_text(
+        legacy_google_verification,
+        "google-site-verification: google6e027989c2c8311c.html",
+        "google6e027989c2c8311c.html",
     )
     require_order(
         homepage,
@@ -62,7 +156,37 @@ def main() -> int:
         "index.html",
     )
 
-    print("Site contract passed: permanent URLs and homepage invariants are intact.")
+    if "<style>" in homepage:
+        raise AssertionError("Homepage styles must remain in assets/css/site.css")
+    if "Beyond research" in homepage or "Notes in progress" in homepage:
+        raise AssertionError("Generic placeholder content must not return to the homepage")
+
+    for removed_asset in (
+        "stylesheet.css",
+        "font-awesome.min.css",
+        "w3.css",
+        "jquery.min.js",
+        "jquery-1.11.1.min.js",
+        "data/CV_Qinglin.pdf",
+        "images/AdderNet.jpg",
+        "images/atlas200.PNG",
+        "images/GhostNet.png",
+        "images/HDC2020-small.gif",
+        "images/Qinglin.jpg",
+        "images/video.gif",
+        "images/Yunhe_new.jpg",
+        "images/YunheWang_circle.jpg",
+        "images/icons.png",
+        "images/icon/cursor.png",
+        "images/icon/cursor-pointer.png",
+        "images/experience/background-960.webp",
+        "images/experience/background-1440.webp",
+        "images/experience/background-1920.webp",
+        "images/experience/background.jpeg",
+    ):
+        require_absent(removed_asset)
+
+    print("Site contract passed: permanent URLs, content data, and homepage invariants are intact.")
     return 0
 
 

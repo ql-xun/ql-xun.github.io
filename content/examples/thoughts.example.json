@@ -1,0 +1,25 @@
+[
+  {
+    "date": "2026-10-10",
+    "title": {
+      "en": "Choosing a research problem",
+      "zh": "如何选择研究问题"
+    },
+    "body": {
+      "en": "Write the English version of the note or advice here.",
+      "zh": "在这里填写这篇思考或建议的中文内容。"
+    },
+    "image": "",
+    "image_alt": {
+      "en": "",
+      "zh": ""
+    },
+    "link": {
+      "url": "",
+      "label": {
+        "en": "Read more",
+        "zh": "阅读全文"
+      }
+    }
+  }
+]

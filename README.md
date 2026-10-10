@@ -14,9 +14,17 @@ Then open `http://127.0.0.1:8080/`.
 ## Updating the site
 
 - Main page: `index.html`
-- Styles: `stylesheet.css`
+- Styles: `assets/css/site.css`
+- Language and content loader: `assets/js/site.js`
 - Profile photo: `images/Qinglin.png`
+- Hobbies data: `content/hobbies.json`
+- Thoughts & Advice data: `content/thoughts.json`
+- Content editing instructions: `CONTENT_GUIDE.md`
 - GitHub Pages workflow: `.github/workflows/static.yml`
+
+The Hobbies and Thoughts & Advice sections are data-driven so they can be
+updated without editing the main page markup. Copy the valid examples in
+`content/examples/` and follow `CONTENT_GUIDE.md`.
 
 The page is based on the open-source
 [Academic Homepage Template](https://github.com/w-r-s/academic-homepage-template).
