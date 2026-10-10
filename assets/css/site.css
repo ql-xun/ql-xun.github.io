@@ -393,13 +393,19 @@ html[data-lang="zh"] .lang-zh {
 
 .hobby-gallery {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 28px;
-  gap: 30px;
+  gap: 28px 24px;
 }
 
 .hobby-place {
+  min-width: 0;
   padding-top: 22px;
   border-top: 1px solid var(--line);
+}
+
+.hobby-place--multi {
+  grid-column: 1 / -1;
 }
 
 .hobby-place-heading {
@@ -428,38 +434,31 @@ html[data-lang="zh"] .lang-zh {
 }
 
 .hobby-photo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
   gap: 12px;
 }
 
 .hobby-photo {
   position: relative;
   display: block;
+  flex: 0 1 auto;
   overflow: hidden;
-  min-height: 220px;
-  border-radius: 12px;
+  max-width: 100%;
+  border-radius: 9px;
   background: #e9e5dd;
-  box-shadow: 0 8px 24px rgba(50, 38, 24, 0.1);
-}
-
-.hobby-photo--wide {
-  grid-column: 1 / -1;
-  aspect-ratio: 16 / 9;
-}
-
-.hobby-photo--portrait {
-  aspect-ratio: 3 / 4;
-}
-
-.hobby-photo--standard {
-  aspect-ratio: 4 / 3;
+  box-shadow: 0 6px 18px rgba(50, 38, 24, 0.1);
 }
 
 .hobby-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(300px, 100%);
+  max-height: 260px;
+  object-fit: contain;
   transition: transform 0.35s ease;
 }
 
@@ -471,22 +470,6 @@ html[data-lang="zh"] .lang-zh {
 .hobby-photo:focus-visible {
   outline: 3px solid rgba(37, 99, 184, 0.45);
   outline-offset: 3px;
-}
-
-.hobby-photo-grid[data-count="1"] {
-  grid-template-columns: minmax(0, 720px);
-  justify-content: center;
-}
-
-.hobby-photo-grid[data-count="1"] .hobby-photo {
-  grid-column: auto;
-  width: 100%;
-  max-height: 520px;
-}
-
-.hobby-photo-grid[data-count="1"] .hobby-photo--portrait {
-  max-width: 520px;
-  justify-self: center;
 }
 
 .content-state {
@@ -615,21 +598,17 @@ html[data-lang="zh"] .lang-zh {
   }
 
   .hobby-gallery {
+    grid-template-columns: 1fr;
     gap: 24px;
   }
 
-  .hobby-photo-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hobby-photo,
-  .hobby-photo--wide {
+  .hobby-place--multi {
     grid-column: auto;
   }
 
-  .hobby-photo--wide,
-  .hobby-photo--standard {
-    aspect-ratio: 4 / 3;
+  .hobby-photo img {
+    max-width: min(270px, 100%);
+    max-height: 230px;
   }
 }
 
