@@ -52,6 +52,48 @@ Example with two hobbies:
 ]
 ```
 
+### Add a location-based photo gallery
+
+Add a `gallery` array to a hobby when several photographs should be grouped by
+place. Each place needs a bilingual `location`, an optional four-digit `year`,
+and one or more `photos`.
+
+```json
+"gallery": [
+  {
+    "location": {
+      "en": "Jiuzhaigou",
+      "zh": "九寨沟"
+    },
+    "year": "2026",
+    "photos": [
+      {
+        "src": "images/hobbies/hiking/jiuzhaigou-overlook-2026.webp",
+        "alt": {
+          "en": "Turquoise lakes and forested mountains viewed from above",
+          "zh": "从观景台俯瞰碧湖与群山"
+        },
+        "orientation": "wide"
+      },
+      {
+        "src": "images/hobbies/hiking/jiuzhaigou-portrait-2026.webp",
+        "alt": {
+          "en": "A hiking portrait beside a turquoise lake",
+          "zh": "在碧湖旁拍摄的徒步照片"
+        },
+        "orientation": "portrait"
+      }
+    ]
+  }
+]
+```
+
+Use `wide` for landscape photographs, `portrait` for vertical photographs, and
+`standard` for ordinary 4:3 photographs. The photograph opens at full size
+when selected. For faster loading and better privacy, use optimized WebP files
+without embedded location metadata. The full-resolution JPG files inside
+`images/hobbies/hiking/` remain local and are excluded from Git.
+
 ## Add a thought or advice note
 
 1. Open `content/examples/thoughts.example.json`.
@@ -90,6 +132,7 @@ Example:
 - Separate objects with commas, but do not add a comma after the last object.
 - Keep both `en` and `zh` fields.
 - Use `/` in image paths, not Windows backslashes.
+- Give every gallery photograph a meaningful bilingual `alt` description.
 - Run `python scripts/check_site_contract.py` before publishing. The GitHub workflow runs the same validation automatically.
 
 ## Local preview

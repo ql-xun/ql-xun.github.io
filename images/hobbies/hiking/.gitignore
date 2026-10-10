@@ -1,0 +1,4 @@
+# Keep the full-resolution source photos on this computer only.
+*.jpg
+*.jpeg
+

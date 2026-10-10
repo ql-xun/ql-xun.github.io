@@ -69,12 +69,51 @@ def validate_optional_media_and_link(item: dict, label: str, check_image: bool) 
         require_bilingual(link.get("label"), f"{label}.link.label")
 
 
+def validate_gallery(item: dict, label: str, check_images: bool) -> None:
+    gallery = item.get("gallery", [])
+    if not isinstance(gallery, list):
+        raise AssertionError(f"{label}.gallery must be an array")
+
+    for place_index, place in enumerate(gallery):
+        place_label = f"{label}.gallery[{place_index}]"
+        if not isinstance(place, dict):
+            raise AssertionError(f"{place_label} must be an object")
+        require_bilingual(place.get("location"), f"{place_label}.location")
+        year = place.get("year", "")
+        if year and (not isinstance(year, str) or not re.fullmatch(r"\d{4}", year)):
+            raise AssertionError(f"{place_label}.year must use YYYY")
+
+        photos = place.get("photos")
+        if not isinstance(photos, list) or not photos:
+            raise AssertionError(f"{place_label}.photos must be a non-empty array")
+        for photo_index, photo in enumerate(photos):
+            photo_label = f"{place_label}.photos[{photo_index}]"
+            if not isinstance(photo, dict):
+                raise AssertionError(f"{photo_label} must be an object")
+            src = photo.get("src")
+            if not isinstance(src, str) or not src:
+                raise AssertionError(f"{photo_label}.src must be non-empty text")
+            require_bilingual(photo.get("alt"), f"{photo_label}.alt")
+            orientation = photo.get("orientation", "standard")
+            if orientation not in ("standard", "wide", "portrait"):
+                raise AssertionError(
+                    f"{photo_label}.orientation must be standard, wide, or portrait"
+                )
+            if check_images:
+                image_path = (ROOT / src).resolve()
+                if ROOT.resolve() not in image_path.parents or not image_path.is_file():
+                    raise AssertionError(
+                        f"{photo_label}.src does not point to a repository file: {src}"
+                    )
+
+
 def validate_hobbies(items: list[dict], label: str, check_images: bool) -> None:
     for index, item in enumerate(items):
         item_label = f"{label}[{index}]"
         require_bilingual(item.get("title"), f"{item_label}.title")
         require_bilingual(item.get("description"), f"{item_label}.description")
         validate_optional_media_and_link(item, item_label, check_images)
+        validate_gallery(item, item_label, check_images)
 
 
 def validate_thoughts(items: list[dict], label: str, check_images: bool) -> None:
@@ -131,7 +170,9 @@ def main() -> int:
     require_text(homepage, 'id="thoughtsContent"', "index.html")
     require_text(script, 'content/hobbies.json', "assets/js/site.js")
     require_text(script, 'content/thoughts.json', "assets/js/site.js")
+    require_text(script, "appendGallery", "assets/js/site.js")
     require_text(stylesheet, ".content-state", "assets/css/site.css")
+    require_text(stylesheet, ".hobby-photo-grid", "assets/css/site.css")
     require_text(robots, "Allow: /", "robots.txt")
     require_text(robots, "Sitemap: https://ql-xun.github.io/sitemap.xml", "robots.txt")
     require_text(sitemap, "<loc>https://ql-xun.github.io/</loc>", "sitemap.xml")
