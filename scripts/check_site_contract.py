@@ -31,6 +31,7 @@ def main() -> int:
     require_text(homepage, "10.1109/TCOMM.2026.3738510", "index.html")
     require_text(homepage, "data-lang=\"en\"", "index.html")
     require_text(homepage, "Pengcheng Laboratory", "index.html")
+    require_text(homepage, "张金钡教授", "index.html")
 
     print("Site contract passed: permanent URLs and homepage invariants are intact.")
     return 0
