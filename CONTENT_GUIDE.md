@@ -1,11 +1,12 @@
 # Hobbies and Thoughts content guide
 
-The homepage reads the two editable data files below:
+The two standalone pages read the editable data files below:
 
-- `content/hobbies.json`
-- `content/thoughts.json`
+- `hobbies.html` reads `content/hobbies.json`.
+- `thoughts.html` reads `content/thoughts.json`.
 
-Both files must contain a JSON array. An empty array (`[]`) keeps the section visible and displays a neutral “Content coming soon / 内容待补充” message.
+Both files must contain a JSON array. An empty array (`[]`) keeps its standalone
+page available and displays a neutral “Content coming soon / 内容待补充” message.
 
 ## Add a hobby
 
@@ -56,7 +57,8 @@ Example with two hobbies:
 
 Add a `gallery` array to a hobby when several photographs should be grouped by
 place. Each place needs a bilingual `location`, an optional four-digit `year`,
-and one or more `photos`.
+and one or more `photos`. The location and year are rendered as a small caption
+below every photograph.
 
 ```json
 "gallery": [

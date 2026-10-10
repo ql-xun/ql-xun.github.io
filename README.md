@@ -14,6 +14,8 @@ Then open `http://127.0.0.1:8080/`.
 ## Updating the site
 
 - Main page: `index.html`
+- Hobbies page: `hobbies.html`
+- Thoughts & Advice page: `thoughts.html`
 - Styles: `assets/css/site.css`
 - Language and content loader: `assets/js/site.js`
 - Profile photo: `images/Qinglin.png`
@@ -22,10 +24,11 @@ Then open `http://127.0.0.1:8080/`.
 - Content editing instructions: `CONTENT_GUIDE.md`
 - GitHub Pages workflow: `.github/workflows/static.yml`
 
-The Hobbies and Thoughts & Advice sections are data-driven so they can be
-updated without editing the main page markup. Copy the valid examples in
-`content/examples/` and follow `CONTENT_GUIDE.md`. Hobbies can also contain
-responsive photo galleries grouped by location.
+The Hobbies and Thoughts & Advice pages are data-driven so they can be updated
+without editing page markup. Copy the valid examples in `content/examples/`
+and follow `CONTENT_GUIDE.md`. Hobbies can also contain responsive photo
+galleries grouped by location, with the location and year shown beneath each
+photograph.
 
 The page is based on the open-source
 [Academic Homepage Template](https://github.com/w-r-s/academic-homepage-template).
