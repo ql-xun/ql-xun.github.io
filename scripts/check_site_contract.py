@@ -19,6 +19,12 @@ def require_text(content: str, expected: str, label: str) -> None:
         raise AssertionError(f"Required content is missing from {label}: {expected}")
 
 
+def require_order(content: str, markers: list[str], label: str) -> None:
+    positions = [content.find(marker) for marker in markers]
+    if -1 in positions or positions != sorted(positions):
+        raise AssertionError(f"Required ordering is incorrect in {label}: {' -> '.join(markers)}")
+
+
 def main() -> int:
     homepage = require_file("index.html")
     speed_detector = require_file("speeddetector/index.html")
@@ -32,6 +38,18 @@ def main() -> int:
     require_text(homepage, "data-lang=\"en\"", "index.html")
     require_text(homepage, "Pengcheng Laboratory", "index.html")
     require_text(homepage, "张金钡教授", "index.html")
+    require_text(homepage, "xunqlin@mail2.sysu.edu.cn", "index.html")
+    require_text(homepage, "xunql2023@gmail.com", "index.html")
+    require_order(
+        homepage,
+        [
+            "10.1109/TON.2025.3570008",
+            "10.1109/TCOMM.2026.3738510",
+            "10.1109/IWQoS57198.2023.10188787",
+            "/papers/xun2026efficient/",
+        ],
+        "index.html",
+    )
 
     print("Site contract passed: permanent URLs and homepage invariants are intact.")
     return 0
