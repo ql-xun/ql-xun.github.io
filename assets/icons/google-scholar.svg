@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Google Scholar</title>
+  <circle cx="32" cy="32" r="30" fill="#4285f4"/>
+  <path d="M8 24 32 10l24 14-24 14L8 24Z" fill="#fff"/>
+  <path d="M18 32v13c0 5 6 9 14 9s14-4 14-9V32l-14 8-14-8Z" fill="#d9e7ff"/>
+  <path d="M54 27v15" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3"/>
+  <circle cx="54" cy="46" r="3" fill="#fff"/>
+</svg>

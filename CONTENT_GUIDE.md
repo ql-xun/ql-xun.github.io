@@ -5,8 +5,9 @@ The two standalone pages read the editable data files below:
 - `hobbies.html` reads `content/hobbies.json`.
 - `thoughts.html` reads `content/thoughts.json`.
 
-Both files must contain a JSON array. An empty array (`[]`) keeps its standalone
-page available and displays a neutral “Content coming soon / 内容待补充” message.
+Both files must contain a JSON array. An empty Hobbies array displays a neutral
+“Content coming soon / 内容待补充” message. The Thoughts page keeps its introduction
+visible and simply omits note cards when its array is empty.
 
 ## Add a hobby
 
@@ -96,7 +97,7 @@ when selected. For faster loading and better privacy, use optimized WebP files
 without embedded location metadata. The full-resolution JPG files inside
 `images/hobbies/hiking/` remain local and are excluded from Git.
 
-## Add a thought or advice note
+## Add a thought note
 
 1. Open `content/examples/thoughts.example.json`.
 2. Copy its object into the array in `content/thoughts.json`.
@@ -115,8 +116,8 @@ Example:
       "zh": "如何选择研究问题"
     },
     "body": {
-      "en": "English note or advice.",
-      "zh": "中文思考或建议。"
+      "en": "English thought.",
+      "zh": "中文思考内容。"
     },
     "image": "",
     "image_alt": { "en": "", "zh": "" },
