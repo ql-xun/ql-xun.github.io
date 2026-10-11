@@ -145,6 +145,26 @@ html[data-lang="zh"] .lang-zh {
   margin-bottom: 28px;
 }
 
+.thoughts-intro {
+  max-width: 900px;
+  margin-bottom: 30px;
+  padding: 22px 24px;
+  border-left: 4px solid #fba524;
+  border-radius: 0 14px 14px 0;
+  background: rgba(247, 241, 232, 0.58);
+  color: #4f4a43;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.thoughts-intro p {
+  margin: 0;
+}
+
+.thoughts-intro p + p {
+  margin-top: 14px;
+}
+
 .about-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 250px;
@@ -190,6 +210,41 @@ html[data-lang="zh"] .lang-zh {
 
 .email-line a {
   white-space: nowrap;
+}
+
+.email-address {
+  white-space: nowrap;
+}
+
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  align-items: center;
+  gap: 10px 18px;
+}
+
+.profile-links a {
+  color: var(--link-blue);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.profile-links a:hover,
+.profile-links a:focus-visible {
+  color: #123f80;
+  text-decoration: underline;
+}
+
+.scholar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.scholar-link img {
+  width: 26px;
+  height: 26px;
 }
 
 .profile-photo {

@@ -23,8 +23,8 @@
     "gallery": [
       {
         "location": {
-          "en": "Guilin",
-          "zh": "桂林"
+          "en": "Guilin · Yangshuo",
+          "zh": "桂林 阳朔"
         },
         "year": "2025",
         "photos": [
@@ -40,8 +40,8 @@
       },
       {
         "location": {
-          "en": "Dapeng · Xichong",
-          "zh": "大鹏·溪涌"
+          "en": "Shenzhen · Dapeng Xichong",
+          "zh": "深圳 大鹏溪涌"
         },
         "year": "2026",
         "photos": [
@@ -57,8 +57,8 @@
       },
       {
         "location": {
-          "en": "Jiuzhaigou",
-          "zh": "九寨沟"
+          "en": "Sichuan · Jiuzhaigou",
+          "zh": "四川 九寨沟"
         },
         "year": "2026",
         "photos": [
@@ -90,8 +90,8 @@
       },
       {
         "location": {
-          "en": "Portugal",
-          "zh": "葡萄牙"
+          "en": "Portugal · Cabo da Roca",
+          "zh": "葡萄牙 罗卡角"
         },
         "year": "2026",
         "photos": [

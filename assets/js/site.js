@@ -6,7 +6,7 @@
   const toggle = document.getElementById("languageToggle");
   const backToTop = document.getElementById("backToTop");
   const page = root.dataset.page || "home";
-  const contentVersion = "20261011-3";
+  const contentVersion = "20261011-4";
   const chineseRegions = new Set(["CN", "HK", "MO", "TW"]);
   const queryLanguage = new URLSearchParams(window.location.search).get("lang");
   let savedLanguage = null;
@@ -28,9 +28,9 @@
     toggle.textContent = selected === "zh" ? "English" : "中文";
     toggle.setAttribute("aria-label", selected === "zh" ? "Switch to English" : "切换至中文");
     const titles = {
-      home: { en: "Qinglin Xun | Academic Homepage", zh: "荀清林｜学术主页" },
+      home: { en: "Qinglin Xun | Homepage", zh: "荀清林｜主页" },
       hobbies: { en: "Hobbies | Qinglin Xun", zh: "兴趣爱好｜荀清林" },
-      thoughts: { en: "Thoughts & Advice | Qinglin Xun", zh: "思考与建议｜荀清林" }
+      thoughts: { en: "Thoughts | Qinglin Xun", zh: "思考｜荀清林" }
     };
     document.title = titles[page][selected];
 
@@ -190,7 +190,7 @@
       .then(function (items) {
         container.replaceChildren();
         if (!items.length) {
-          container.appendChild(emptyState());
+          if (container.dataset.empty !== "hide") container.appendChild(emptyState());
           return;
         }
         items.forEach(function (item) {

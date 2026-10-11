@@ -9,6 +9,7 @@ The site's standalone content pages should also retain their public paths:
 
 - `https://ql-xun.github.io/hobbies.html`
 - `https://ql-xun.github.io/thoughts.html`
+- `https://ql-xun.github.io/cv/Qinglin-Xun-CV.pdf`
 
 Do not rename or delete their directories. The destination behind a redirect may be updated, but the public URL must stay unchanged.
 

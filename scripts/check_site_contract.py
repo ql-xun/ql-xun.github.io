@@ -140,6 +140,7 @@ def main() -> int:
     stylesheet = require_file("assets/css/site.css")
     script = require_file("assets/js/site.js")
     require_file("assets/favicon.svg")
+    require_file("assets/icons/google-scholar.svg")
     speed_detector = require_file("speeddetector/index.html")
     iscc_page = require_file("papers/xun2026efficient/index.html")
     robots = require_file("robots.txt")
@@ -147,6 +148,7 @@ def main() -> int:
     google_verification = require_file("googleceb99c875e0d20ae.html")
     legacy_google_verification = require_file("google6e027989c2c8311c.html")
     require_file("papers/files/xun2026efficient-iscc-accepted-2026-04.pdf")
+    require_file("cv/Qinglin-Xun-CV.pdf")
     hobbies = require_json_array("content/hobbies.json")
     thoughts = require_json_array("content/thoughts.json")
     hobby_example = require_json_array("content/examples/hobbies.example.json")
@@ -164,8 +166,13 @@ def main() -> int:
     require_text(homepage, "data-lang=\"en\"", "index.html")
     require_text(homepage, "Pengcheng Laboratory", "index.html")
     require_text(homepage, "张金钡教授", "index.html")
-    require_text(homepage, "xunqlin@mail2.sysu.edu.cn", "index.html")
-    require_text(homepage, "xunql2023@gmail.com", "index.html")
+    require_text(homepage, "在读博期间", "index.html")
+    require_text(homepage, "xunqlin $at$ mail2.sysu.edu.cn", "index.html")
+    require_text(homepage, "xunql2023 $at$ gmail.com", "index.html")
+    require_text(homepage, "cv/Qinglin-Xun-CV.pdf", "index.html")
+    require_text(homepage, "kzZkC7UAAAAJ", "index.html")
+    require_text(homepage, "assets/icons/google-scholar.svg", "index.html")
+    require_text(homepage, "Qinglin Xun Homepage", "index.html")
     require_text(homepage, "assets/css/site.css", "index.html")
     require_text(homepage, "assets/js/site.js", "index.html")
     for page_content, page_label in (
@@ -173,26 +180,32 @@ def main() -> int:
         (hobbies_page, "hobbies.html"),
         (thoughts_page, "thoughts.html"),
     ):
-        require_text(page_content, "assets/css/site.css?v=20261011-3", page_label)
-        require_text(page_content, "assets/js/site.js?v=20261011-3", page_label)
+        require_text(page_content, "assets/css/site.css?v=20261011-4", page_label)
+        require_text(page_content, "assets/js/site.js?v=20261011-4", page_label)
     require_text(homepage, 'href="hobbies.html"', "index.html")
     require_text(homepage, 'href="thoughts.html"', "index.html")
     require_text(hobbies_page, 'id="hobbiesContent"', "hobbies.html")
     require_text(hobbies_page, 'data-page="hobbies"', "hobbies.html")
     require_text(thoughts_page, 'id="thoughtsContent"', "thoughts.html")
     require_text(thoughts_page, 'data-page="thoughts"', "thoughts.html")
+    require_text(thoughts_page, "Behnaz Arzani's Thoughts and Advice page", "thoughts.html")
+    require_text(thoughts_page, "这里并不是一套正式的建议或准则", "thoughts.html")
     require_text(script, 'content/hobbies.json?v=', "assets/js/site.js")
     require_text(script, 'content/thoughts.json?v=', "assets/js/site.js")
     require_text(script, "appendGallery", "assets/js/site.js")
     require_text(script, 'bilingualElement("figcaption", "hobby-photo-caption"', "assets/js/site.js")
     require_text(stylesheet, ".content-state", "assets/css/site.css")
     require_text(stylesheet, ".hobby-photo-grid", "assets/css/site.css")
+    require_text(stylesheet, ".profile-links", "assets/css/site.css")
+    require_text(stylesheet, ".thoughts-intro", "assets/css/site.css")
     require_text(stylesheet, "width: min(1170px, calc(100% - 38px));", "assets/css/site.css")
     require_text(robots, "Allow: /", "robots.txt")
     require_text(robots, "Sitemap: https://ql-xun.github.io/sitemap.xml", "robots.txt")
     require_text(sitemap, "<loc>https://ql-xun.github.io/</loc>", "sitemap.xml")
     require_text(sitemap, "<loc>https://ql-xun.github.io/hobbies.html</loc>", "sitemap.xml")
     require_text(sitemap, "<loc>https://ql-xun.github.io/thoughts.html</loc>", "sitemap.xml")
+    for location in ("桂林 阳朔", "深圳 大鹏溪涌", "四川 九寨沟", "葡萄牙 罗卡角"):
+        require_text(require_file("content/hobbies.json"), location, "content/hobbies.json")
     require_text(
         google_verification,
         "google-site-verification: googleceb99c875e0d20ae.html",
@@ -218,6 +231,12 @@ def main() -> int:
         raise AssertionError("Homepage styles must remain in assets/css/site.css")
     if 'id="hobbiesContent"' in homepage or 'id="thoughtsContent"' in homepage:
         raise AssertionError("Hobbies and Thoughts must remain on standalone pages")
+    if 'id="service"' in homepage or 'href="#service"' in homepage:
+        raise AssertionError("The Service, Honors & Skills section must remain hidden")
+    if "mailto:xunql" in homepage:
+        raise AssertionError("Homepage email addresses must remain crawler-resistant")
+    if "学术主页" in homepage or "Academic Homepage" in homepage:
+        raise AssertionError("Homepage title must not include academic/学术")
     if "Beyond research" in homepage or "Notes in progress" in homepage:
         raise AssertionError("Generic placeholder content must not return to the homepage")
 
