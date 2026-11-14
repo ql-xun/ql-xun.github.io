@@ -13,11 +13,12 @@ python -m pip install -r scripts/requirements-journals.txt
 python -B scripts/check_site_contract.py
 python -B scripts/refresh_journals.py --validate
 python -B -m unittest discover -s scripts -p 'test_journal*.py'
+python -B -m unittest discover -s scripts -p test_preview.py
 node --test scripts/test_journal_model.mjs
-python scripts/serve_site.py 8080
+python -B scripts/serve_site.py 8775
 ```
 
-打开 `http://127.0.0.1:8080/tools/journals/`，可加 `?lang=zh` 或 `?lang=en`。
+打开 `http://127.0.0.1:8775/tools/journals/?lang=zh`；英文可用 `?lang=en`。预览服务仅监听本机。服务运行时，打开的预览页会在保存网站文件后自动刷新，无需重启；电脑重启或服务结束后需重新运行命令。
 
 ## 维护期刊与数据
 
