@@ -37,13 +37,10 @@
 .journal-table .journal-numeric { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .journal-name { font-weight: 650; }
 .journal-sub { display: block; margin-top: 2px; max-width: 56ch; }
-.journal-deadline { color: #865124; }
 .journal-state { border-left: 3px solid #929fb0; padding: 9px 13px; background: #f4f5f6; }
 .journal-shell summary { cursor: pointer; color: var(--journal-blue); }
 .journal-shell details { margin: 5px 0; }
-.journal-method { border-top: 1px solid var(--journal-rule); margin-top: 30px; padding-top: 12px; }
-.journal-method h2, .journal-shell section h2 { font-size: 17px; margin: 12px 0 5px; }
-.journal-method p { max-width: 86ch; }
+.journal-shell section h2 { font-size: 17px; margin: 12px 0 5px; }
 .journal-fields { display: grid; grid-template-columns: minmax(85px, max-content) minmax(90px, 1fr); gap: 5px 10px; margin: 8px 0; }
 .journal-fields dt { color: var(--muted); }
 .journal-fields dd { margin: 0; }
@@ -56,20 +53,19 @@
 .journal-bar { height: 9px; background: var(--journal-tint); border-radius: 2px; overflow: hidden; }
 .journal-bar span { display: block; height: 100%; background: var(--journal-blue); }
 .journal-bar--partial span { background: #8baedc; }
-.journal-shell .cfp-community { margin: 22px 0 30px; }
-.journal-shell .cfp-community > h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  padding: 7px 10px;
-  border-left: 3px solid var(--journal-blue);
-  background: var(--journal-tint);
-}
-.cfp-journal { margin: 0 0 18px; }
-.cfp-journal h3 { font-size: 15px; margin: 0 0 6px; }
-.cfp-journal h3 a { color: inherit; text-decoration: none; }
-.cfp-journal h3 a:hover, .cfp-journal h3 a:focus-visible { color: var(--journal-blue); text-decoration: underline; }
-.cfp-journal p { margin: 5px 0; }
+.cfp-societies { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; font-size: 14px; }
+.cfp-societies a { color: var(--muted); padding: 5px 10px; border: 1px solid var(--journal-rule); border-radius: 5px; text-decoration: none; }
+.cfp-societies a:hover { color: var(--journal-blue); }
+.cfp-societies a[aria-current="page"] { color: #184f9a; border-color: #82a4d0; background: var(--journal-tint); font-weight: 650; }
+.journal-shell .cfp-community > h2 { font-size: 18px; margin: 0 0 10px; }
+.cfp-subgroup > h3 { padding: 5px 9px; margin: 13px 0 10px; border-left: 2px solid #82a4d0; background: var(--journal-tint); font-size: 14px; }
+.cfp-journal { margin: 0 0 17px; padding: 9px 0 0; border-top: 1px solid var(--journal-rule); }
+.cfp-title { font-size: 15px; margin: 0; overflow-wrap: anywhere; }
+.cfp-title a { color: inherit; text-decoration: none; }
+.cfp-title a:hover, .cfp-title a:focus-visible { color: var(--journal-blue); text-decoration: underline; }
+.cfp-chief { display: flex; flex-wrap: wrap; gap: 2px 16px; margin: 3px 0 7px; }
+.cfp-chief a { white-space: normal; }
+.cfp-empty { margin: 0; }
 .cfp-journal .journal-table { min-width: 560px; }
 .cfp-journal .journal-table tr > :first-child { width: 47%; }
 .cfp-journal .journal-table tr > :nth-child(2) { width: 160px; }
@@ -78,6 +74,8 @@
   .journal-shell { width: calc(100% - 28px); padding-top: 24px; }
   .journal-filter-search { flex-basis: 100%; }
   .journal-tabs { gap: 2px 9px; }
+  .cfp-societies { gap: 5px; }
+  .cfp-societies a { padding: 7px 8px; }
   .journal-table th, .journal-table td { padding: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {

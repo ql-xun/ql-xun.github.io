@@ -1,4 +1,4 @@
-import { daysLeft, filterJournals, groupCallsByCommunity, safeLink, sanitizeNotes } from "./journal-model.js?v=2";
+import { communityId, currentEditor, filterJournals, groupCallsByCommunity, safeLink, sanitizeNotes } from "./journal-model.js?v=3";
 
 const app = document.querySelector("#journal-app");
 const meta = document.querySelector("#journal-meta");
@@ -8,10 +8,7 @@ const t = (en, zh) => root.dataset.lang === "zh" ? zh : en;
 const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
 const year = Number(today.slice(0, 4));
 const years = Array.from({ length: 6 }, (_, n) => year - 5 + n);
-const staleAfter = (value, days) => (daysLeft(today, value?.slice(0, 10)) ?? 0) > days;
-const missing = () => t("Not available", "暂无数据");
-const unknown = () => t("Not yet verified", "待核实");
-const hiddenMetric = () => t("Not publicly reported", "未公开");
+const missing = "—";
 const categories = () => ({
   communications: t("Communications & wireless", "通信与无线"),
   networking: t("Networks & IoT", "网络与物联网"),
@@ -20,7 +17,7 @@ const categories = () => ({
 });
 const access = () => ({
   hybrid: t("Hybrid", "混合出版"), open: t("Open access", "开放获取"),
-  subscription: t("Subscription", "订阅"), unknown: unknown()
+  subscription: t("Subscription", "订阅"), unknown: missing
 });
 const fields = () => [
   ["scope", t("Scope", "研究范围")], ["article_types", t("Article types", "论文类型")],
@@ -30,7 +27,9 @@ const fields = () => [
   ["acceptance", t("Acceptance rate", "录用率")],
   ["official_volume", t("Publisher annual volume", "出版社年发文量")]
 ];
-let journals, stats, calls, sources, byId, callById, allowed, snapshot;
+const societyFromUrl = () => communityId(new URLSearchParams(location.search).get("society"));
+let society = societyFromUrl();
+let journals, stats, calls, byId, callById, allowed, snapshot;
 let notes = Object.create(null), tab = "tracker", detail = null;
 let filters = { query: "", sort: "grade" };
 const selected = new Set();
@@ -56,10 +55,10 @@ function link(url, text) {
   return href ? el("a", { href, target: "_blank", rel: "noopener noreferrer" }, text) : null;
 }
 function button(text, fn, attrs = {}) { return el("button", { type: "button", onclick: fn, ...attrs }, text); }
-const fmt = value => Number.isInteger(value) ? new Intl.NumberFormat(root.lang).format(value) : missing();
+const fmt = value => Number.isInteger(value) ? new Intl.NumberFormat(root.lang).format(value) : missing;
 function rank(journal) {
   const grade = journal.ccf?.grade;
-  return grade === "not-listed" ? t("Not listed", "未收录") : grade ? "CCF-" + grade : unknown();
+  return grade === "not-listed" ? t("Not listed", "未收录") : grade ? "CCF-" + grade : missing;
 }
 function dateNote(value) { return value ? t("Checked: ", "核查：") + value.slice(0, 10) : ""; }
 const noteExists = key => Object.hasOwn(notes, key);
@@ -120,7 +119,7 @@ function journalDetail(item) {
     p(t("Research tags: ", "方向标签：") + (item.tags || []).join(" · ")),
     el("dl", { class: "journal-fields" }, fields().flatMap(([key, title]) => {
       const field = item.details?.[key];
-      return [el("dt", {}, title), el("dd", {}, metric(field, key))];
+      return [el("dt", {}, title), el("dd", {}, metric(field))];
     })),
     el("h2", {}, t("OpenAlex indexed works", "OpenAlex 收录量")),
     chart(item, Math.max(1, ...years.map(y => stats[item.id]?.counts?.[y] ?? 0))), statSource(item),
@@ -131,17 +130,15 @@ function journalDetail(item) {
       })));
   return section;
 }
-function metric(field, key) {
-  if (!field) return ["first_decision", "acceptance", "official_volume"].includes(key) ? hiddenMetric() : unknown();
+function metric(field) {
+  if (!field) return missing;
   return el("span", {}, field.value, " ", link(field.url, t("Source", "来源")),
     el("small", { class: "journal-sub journal-muted" }, [field.year, dateNote(field.checked_at)].filter(Boolean).join(" · ")));
 }
 function statSource(item) {
   const data = stats[item.id];
-  if (!data?.checked_at) return p(unknown(), "journal-muted");
+  if (!data?.checked_at) return null;
   return el("p", { class: "journal-muted" }, dateNote(data.checked_at),
-    data.status === "error" ? t(" · Refresh failed; showing saved data.", " · 更新失败，保留上次数据。") : "",
-    data.status !== "error" && staleAfter(data.checked_at, 14) ? t(" · Statistics may be out of date.", " · 统计可能已过时。") : "",
     data.openalex_id ? [" · ", link("https://openalex.org/" + data.openalex_id, "OpenAlex")] : [],
     item.previous_issns?.length ? el("span", { class: "journal-sub" },
       t("Earlier years use the predecessor ISSN; the change in title is marked.", "早期年份按前身 ISSN 统计；更名处已标记。")) : null);
@@ -171,9 +168,8 @@ function library() {
       el("span", { class: "journal-sub journal-muted" }, item.name)),
       categories()[item.category], item.publisher,
       item.ccf ? link(item.ccf.url, rank(item)) || rank(item) : rank(item),
-      access()[item.access || "unknown"] || unknown(),
-      el("span", { class: "journal-numeric" }, fmt(stats[item.id]?.counts?.[year - 1]),
-        stats[item.id]?.status === "error" ? el("span", { class: "journal-sub journal-muted" }, t("Saved data", "上次数据")) : null),
+      access()[item.access || "unknown"] || missing,
+      el("span", { class: "journal-numeric" }, fmt(stats[item.id]?.counts?.[year - 1])),
       el("div", { class: "journal-actions" }, favorite("j:" + item.id), compareButton(item))
     ]);
     results.replaceChildren(el("p", { role: "status", class: "journal-muted journal-result" },
@@ -184,42 +180,72 @@ function library() {
   }
   const change = key => value => { filters[key] = value; draw(); };
   const all = t("All", "全部");
+  const publishers = Object.fromEntries([...new Set(journals.map(item => item.publisher))].sort().map(name => [name, name]));
   wrap.append(el("div", { class: "journal-filters" },
     search(t("Search by name, acronym, or topic", "搜索名称、简称、研究主题"), filters.query, change("query")),
     select(t("Area", "方向"), { "": all, ...categories() }, filters.category, change("category")),
-    select(t("Publisher", "出版方"), { "": all, IEEE: "IEEE", ACM: "ACM", Elsevier: "Elsevier" }, filters.publisher, change("publisher")),
-    select("CCF", { "": all, A: "A", B: "B", C: "C", "not-listed": t("Not listed", "未收录"), unknown: unknown() }, filters.grade, change("grade")),
+    select(t("Publisher", "出版方"), { "": all, ...publishers }, filters.publisher, change("publisher")),
+    select("CCF", { "": all, A: "A", B: "B", C: "C", "not-listed": t("Not listed", "未收录"), unknown: missing }, filters.grade, change("grade")),
     select(t("Access", "开放获取"), { "": all, ...access() }, filters.access, change("access")),
     select(t("Sort by", "排序"), { grade: "CCF", alpha: t("Acronym", "简称"), count: (year - 1) + t(" count", " 年收录量") }, filters.sort, change("sort"))),
     detail && byId.has(detail) ? journalDetail(byId.get(detail)) : el("span"), results);
   draw();
   return wrap;
 }
+function chiefLine(journal) {
+  const editor = currentEditor(journal, today);
+  return el("p", { class: "cfp-chief journal-muted" },
+    el("span", {}, t("Editor-in-Chief: ", "主编："), link(editor?.source, editor?.name) || editor?.name || missing),
+    el("span", {}, t("Since: ", "上任："), link(editor?.since_source, editor?.since) || editor?.since || missing));
+}
+function cfpJournal({ journal, calls: entries }, heading) {
+  const label = journal.name + " (" + journal.abbreviation + ")";
+  const name = link(journal.cfp_url || journal.url, label) || label;
+  return el("section", { class: "cfp-journal", "data-journal": journal.id },
+    el(heading, { class: "cfp-title" }, name), chiefLine(journal),
+    entries.length ? table([t("Topic", "特刊主题"), t("Submission deadline", "投稿截止日期"), t("Guest editors", "客座编辑")],
+      entries.map(call => [link(call.url, call.title) || call.title,
+        call.deadline ? el("time", { datetime: call.deadline, class: "journal-numeric" }, call.deadline) : missing,
+        (call.editors || []).map(name => name.trim().replace(/[\s,，;；]+$/, "")).filter(Boolean).join(", ") || missing]), label) :
+      p(t("No SI", "暂无SI"), "journal-muted cfp-empty"));
+}
 function tracker() {
   const labels = {
-    comsoc: t("IEEE Communications Society (ComSoc)", "IEEE 通信学会（ComSoc）"),
+    comsoc: t("IEEE Communications Society", "IEEE 通信学会"),
     computer: t("IEEE Computer Society", "IEEE 计算机学会"),
     other: t("Other societies", "其他学会")
   };
-  const groups = groupCallsByCommunity(journals, calls, today);
+  const subdivisions = {
+    sps: t("IEEE Signal Processing Society", "IEEE 信号处理学会"),
+    vts: t("IEEE Vehicular Technology Society", "IEEE 车辆技术学会"),
+    scp: t("Science China Press", "中国科学杂志社"),
+    misc: t("Other publications", "其他期刊")
+  };
+  const group = groupCallsByCommunity(journals, calls, today).find(group => group.id === society);
+  const nav = el("nav", { class: "cfp-societies", "aria-label": t("Societies", "学会导航") },
+    Object.entries(labels).map(([id, label]) => {
+      const url = new URL(location.href);
+      url.searchParams.set("society", id);
+      url.searchParams.set("lang", root.dataset.lang);
+      return el("a", { href: url.href, "aria-current": society === id ? "page" : null,
+        "data-focus": "society-" + id, onclick: event => {
+          if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          if (society === id) return;
+          society = id;
+          history.pushState(null, "", url);
+          rerender();
+        } }, label);
+    }));
   return el("section", { class: "cfp-directory", "aria-label": t("Special issues by society", "按学会浏览特刊") },
-    groups.map(group => el("section", { class: "cfp-community" },
-      el("h2", {}, labels[group.id]),
-      group.journals.map(({ journal, calls: entries }) => {
-        const source = sources[journal.id];
-        const label = journal.name + " (" + journal.abbreviation + ")";
-        return el("section", { class: "cfp-journal" },
-          el("h3", {}, link(journal.cfp_url || journal.url, label) || label),
-          source?.status === "error" ?
-            p(t("Last refresh failed. Check the official page.", "最近一次更新失败，请查阅官方页面。"), "journal-muted") : null,
-          entries.length ? table([t("Topic", "特刊主题"), t("Submission deadline", "投稿截止日期"), t("Guest editors", "客座编辑")],
-            entries.map(call => [link(call.url, call.title) || call.title,
-              call.deadline ? el("time", { datetime: call.deadline, class: "journal-numeric" }, call.deadline) :
-                t("Ongoing", "持续征稿"),
-              (call.editors || []).join(", ") || unknown()]), label) :
-            p(source?.status === "ok" ? t("No current call found in the snapshot.", "当前快照未发现有效征稿。") :
-              t("See the official CFP page for current calls.", "征稿信息请查阅官方 CFP。"), "journal-muted"));
-      }))));
+    nav,
+    group ? el("section", { class: "cfp-community", "data-society": group.id, "aria-labelledby": "cfp-community-heading" },
+      el("h2", { id: "cfp-community-heading" }, labels[group.id]),
+      group.id === "other" ? Object.entries(subdivisions).map(([id, label]) => {
+        const items = group.journals.filter(item => item.subgroup === id);
+        return items.length ? el("section", { class: "cfp-subgroup" }, el("h3", {}, label),
+          items.map(item => cfpJournal(item, "h4"))) : null;
+      }) : group.journals.map(item => cfpJournal(item, "h3"))) : null);
 }
 function comparison() {
   const items = [...selected].map(id => byId.get(id)).filter(Boolean);
@@ -235,9 +261,9 @@ function comparison() {
   const max = Math.max(1, ...items.flatMap(item => years.map(y => stats[item.id]?.counts?.[y] ?? 0)));
   wrap.append(table([t("Metric", "指标"), ...items.map(item => link(item.url, item.abbreviation) || item.abbreviation)],
     [["CCF", ...items.map(item => item.ccf ? link(item.ccf.url, rank(item)) || rank(item) : rank(item))],
-      [t("Access", "开放获取"), ...items.map(item => access()[item.access || "unknown"] || unknown())],
+      [t("Access", "开放获取"), ...items.map(item => access()[item.access || "unknown"] || missing)],
       [t("OpenAlex indexed works", "OpenAlex 收录量"), ...items.map(item => el("div", {}, chart(item, max), statSource(item)))],
-      ...fields().filter(([key]) => key !== "scope").map(([key, title]) => [title, ...items.map(item => metric(item.details?.[key], key))])],
+      ...fields().filter(([key]) => key !== "scope").map(([key, title]) => [title, ...items.map(item => metric(item.details?.[key]))])],
     t("Journal comparison", "期刊对比")));
   return wrap;
 }
@@ -277,7 +303,7 @@ function favorites() {
       const input = el("textarea", { maxlength: 4000, value: notes[key], oninput: event => { notes[key] = event.target.value; persist(); } });
       return el("li", { class: "journal-note" }, link(item?.url, label) || label,
         el("label", {}, t("Private note", "个人备注"), input), favorite(key));
-    })) : p(t("Save a journal or a special issue to start your list.", "在期刊库或特刊追踪中收藏条目，即可在这里管理。"), "journal-state"));
+    })) : p(t("Save journals from the journal library.", "可在期刊资料库收藏期刊。"), "journal-state"));
 }
 function render() {
   const labels = { library: t("Journal library", "期刊资料库"), tracker: t("Special issues", "特刊追踪"),
@@ -286,17 +312,21 @@ function render() {
     app.replaceChildren(p(t("Journal data could not load. Reload the page to try again.", "未能加载期刊数据，请刷新页面重试。"), "journal-state"));
     return;
   }
-  const stale = Object.values(sources).filter(source => source.status === "error").length;
   const checked = snapshot.generated_at?.slice(0, 10);
   meta.textContent = t(journals.length + " journals", "收录 " + journals.length + " 本") +
-    (checked ? t(" · Snapshot: ", " · 快照：") + checked : "") +
-    (stale ? t(" · " + stale + " sources could not refresh", " · " + stale + " 个来源更新失败") : "") +
-    (staleAfter(checked, 3) ? t(" · Snapshot may be out of date", " · 快照可能已过时") : "");
+    (checked ? t(" · Updated ", " · 更新于 ") + checked : "");
   app.replaceChildren(el("nav", { class: "journal-tabs", "aria-label": t("Journal Explorer views", "期刊观察功能") },
     Object.entries(labels).map(([key, title]) => button(title + (key === "comparison" && selected.size ? " (" + selected.size + ")" : ""), () => {
       tab = key; statusText = ""; rerender();
     }, { "aria-pressed": String(tab === key), "data-focus": "tab-" + key }))),
     { library, tracker, comparison, favorites }[tab]());
+}
+function syncLanguageQuery() {
+  const url = new URL(location.href);
+  if (url.searchParams.has("lang") && url.searchParams.get("lang") !== root.dataset.lang) {
+    url.searchParams.set("lang", root.dataset.lang);
+    history.replaceState(history.state, "", url);
+  }
 }
 async function start() {
   try {
@@ -307,7 +337,6 @@ async function start() {
     journals = snapshot.journals;
     stats = snapshot.stats || {};
     calls = Object.values(snapshot.calls || {});
-    sources = snapshot.cfp_sources || {};
     byId = new Map(journals.map(item => [item.id, item]));
     callById = new Map(calls.map(item => [item.id, item]));
     allowed = new Set([...journals.map(item => "j:" + item.id), ...calls.map(item => "c:" + item.id)]);
@@ -317,6 +346,15 @@ async function start() {
     } catch { storageWorks = false; }
     render();
   } catch { journals = null; render(); }
-  new MutationObserver(render).observe(root, { attributes: true, attributeFilter: ["data-lang"] });
+  new MutationObserver(() => {
+    syncLanguageQuery();
+    rerender();
+  }).observe(root, { attributes: true, attributeFilter: ["data-lang"] });
 }
+window.addEventListener("popstate", () => {
+  society = societyFromUrl();
+  tab = "tracker";
+  syncLanguageQuery();
+  render();
+});
 start();

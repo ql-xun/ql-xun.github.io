@@ -20,10 +20,20 @@ export function callStatus(call, today) {
 }
 
 const communities = [
-  ["comsoc", ["commag", "ieee-network", "wcm", "jsac", "tccn", "tgcn", "tnse", "tnsm", "iotj"]],
-  ["computer", ["tdsc"]],
-  ["other", ["tvt", "jstsp"]]
+  ["comsoc", ["commag", "ieee-network", "wcm", "jsac", "ton", "tccn", "tgcn", "tnse", "tnsm", "iotj"]],
+  ["computer", ["tdsc", "taffc", "tetc"]],
+  ["other", ["tsp", "jstsp", "tvt", "scis"]]
 ];
+const otherSocieties = { tsp: "sps", jstsp: "sps", tvt: "vts", scis: "scp" };
+
+export function communityId(value) {
+  return communities.some(([id]) => id === value) ? value : "comsoc";
+}
+
+export function currentEditor(journal, today) {
+  const editor = journal.editor_in_chief;
+  return editor?.next?.since && editor.next.since <= today ? editor.next : editor;
+}
 
 export function groupCallsByCommunity(journals, calls, today) {
   const active = new Map();
@@ -42,6 +52,7 @@ export function groupCallsByCommunity(journals, calls, today) {
     }
     return { id, journals: titles.map(journal => ({
       journal,
+      subgroup: id === "other" ? otherSocieties[journal.id] || "misc" : null,
       calls: (active.get(journal.id) || []).sort((a, b) => a.title.localeCompare(b.title, "en"))
     })) };
   }).filter(group => group.journals.length);

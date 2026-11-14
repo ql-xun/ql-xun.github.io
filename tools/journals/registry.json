@@ -116,6 +116,12 @@
   },
   {
     "id": "jsac",
+    "editor_in_chief": {
+      "name": "Zhiguo Ding",
+      "source": "https://www.comsoc.org/publications/journals/ieee-jsac/ieee-journal-selected-areas-communications-editorial-board",
+      "since": "2026",
+      "since_source": "https://www.comsoc.org/publications/journals/ieee-jsac/ieee-journal-selected-areas-communications-editorial-board"
+    },
     "abbreviation": "JSAC",
     "name": "IEEE Journal on Selected Areas in Communications",
     "category": "communications",
@@ -293,6 +299,12 @@
   },
   {
     "id": "tccn",
+    "editor_in_chief": {
+      "name": "Shiwen Mao",
+      "source": "https://www.comsoc.org/publications/journals/ieee-tccn/ieee-transactions-cognitive-communications-and-networking-editorial-board",
+      "since": "2023-01",
+      "since_source": "https://www.eng.auburn.edu/~szm0001/papers/EiC-MSG23.pdf"
+    },
     "abbreviation": "TCCN",
     "name": "IEEE Transactions on Cognitive Communications and Networking",
     "category": "communications",
@@ -332,6 +344,12 @@
   },
   {
     "id": "tgcn",
+    "editor_in_chief": {
+      "name": "Yuanwei Liu",
+      "source": "https://www.comsoc.org/publications/journals/ieee-tgcn/editorial-board",
+      "since": "2026-08",
+      "since_source": "https://web.ece.hku.hk/~yuanwei/activities.html"
+    },
     "abbreviation": "TGCN",
     "name": "IEEE Transactions on Green Communications and Networking",
     "category": "communications",
@@ -372,6 +390,12 @@
   },
   {
     "id": "tvt",
+    "editor_in_chief": {
+      "name": "Lin Cai",
+      "source": "https://vtsociety.org/position/editor-chief-tvt",
+      "since": "2026",
+      "since_source": "https://vtsociety.org/position/editor-chief-tvt"
+    },
     "abbreviation": "TVT",
     "name": "IEEE Transactions on Vehicular Technology",
     "category": "communications",
@@ -452,7 +476,14 @@
   },
   {
     "id": "ton",
-    "abbreviation": "ToN",
+    "abbreviation": "TNET",
+    "cfp_url": "https://www.comsoc.org/publications/journals/ieee-tnet/ieee-transactions-networking-call-papers",
+    "editor_in_chief": {
+      "name": "Junshan Zhang",
+      "source": "https://www.comsoc.org/publications/journals/ieee-tnet/ieee-transactions-networking-editorial-board",
+      "since": "2024",
+      "since_source": "https://faculty.engineering.ucdavis.edu/jzhang/awards-and-activities/"
+    },
     "name": "IEEE Transactions on Networking",
     "category": "networking",
     "publisher": "IEEE",
@@ -469,7 +500,7 @@
     "url": "https://www.comsoc.org/publications/journals/ieee-tnet",
     "aliases": [
       "IEEE/ACM Transactions on Networking",
-      "TNET",
+      "ToN",
       "TON"
     ],
     "previous_issns": [
@@ -536,6 +567,12 @@
   },
   {
     "id": "tnsm",
+    "editor_in_chief": {
+      "name": "Abdallah Shami",
+      "source": "https://www.comsoc.org/publications/journals/ieee-tnsm/ieee-transactions-network-and-service-management-editorial-board",
+      "since": "2026-01-01",
+      "since_source": "https://www.cloudcom2025.org/keynote-speakers"
+    },
     "abbreviation": "TNSM",
     "name": "IEEE Transactions on Network and Service Management",
     "category": "networking",
@@ -570,6 +607,10 @@
   },
   {
     "id": "tnse",
+    "editor_in_chief": {
+      "name": "Yingying Chen",
+      "source": "https://www.comsoc.org/publications/journals/ieee-tnse/ieee-transactions-network-science-and-engineering-editorial-board"
+    },
     "abbreviation": "TNSE",
     "name": "IEEE Transactions on Network Science and Engineering",
     "category": "networking",
@@ -604,6 +645,12 @@
   },
   {
     "id": "iotj",
+    "editor_in_chief": {
+      "name": "Bo Li",
+      "source": "https://ieee-iotj.org/editorial-board/",
+      "since": "2026",
+      "since_source": "https://cse.hkust.edu.hk/News/IEEEIOTJ2026/"
+    },
     "abbreviation": "IoTJ",
     "name": "IEEE Internet of Things Journal",
     "category": "networking",
@@ -736,6 +783,19 @@
   },
   {
     "id": "tsp",
+    "cfp_url": "https://signalprocessingsociety.org/event-categories/special-issue-deadlines",
+    "editor_in_chief": {
+      "name": "Zhi Tian",
+      "source": "https://signalprocessingsociety.org/index.php/publications-resources/ieee-transactions-signal-processing/editorial-board",
+      "since": "2024-01-01",
+      "since_source": "https://signalprocessingsociety.org/our-story/news-updates/2023/05/new-society-editors-chief-named-2024?order=title&sort=asc",
+      "next": {
+        "name": "Chandra R. Murthy",
+        "source": "https://signalprocessingsociety.org/our-story/news-updates/2026/06/new-society-editors-chief-named-2027",
+        "since": "2027-01-01",
+        "since_source": "https://signalprocessingsociety.org/our-story/news-updates/2026/06/new-society-editors-chief-named-2027"
+      }
+    },
     "abbreviation": "TSP",
     "name": "IEEE Transactions on Signal Processing",
     "category": "systems",
@@ -776,6 +836,12 @@
   },
   {
     "id": "jstsp",
+    "editor_in_chief": {
+      "name": "Patrizio Campisi",
+      "source": "https://signalprocessingsociety.org/publications-resources/ieee-journal-selected-topics-signal-processing/senior-editorial-board",
+      "since": "2026-01-01",
+      "since_source": "https://signalprocessingsociety.org/our-story/news-updates/2025/05/new-society-editors-chief-named-2026"
+    },
     "abbreviation": "JSTSP",
     "name": "IEEE Journal of Selected Topics in Signal Processing",
     "category": "systems",
@@ -903,6 +969,12 @@
   },
   {
     "id": "tdsc",
+    "editor_in_chief": {
+      "name": "Dan (Linda) Lin",
+      "source": "https://www.computer.org/csdl/journal/tq",
+      "since": "2026-01-01",
+      "since_source": "https://www.computer.org/press-room/2026-eics-announced"
+    },
     "abbreviation": "TDSC",
     "name": "IEEE Transactions on Dependable and Secure Computing",
     "category": "systems",
@@ -927,6 +999,67 @@
     "checked_at": "2026-11-14",
     "guidelines": "https://www.computer.org/publications/author-resources",
     "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers"
+  },
+  {
+    "id": "taffc",
+    "abbreviation": "TAFFC",
+    "name": "IEEE Transactions on Affective Computing",
+    "category": "systems",
+    "publisher": "IEEE",
+    "issn": "1949-3045",
+    "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+    "tags": [
+      "affective computing",
+      "emotion recognition",
+      "human-computer interaction",
+      "computational intelligence"
+    ],
+    "url": "https://www.computer.org/csdl/journal/ta/",
+    "aliases": [
+      "TAC",
+      "T-AFFC"
+    ],
+    "access": "hybrid",
+    "access_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+    "checked_at": "2026-11-14",
+    "guidelines": "https://www.computer.org/publications/author-resources",
+    "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
+    "editor_in_chief": {
+      "name": "Jesse Hoey",
+      "source": "https://www.computer.org/csdl/journal/ta/",
+      "since": "2023-01-01",
+      "since_source": "https://www.computer.org/press-room/editors-in-chief-confirmed-for-ieee-computer-society-publications"
+    }
+  },
+  {
+    "id": "tetc",
+    "abbreviation": "TETC",
+    "name": "IEEE Transactions on Emerging Topics in Computing",
+    "category": "systems",
+    "publisher": "IEEE",
+    "issn": "2168-6750",
+    "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+    "tags": [
+      "emerging computing",
+      "computer systems",
+      "computing technologies",
+      "computer engineering"
+    ],
+    "url": "https://www.computer.org/csdl/journal/ec/",
+    "aliases": [
+      "T-ETC"
+    ],
+    "access": "hybrid",
+    "access_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+    "checked_at": "2026-11-14",
+    "guidelines": "https://www.computer.org/publications/author-resources",
+    "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
+    "editor_in_chief": {
+      "name": "Patrick Schaumont",
+      "source": "https://www.computer.org/csdl/journal/ec/",
+      "since": "2026-01-01",
+      "since_source": "https://www.computer.org/press-room/2026-eics-announced"
+    }
   },
   {
     "id": "tocs",
@@ -1054,7 +1187,41 @@
     }
   },
   {
+    "id": "scis",
+    "abbreviation": "SCIS",
+    "name": "SCIENCE CHINA Information Sciences",
+    "category": "systems",
+    "publisher": "Science China Press",
+    "issn": "1674-733X",
+    "identity_url": "https://link.springer.com/journal/11432",
+    "tags": [
+      "information sciences",
+      "computer science",
+      "control engineering",
+      "communication engineering",
+      "quantum information"
+    ],
+    "url": "https://scis.scichina.com/",
+    "access": "hybrid",
+    "access_url": "https://link.springer.com/journal/11432",
+    "checked_at": "2026-11-14",
+    "guidelines": "https://scis.scichina.com/download/scis-authors.pdf",
+    "cfp_url": "https://scis.scichina.com/",
+    "editor_in_chief": {
+      "name": "Hong Mei（梅宏）",
+      "source": "https://scis.scichina.com/download/scis-editorialboard.pdf",
+      "since": "2018",
+      "since_source": "https://scis.scichina.com/en/2018/010001.pdf"
+    }
+  },
+  {
     "id": "commag",
+    "editor_in_chief": {
+      "name": "Rose Qingyang Hu",
+      "source": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine/ieee-communications-magazine-editorial-board",
+      "since": "2024-01",
+      "since_source": "https://research.usu.edu/awards/d-wynne-thorne/awardees/2024/winner"
+    },
     "abbreviation": "ComMag",
     "name": "IEEE Communications Magazine",
     "category": "magazine",
@@ -1090,6 +1257,12 @@
   },
   {
     "id": "ieee-network",
+    "editor_in_chief": {
+      "name": "Jiming Chen（陈积明）",
+      "source": "https://www.comsoc.org/publications/magazines/ieee-network/editorial-board",
+      "since": "2024-07",
+      "since_source": "https://m.thepaper.cn/newsDetail_forward_27988060"
+    },
     "abbreviation": "NetMag",
     "name": "IEEE Network",
     "category": "magazine",
@@ -1116,6 +1289,12 @@
   },
   {
     "id": "wcm",
+    "editor_in_chief": {
+      "name": "Octavia A. Dobre",
+      "source": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/editorial-board",
+      "since": "2026",
+      "since_source": "https://doi.org/10.1109/MWC.2026.3681087"
+    },
     "abbreviation": "WCM",
     "name": "IEEE Wireless Communications",
     "category": "magazine",

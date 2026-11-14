@@ -15,7 +15,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-from journal_cfp import PUBLISHERS, detail_fields, parse_page, parser_for, pdf_fields
+from journal_cfp import CS_JOURNALS, PUBLISHERS, detail_fields, parse_page, parser_for, pdf_fields
 from journal_digest import create_digest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -129,6 +129,17 @@ def error_summary(error):
     return f"HTTP {error.code}" if isinstance(error, HTTPError) else type(error).__name__
 
 
+def saved_detail(item, prior, prefer_detail):
+    if not prior.get("detail_checked_at"):
+        return
+    item["detail_checked_at"] = prior["detail_checked_at"]
+    if prior["status"] == "closed" or ((prefer_detail or item["status"] == "unknown") and prior.get("deadline")):
+        item["deadline"], item["status"] = prior["deadline"], prior["status"]
+        if prior.get("deadline_source"):
+            item["deadline_source"] = prior["deadline_source"]
+    item["publication"] = item["publication"] or prior.get("publication")
+
+
 def refresh_source(journal, old, prior_calls, now):
     journal_id = journal["id"]
     url = journal.get("cfp_url")
@@ -137,49 +148,61 @@ def refresh_source(journal, old, prior_calls, now):
     try:
         records = parse_page(read_url(url, PUBLISHERS), url, journal_id)
         today = now.date()
+        prefer_detail = journal_id in CS_JOURNALS or journal_id == "scis"
         budget = 20
         for item in records:
             prior = prior_calls.get(item["id"], {})
             item["editors"] = item.get("editors") or prior.get("editors", [])
-            date_text = item["deadline"]
-            active = item["status"] in {"ongoing", "unknown"} or bool(date_text and date.fromisoformat(date_text) >= today)
-            if not active or budget <= 0:
+            if item["status"] == "closed":
+                continue
+            published_date = item["deadline"]
+            active = item["status"] in {"ongoing", "unknown"} or bool(published_date and published_date >= today.isoformat())
+            was_active = prior.get("deadline", "") and prior["deadline"] >= today.isoformat()
+            # A stale directory date can be earlier than the date on the CS detail page.
+            if not (active or journal_id in CS_JOURNALS or (prefer_detail and was_active)):
                 continue
             is_pdf = item["url"].lower().endswith(".pdf")
-            if is_pdf and journal_id != "tvt":
+            if is_pdf and journal_id not in {"tvt", "scis"}:
                 continue  # IoTJ publishes dates and editors directly on its list.
             last = prior.get("detail_checked_at", "")
-            fresh = last and (today - date.fromisoformat(last[:10])).days < 7
+            # SCIS may replace a PDF in place while its directory remains unchanged.
+            max_age = 0 if journal_id == "scis" else 1 if prefer_detail else 7
+            fresh = (last and not prior.get("detail_stale") and 0 <= (today - date.fromisoformat(last[:10])).days < max_age
+                     and (not prefer_detail or prior.get("deadline_source") == item["url"]))
             if fresh and prior.get("deadline_text") == item["deadline_text"]:
-                item["detail_checked_at"] = last
-                if item["deadline"] is None and prior.get("deadline"):
-                    item["deadline"] = prior["deadline"]
-                    item["status"] = "dated"
-                if not item["publication"]:
-                    item["publication"] = prior.get("publication")
+                saved_detail(item, prior, prefer_detail)
+                continue
+            if budget <= 0:
+                saved_detail(item, prior, prefer_detail)
+                item["detail_stale"] = True
                 continue
             budget -= 1
             try:
                 raw = read_url(item["url"], PUBLISHERS, accept="application/pdf" if is_pdf else "text/html")
                 if is_pdf:
-                    plain = subprocess.run(["pdftotext", "-enc", "UTF-8", "-f", "1", "-l", "8", "-", "-"],
+                    layout = ["-raw"] if journal_id == "scis" else []
+                    plain = subprocess.run(["pdftotext", *layout, "-enc", "UTF-8", "-f", "1", "-l", "8", "-", "-"],
                                            input=raw, capture_output=True, timeout=12, check=True).stdout.decode("utf-8", "replace")
                     editors, detail_date, publication = pdf_fields(plain)
                     item["publication"] = publication or item["publication"]
                 else:
                     editors, detail_date = detail_fields(raw)
+                if prefer_detail and not detail_date:
+                    raise ValueError("Official CFP submission deadline not found")
                 if editors:
                     item["editors"] = editors
                 item["detail_checked_at"] = now.isoformat()
-                if detail_date and item["status"] == "unknown":
+                if detail_date == "Closed":
+                    item["deadline"], item["status"] = None, "closed"
+                    item["deadline_source"] = item["url"]
+                elif detail_date and (prefer_detail or item["status"] == "unknown"):
                     item["deadline"], item["status"] = detail_date, "dated"
+                    item["deadline_source"] = item["url"]
             except (ValueError, OSError, subprocess.SubprocessError) as error:
-                if last:
-                    item["detail_checked_at"] = last
-                if item["deadline"] is None and item["status"] == "unknown" and prior.get("deadline"):
-                    # A previously verified detail date can be retained on transient failure.
-                    item["deadline"], item["status"] = prior["deadline"], "dated"
-                    item["detail_stale"] = True
+                saved_detail(item, prior, prefer_detail)
+                if journal_id in CS_JOURNALS and not prior.get("deadline") and item["status"] != "closed":
+                    item["deadline"], item["status"] = None, "unknown"
+                item["detail_stale"] = True
                 print(f"CFP detail {item['id']}: {error_summary(error)}", flush=True)
         print(f"CFP {journal_id}: {len(records)} entries", flush=True)
         return journal_id, {"status": "ok", "checked_at": now.isoformat(), "url": url}, records
@@ -229,6 +252,24 @@ def atomic_json(path, value):
     tmp.replace(path)
 
 
+def validate_editor(editor, journal_id):
+    require(isinstance(editor, dict) and isinstance(editor.get("name"), str) and
+            editor["name"].strip() and https_url(editor.get("source")), f"Invalid chief editor: {journal_id}")
+    since = editor.get("since")
+    if since is not None:
+        require(isinstance(since, str) and re.fullmatch(r"\d{4}(?:-\d{2}(?:-\d{2})?)?", since)
+                and https_url(editor.get("since_source")), f"Invalid editor appointment: {journal_id}")
+        date.fromisoformat(since + "-01" * (2 - since.count("-")))
+    else:
+        require(not editor.get("since_source"), f"Appointment source has no date: {journal_id}")
+    if successor := editor.get("next"):
+        require(isinstance(successor, dict) and isinstance(successor.get("since"), str)
+                and re.fullmatch(r"\d{4}-\d{2}-\d{2}", successor["since"])
+                and (not since or successor["since"] > since) and "next" not in successor,
+                f"Invalid editor transition: {journal_id}")
+        validate_editor(successor, journal_id)
+
+
 def validate_registry(journals):
     require(isinstance(journals, list) and bool(journals), "Journal registry is empty")
     ids = set()
@@ -246,6 +287,8 @@ def validate_registry(journals):
                 require(https_url(row.get(name)), f"Invalid journal link: {key}/{name}")
         if rank := row.get("ccf"):
             require(rank["grade"] in {"A", "B", "C", "not-listed"} and https_url(rank["url"]) and rank["version"], "Invalid CCF entry")
+        if row.get("editor_in_chief") is not None:
+            validate_editor(row["editor_in_chief"], key)
         for metric in row.get("details", {}).values():
             require(bool(metric["value"]) and https_url(metric["url"]), "Unsourced detail")
             date.fromisoformat(metric["checked_at"])
@@ -264,6 +307,7 @@ def validate_snapshot(snapshot):
         if call["deadline"]:
             date.fromisoformat(call["deadline"])
         require(call["status"] != "dated" or bool(call["deadline"]), "Dated CFP missing deadline")
+        require(not call.get("deadline_source") or https_url(call["deadline_source"]), "Invalid CFP deadline source")
     for key, stat in snapshot["stats"].items():
         require(key in ids, "Unknown journal in statistics")
         for year, count in stat.get("counts", {}).items():
