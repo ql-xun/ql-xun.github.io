@@ -12,12 +12,12 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  schedule:
-    # 08:17 Beijing time. The updater runs full statistics on Sundays.
-    - cron: '17 0 * * *'
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -27,89 +27,37 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate site and prepare Pages artifact
+    name: Validate permanent site URLs
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-      - name: Install journal parser
-        run: python -m pip install -r scripts/requirements-journals.txt
+          python-version: "3.x"
       - name: Check site contract
-        run: |
-          python -B scripts/check_site_contract.py
-          python -B scripts/refresh_journals.py --validate
-          python -B -m unittest discover -s scripts -p 'test_journal*.py'
-          node --check assets/js/site.js
-          node --check tools/journals/journals.js
-          node --test scripts/test_journal_model.mjs
-      - name: Stage website
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        run: |
-          mkdir -p "${RUNNER_TEMP}/pages-site"
-          git archive HEAD | tar -x -C "${RUNNER_TEMP}/pages-site"
-      - name: Install PDF text extractor if needed
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        run: |
-          if ! command -v pdftotext >/dev/null; then
-            sudo apt-get update -qq
-            sudo apt-get install -y poppler-utils
-          fi
-      - name: Refresh and validate journal snapshot
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        env:
-          BEFORE_SHA: ${{ github.event.before }}
-          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
-        run: |
-          options=()
-          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then options+=(--full); fi
-          if [[ "$GITHUB_EVENT_NAME" == "push" ]] && git cat-file -e "${BEFORE_SHA}^{commit}" \
-            && ! git cat-file -e "${BEFORE_SHA}:tools/journals/snapshot.json" 2>/dev/null; then
-            options+=(--bootstrap)
-          fi
-          python -B scripts/refresh_journals.py "${options[@]}" \
-            --output "${RUNNER_TEMP}/pages-site/tools/journals/snapshot.json" \
-            --digest "${RUNNER_TEMP}/journal-email-preview.txt"
-          python -B "${RUNNER_TEMP}/pages-site/scripts/check_site_contract.py"
-      - name: Retain journal snapshot and email preview
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: journal-data-${{ github.run_id }}
-          path: |
-            ${{ runner.temp }}/pages-site/tools/journals/snapshot.json
-            ${{ runner.temp }}/journal-email-preview.txt
-          if-no-files-found: error
-          retention-days: 21
-      - name: Upload artifact
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ runner.temp }}/pages-site
+        run: python scripts/check_site_contract.py
+      - name: Check JavaScript syntax
+        run: node --check assets/js/site.js
 
   deploy:
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request'
     needs: validate
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

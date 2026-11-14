@@ -30,8 +30,7 @@
     const titles = {
       home: { en: "Qinglin Xun | Homepage", zh: "荀清林｜主页" },
       hobbies: { en: "Hobbies | Qinglin Xun", zh: "兴趣爱好｜荀清林" },
-      thoughts: { en: "Thoughts | Qinglin Xun", zh: "思考｜荀清林" },
-      journals: { en: "Journal Explorer | Qinglin Xun", zh: "期刊观察｜荀清林" }
+      thoughts: { en: "Thoughts | Qinglin Xun", zh: "思考｜荀清林" }
     };
     document.title = titles[page][selected];
 
@@ -229,7 +228,7 @@
   loadCollection("content/hobbies.json?v=" + contentVersion, "hobbiesContent", renderHobby);
   loadCollection("content/thoughts.json?v=" + contentVersion, "thoughtsContent", renderThought);
 
-  if (page !== "journals" && !explicitLanguage && !savedLanguage) {
+  if (!explicitLanguage && !savedLanguage) {
     const controller = new AbortController();
     const timeout = window.setTimeout(function () {
       controller.abort();
