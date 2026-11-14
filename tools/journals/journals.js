@@ -1,4 +1,4 @@
-import { calendar, callStatus, daysLeft, filterJournals, safeLink, sanitizeNotes } from "./journal-model.js?v=1";
+import { daysLeft, filterJournals, groupCallsByCommunity, safeLink, sanitizeNotes } from "./journal-model.js?v=2";
 
 const app = document.querySelector("#journal-app");
 const meta = document.querySelector("#journal-meta");
@@ -22,10 +22,6 @@ const access = () => ({
   hybrid: t("Hybrid", "混合出版"), open: t("Open access", "开放获取"),
   subscription: t("Subscription", "订阅"), unknown: unknown()
 });
-const states = () => ({
-  open: t("Open", "开放"), ongoing: t("Ongoing", "持续征稿"),
-  past: t("Deadline passed", "已过截止日"), closed: t("Closed", "官方关闭"), unknown: unknown()
-});
 const fields = () => [
   ["scope", t("Scope", "研究范围")], ["article_types", t("Article types", "论文类型")],
   ["length", t("Length limits", "篇幅限制")], ["review_model", t("Peer review", "审稿方式")],
@@ -35,8 +31,8 @@ const fields = () => [
   ["official_volume", t("Publisher annual volume", "出版社年发文量")]
 ];
 let journals, stats, calls, sources, byId, callById, allowed, snapshot;
-let notes = Object.create(null), tab = "library", detail = null;
-let filters = { query: "", sort: "grade" }, cfpFilter = { query: "", status: "active" };
+let notes = Object.create(null), tab = "tracker", detail = null;
+let filters = { query: "", sort: "grade" };
 const selected = new Set();
 let statusText = "";
 let storageWorks = true;
@@ -199,71 +195,31 @@ function library() {
   draw();
   return wrap;
 }
-function cfpState(item) {
-  const source = sources[item.id];
-  if (!item.cfp_url && !source) return t("Not connected", "尚未接入");
-  if (source?.status === "unsupported" || !source) return t("Official link only", "尚未接入（提供官网）");
-  if (source.status === "error") return source.checked_at ? t("Refresh failed; saved data", "更新失败，保留旧数据") : t("Fetch failed; awaiting verification", "抓取失败，待核实");
-  if (staleAfter(source.checked_at, 3)) return t("Source has not refreshed recently", "来源近期未更新");
-  const journalCalls = calls.filter(call => call.journal_id === item.id);
-  if (journalCalls.some(call => ["open", "ongoing", "unknown"].includes(callStatus(call, today)))) return t("See calls", "见征稿列表");
-  return t("No active calls found", "暂无开放特刊");
-}
 function tracker() {
-  const results = el("div"), all = t("All", "全部");
-  function draw() {
-    const term = cfpFilter.query.trim().toLowerCase();
-    const filtered = calls.filter(call => {
-      const state = callStatus(call, today);
-      return (!cfpFilter.journal || call.journal_id === cfpFilter.journal) &&
-        (!cfpFilter.status || (cfpFilter.status === "active" ? ["open", "ongoing"].includes(state) :
-          cfpFilter.status === "archive" ? ["closed", "past"].includes(state) : state === cfpFilter.status)) &&
-        (!term || [call.title, byId.get(call.journal_id)?.name, byId.get(call.journal_id)?.abbreviation, ...(call.editors || [])].join(" ").toLowerCase().includes(term));
-    }).sort((a, b) => (a.deadline || "9999").localeCompare(b.deadline || "9999") || a.title.localeCompare(b.title));
-    const dated = filtered.filter(call => callStatus(call, today) === "open" && call.deadline);
-    const rows = filtered.map(call => {
-      const state = callStatus(call, today);
-      const days = daysLeft(call.deadline, today);
-      const history = (call.history || []).filter(event => event.kind !== "new");
-      return [
-        el("div", { class: "journal-name" }, link(call.url, call.title) || call.title,
-          history.length ? el("details", { class: "journal-muted" },
-            el("summary", {}, t("Change history", "变更记录")),
-            el("ul", {}, history.map(event => el("li", {}, event.at.slice(0, 10) + " · " +
-              (event.kind === "deadline" ? (event.from || "—") + " → " + (event.to || "—") : t("Officially closed", "官方关闭")))))) : null),
-        byId.get(call.journal_id)?.abbreviation || call.journal_id,
-        el("div", { class: "journal-numeric" }, call.deadline || "—",
-          el("span", { class: "journal-sub journal-muted" }, state === "open" && days !== null ?
-            (days === 0 ? t("Due today", "今日截止") : t(days + " days left", "剩余 " + days + " 天")) : states()[state])),
-        (call.editors || []).join(", ") || unknown(), call.publication || unknown(),
-        el("div", {}, call.listed === false ? t("No longer in current listing", "当前列表未列出") :
-          call.detail_stale ? t("Detail refresh failed", "详情更新失败") : cfpState(byId.get(call.journal_id)),
-          el("small", { class: "journal-sub journal-muted" }, dateNote(call.checked_at))),
-        el("div", { class: "journal-actions" }, favorite("c:" + call.id), dated.includes(call) ?
-          button(t("Calendar", "日历"), () => download(call.id + ".ics", calendar([call]), "text/calendar")) : null)
-      ];
-    });
-    results.replaceChildren(el("div", { class: "journal-actions journal-result" },
-      el("span", { role: "status", class: "journal-muted" }, t(filtered.length + " calls", filtered.length + " 条征稿")),
-      button(t("Export open deadlines (.ics)", "导出开放截止日（.ics）"), () => download("journal-deadlines.ics", calendar(dated), "text/calendar"), { disabled: !dated.length })),
-      rows.length ? table([t("Special issue", "特刊主题"), t("Journal", "期刊"), t("Deadline", "截止日期"),
-        t("Guest editors", "客座编辑"), t("Expected publication", "预计出版"), t("Source status", "来源状态"), t("Actions", "操作")],
-        rows, t("Special issues", "特刊征稿")) : p(t("No calls match. Check other statuses or source coverage.", "没有符合条件的征稿。可以切换状态或查看来源覆盖。"), "journal-state"));
-  }
-  const coverage = el("details", {},
-    el("summary", {}, t("Source coverage and update status", "来源覆盖与更新状态")),
-    table([t("Journal", "期刊"), t("Status", "状态"), t("Last successful check", "上次成功检查"), t("Official source", "官方来源")],
-      journals.map(item => [item.abbreviation, cfpState(item), sources[item.id]?.checked_at?.slice(0, 10) || "—", link(item.cfp_url || item.url, t("Official site", "官网"))]), t("CFP source coverage", "CFP 来源覆盖")));
-  const section = el("section", {},
-    p(t("Days left use calendar dates in Beijing. Confirm the publisher’s exact time zone.", "剩余天数按北京时间的日历日期计算，准确截止时刻和时区请查官方页面。"), "journal-muted"),
-    el("div", { class: "journal-filters" },
-      search(t("Search calls or guest editors", "搜索征稿主题或客座编辑"), cfpFilter.query, value => { cfpFilter.query = value; draw(); }),
-      select(t("Journal", "期刊"), { "": all, ...Object.fromEntries(journals.map(item => [item.id, item.abbreviation])) }, cfpFilter.journal, value => { cfpFilter.journal = value; draw(); }),
-      select(t("Status", "状态"), { active: t("Open and ongoing", "开放与持续征稿"), archive: t("Past and closed", "已过期与关闭"), unknown: unknown(), "": all },
-        cfpFilter.status, value => { cfpFilter.status = value; draw(); })),
-    results, coverage);
-  draw();
-  return section;
+  const labels = {
+    comsoc: t("IEEE Communications Society (ComSoc)", "IEEE 通信学会（ComSoc）"),
+    computer: t("IEEE Computer Society", "IEEE 计算机学会"),
+    other: t("Other societies", "其他学会")
+  };
+  const groups = groupCallsByCommunity(journals, calls, today);
+  return el("section", { class: "cfp-directory", "aria-label": t("Special issues by society", "按学会浏览特刊") },
+    groups.map(group => el("section", { class: "cfp-community" },
+      el("h2", {}, labels[group.id]),
+      group.journals.map(({ journal, calls: entries }) => {
+        const source = sources[journal.id];
+        const label = journal.name + " (" + journal.abbreviation + ")";
+        return el("section", { class: "cfp-journal" },
+          el("h3", {}, link(journal.cfp_url || journal.url, label) || label),
+          source?.status === "error" ?
+            p(t("Last refresh failed. Check the official page.", "最近一次更新失败，请查阅官方页面。"), "journal-muted") : null,
+          entries.length ? table([t("Topic", "特刊主题"), t("Submission deadline", "投稿截止日期"), t("Guest editors", "客座编辑")],
+            entries.map(call => [link(call.url, call.title) || call.title,
+              call.deadline ? el("time", { datetime: call.deadline, class: "journal-numeric" }, call.deadline) :
+                t("Ongoing", "持续征稿"),
+              (call.editors || []).join(", ") || unknown()]), label) :
+            p(source?.status === "ok" ? t("No current call found in the snapshot.", "当前快照未发现有效征稿。") :
+              t("See the official CFP page for current calls.", "征稿信息请查阅官方 CFP。"), "journal-muted"));
+      }))));
 }
 function comparison() {
   const items = [...selected].map(id => byId.get(id)).filter(Boolean);

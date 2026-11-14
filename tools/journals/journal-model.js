@@ -19,6 +19,34 @@ export function callStatus(call, today) {
   return days === null ? "unknown" : days < 0 ? "past" : "open";
 }
 
+const communities = [
+  ["comsoc", ["commag", "ieee-network", "wcm", "jsac", "tccn", "tgcn", "tnse", "tnsm", "iotj"]],
+  ["computer", ["tdsc"]],
+  ["other", ["tvt", "jstsp"]]
+];
+
+export function groupCallsByCommunity(journals, calls, today) {
+  const active = new Map();
+  for (const call of calls) {
+    if (!["open", "ongoing"].includes(callStatus(call, today))) continue;
+    if (!active.has(call.journal_id)) active.set(call.journal_id, []);
+    active.get(call.journal_id).push(call);
+  }
+  const byId = new Map(journals.map(item => [item.id, item]));
+  const assigned = new Set(communities.flatMap(([, ids]) => ids));
+  return communities.map(([id, ids]) => {
+    const titles = ids.map(key => byId.get(key)).filter(Boolean);
+    if (id === "other") {
+      titles.push(...journals.filter(item => !assigned.has(item.id) && (item.cfp_url || active.has(item.id)))
+        .sort((a, b) => a.name.localeCompare(b.name, "en")));
+    }
+    return { id, journals: titles.map(journal => ({
+      journal,
+      calls: (active.get(journal.id) || []).sort((a, b) => a.title.localeCompare(b.title, "en"))
+    })) };
+  }).filter(group => group.journals.length);
+}
+
 export function filterJournals(entries, filters, stats, year) {
   const terms = (filters.query || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
   const count = item => stats[item.id]?.counts?.[year] ?? -1;
@@ -42,32 +70,4 @@ export function sanitizeNotes(value, allowed) {
     if (allowed.has(key) && typeof note === "string") items[key] = note.slice(0, 4000);
   }
   return items;
-}
-
-const icsEscape = value => String(value).replace(/\\/g, "\\\\").replace(/\r\n|[\r\n]/g, "\\n").replace(/[;,]/g, "\\$&");
-function foldLine(line) {
-  const encoder = new TextEncoder();
-  let current = "", size = 0;
-  const parts = [];
-  for (const char of line) {
-    const length = encoder.encode(char).length;
-    if (size + length > 75) { parts.push(current); current = " "; size = 1; }
-    current += char;
-    size += length;
-  }
-  return [...parts, current].join("\r\n");
-}
-export function calendar(calls, now = new Date()) {
-  const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Qinglin Xun//Journal Explorer//EN", "CALSCALE:GREGORIAN"];
-  for (const call of calls) {
-    if (!/^\d{4}-\d\d-\d\d$/.test(call.deadline || "") || !/^[a-z0-9-]+$/.test(call.id)) continue;
-    lines.push("BEGIN:VEVENT", "UID:" + call.id + "@ql-xun.github.io", "DTSTAMP:" + stamp,
-      "DTSTART;VALUE=DATE:" + call.deadline.replace(/-/g, ""),
-      "SUMMARY:" + icsEscape(call.title),
-      "DESCRIPTION:" + icsEscape("Submission deadline. Confirm time and time zone on the official CFP."),
-      ...(safeLink(call.url) ? ["URL:" + safeLink(call.url)] : []), "END:VEVENT");
-  }
-  lines.push("END:VCALENDAR");
-  return lines.map(foldLine).join("\r\n") + "\r\n";
 }

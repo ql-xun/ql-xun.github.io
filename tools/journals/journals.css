@@ -56,6 +56,24 @@
 .journal-bar { height: 9px; background: var(--journal-tint); border-radius: 2px; overflow: hidden; }
 .journal-bar span { display: block; height: 100%; background: var(--journal-blue); }
 .journal-bar--partial span { background: #8baedc; }
+.journal-shell .cfp-community { margin: 22px 0 30px; }
+.journal-shell .cfp-community > h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  padding: 7px 10px;
+  border-left: 3px solid var(--journal-blue);
+  background: var(--journal-tint);
+}
+.cfp-journal { margin: 0 0 18px; }
+.cfp-journal h3 { font-size: 15px; margin: 0 0 6px; }
+.cfp-journal h3 a { color: inherit; text-decoration: none; }
+.cfp-journal h3 a:hover, .cfp-journal h3 a:focus-visible { color: var(--journal-blue); text-decoration: underline; }
+.cfp-journal p { margin: 5px 0; }
+.cfp-journal .journal-table { min-width: 560px; }
+.cfp-journal .journal-table tr > :first-child { width: 47%; }
+.cfp-journal .journal-table tr > :nth-child(2) { width: 160px; }
+.cfp-journal .journal-table :is(th, td) { padding-block: 7px; }
 @media (max-width: 560px) {
   .journal-shell { width: calc(100% - 28px); padding-top: 24px; }
   .journal-filter-search { flex-basis: 100%; }

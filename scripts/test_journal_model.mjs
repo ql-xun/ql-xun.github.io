@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calendar, callStatus, daysLeft, filterJournals, safeLink, sanitizeNotes } from "../tools/journals/journal-model.js";
+import { callStatus, daysLeft, filterJournals, groupCallsByCommunity, safeLink, sanitizeNotes } from "../tools/journals/journal-model.js";
 
 const journals = [
   { id: "a", abbreviation: "TCOM", name: "Transactions on Communications", category: "communications", publisher: "IEEE", access: "hybrid", tags: ["MIMO"], ccf: { grade: "B" } },
@@ -31,11 +31,21 @@ test("notes allow only known IDs without interpreting text as HTML", () => {
   assert.equal(safeLink("javascript:alert(1)"), null);
 });
 
-test("calendar uses an all-day date and escapes content", () => {
-  const text = calendar([{ id: "a-123", deadline: "2026-11-21", title: "测试;Call\nNext, item", url: "https://example.org/cfp" }],
-    new Date("2026-11-14T00:00:00Z"));
-  assert.match(text, /DTSTART;VALUE=DATE:20261121/);
-  assert.ok(text.includes("SUMMARY:测试\\;Call\\nNext\\, item"));
-  assert.ok(text.endsWith("\r\n"));
-  assert.ok(text.split("\r\n").every(line => Buffer.byteLength(line) <= 75));
+test("CFPs stay grouped by society and journal, with topics sorted by title", () => {
+  const titles = ["tdsc", "tvt", "jsac", "commag", "new"].map(id => ({ id, name: id }));
+  const input = [
+    { journal_id: "tdsc", title: "Earlier deadline", status: "dated", deadline: "2026-11-15" },
+    { journal_id: "commag", title: "Z topic", status: "dated", deadline: "2026-11-16" },
+    { journal_id: "commag", title: "A topic", status: "dated", deadline: "2026-12-20" },
+    { journal_id: "commag", title: "Closed", status: "closed", deadline: "2026-12-20" },
+    { journal_id: "commag", title: "Past", status: "dated", deadline: "2026-11-01" },
+    { journal_id: "commag", title: "Missing from list", status: "dated", deadline: "2026-12-20", listed: false },
+    { journal_id: "new", title: "New source", status: "ongoing" }
+  ];
+  const groups = groupCallsByCommunity(titles, input, "2026-11-14");
+  assert.deepEqual(groups.map(group => group.id), ["comsoc", "computer", "other"]);
+  assert.deepEqual(groups[0].journals.map(item => item.journal.id), ["commag", "jsac"]);
+  assert.deepEqual(groups[0].journals[0].calls.map(item => item.title), ["A topic", "Z topic"]);
+  assert.deepEqual(groups[0].journals[1].calls, []);
+  assert.deepEqual(groups[2].journals.map(item => item.journal.id), ["tvt", "new"]);
 });
