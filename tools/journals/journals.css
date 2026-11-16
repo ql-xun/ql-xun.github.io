@@ -60,7 +60,7 @@
 .journal-trend {
   position: fixed;
   z-index: 110;
-  width: min(340px, calc(100vw - 20px));
+  width: min(340px, calc(100% - 16px));
   padding: 10px 12px 9px;
   color: var(--ink);
   background: #fff;
