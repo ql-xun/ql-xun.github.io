@@ -25,14 +25,66 @@ const communities = [
   ["other", ["tsp", "jstsp", "tvt", "scis"]]
 ];
 const otherSocieties = { tsp: "sps", jstsp: "sps", tvt: "vts", scis: "scp" };
+const libraryComSoc = new Set([...communities[0][1], "tcom", "twc", "comst", "cl", "wcl", "oj-coms"]);
+const libraryComputer = new Set([...communities[1][1], "tmc", "tpds", "tc", "tcc"]);
+export const libraryCommunities = ["comsoc", "computer", "acm", "other"];
 
 export function communityId(value) {
   return communities.some(([id]) => id === value) ? value : "comsoc";
 }
 
-export function currentEditor(journal, today) {
-  const editor = journal.editor_in_chief;
+export function journalRoute(search) {
+  const query = new URLSearchParams(search);
+  if (query.get("view") === "library") {
+    const society = query.get("librarySociety");
+    return { view: "library", society: libraryCommunities.includes(society) ? society : "comsoc" };
+  }
+  return { view: "tracker", society: communityId(query.get("society")) };
+}
+
+export function journalGrade(journal) {
+  const grade = journal.ccf?.grade;
+  return ["A", "B", "C"].includes(grade) ? grade : null;
+}
+
+export function groupLibrary(journals) {
+  const groups = new Map(libraryCommunities.map(id => [id, []]));
+  for (const journal of journals) {
+    const id = libraryComSoc.has(journal.id) ? "comsoc" : libraryComputer.has(journal.id) ? "computer" :
+      journal.publisher === "ACM" ? "acm" : "other";
+    groups.get(id).push(journal);
+  }
+  return [...groups].map(([id, entries]) => ({
+    id,
+    journals: entries.sort((a, b) => (journalGrade(a) || "Z").localeCompare(journalGrade(b) || "Z", "en") ||
+      a.abbreviation.localeCompare(b.abbreviation, "en"))
+  }));
+}
+
+function editorAt(editor, today) {
   return editor?.next?.since && editor.next.since <= today ? editor.next : editor;
+}
+
+export function currentEditor(journal, today) {
+  return editorAt(journal.editor_in_chief, today);
+}
+
+export function currentEditors(journal, today) {
+  const editor = journal.editor_in_chief;
+  return editor ? [currentEditor(journal, today), ...(editor.co_editors || []).map(member => editorAt(member, today))] : [];
+}
+
+export function annualCount(data, year) {
+  const count = data?.counts?.[year];
+  return Number.isSafeInteger(count) && count >= 0 ? count : null;
+}
+
+export function annualSeries(journal, data, currentYear) {
+  return Array.from({ length: 6 }, (_, i) => {
+    const year = currentYear - 5 + i;
+    return { year, count: annualCount(data, year), partial: year === currentYear,
+      predecessor: Boolean(journal.previous_issns?.some(entry => year <= entry.through)) };
+  }).filter(row => !row.partial || row.count !== null);
 }
 
 export function groupCallsByCommunity(journals, calls, today) {
@@ -56,29 +108,4 @@ export function groupCallsByCommunity(journals, calls, today) {
       calls: (active.get(journal.id) || []).sort((a, b) => a.title.localeCompare(b.title, "en"))
     })) };
   }).filter(group => group.journals.length);
-}
-
-export function filterJournals(entries, filters, stats, year) {
-  const terms = (filters.query || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const count = item => stats[item.id]?.counts?.[year] ?? -1;
-  const grade = item => ["A", "B", "C", "not-listed", undefined].indexOf(item.ccf?.grade);
-  return entries.filter(item =>
-    (!filters.category || filters.category === item.category) &&
-    (!filters.publisher || filters.publisher === item.publisher) &&
-    (!filters.access || filters.access === (item.access || "unknown")) &&
-    (!filters.grade || filters.grade === (item.ccf?.grade || "unknown")) &&
-    terms.every(term => [item.abbreviation, item.name, item.publisher, item.issn, ...(item.tags || []), ...(item.aliases || [])].join(" ").toLowerCase().includes(term))
-  ).sort((a, b) => (filters.sort === "count" ? count(b) - count(a)
-    : filters.sort === "grade" ? grade(a) - grade(b) : 0) || a.abbreviation.localeCompare(b.abbreviation));
-}
-
-export function sanitizeNotes(value, allowed) {
-  if (!value || value.version !== 1 || !value.items || typeof value.items !== "object" || Array.isArray(value.items)) {
-    throw new Error("Invalid favorites export");
-  }
-  const items = Object.create(null);
-  for (const [key, note] of Object.entries(value.items)) {
-    if (allowed.has(key) && typeof note === "string") items[key] = note.slice(0, 4000);
-  }
-  return items;
 }

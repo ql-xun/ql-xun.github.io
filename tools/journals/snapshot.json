@@ -11823,9 +11823,17 @@
           "value": "Transactions papers, comments, and corrections."
         },
         "length": {
-          "checked_at": "2026-11-14",
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤13 pages (double column)",
+            "zh": "≤13 页（双栏）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column)",
+            "zh": "≤16 页（双栏）"
+          },
           "url": "https://www.comsoc.org/publications/journals/ieee-tcom/policies-and-guidelines",
-          "value": "13 double-column pages initially; 16 for revised papers."
+          "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column)."
         },
         "overlength": {
           "checked_at": "2026-11-14",
@@ -11838,9 +11846,21 @@
           "value": "Physical-layer communication theory and experiments across wireless, wired, optical, and quantum systems."
         }
       },
+      "editor_in_chief": {
+        "name": "George Karagiannidis",
+        "since": "2024-01",
+        "since_source": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?arnumber=10734395",
+        "source": "https://www.comsoc.org/publications/journals/ieee-tcom/ieee-transactions-communications-editorial-board"
+      },
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-tcom/policies-and-guidelines",
       "id": "tcom",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8.4,
+        "year": 2025
+      },
       "issn": "0090-6778",
       "issn_l": "0090-6778",
       "name": "IEEE Transactions on Communications",
@@ -11882,9 +11902,17 @@
           "value": "Original Transactions papers, comments, and corrections."
         },
         "length": {
-          "checked_at": "2026-11-14",
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤13 pages (double column)",
+            "zh": "≤13 页（双栏）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column)",
+            "zh": "≤16 页（双栏）"
+          },
           "url": "https://www.comsoc.org/publications/journals/ieee-twc/policies-guidelines",
-          "value": "13 double-column pages initially; 16 for revised papers."
+          "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column)."
         },
         "overlength": {
           "checked_at": "2026-11-14",
@@ -11897,9 +11925,21 @@
           "value": "Theory and applications of wireless communication systems and networks."
         }
       },
+      "editor_in_chief": {
+        "name": "Vincent Wong",
+        "since": "2023-01",
+        "since_source": "https://people.ece.ubc.ca/~vincentw/Homepage/Activities.html",
+        "source": "https://www.comsoc.org/publications/journals/ieee-twc/editorial-board"
+      },
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-twc/policies-guidelines",
       "id": "twc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 10.3,
+        "year": 2025
+      },
       "issn": "1536-1276",
       "issn_l": "1536-1276",
       "name": "IEEE Transactions on Wireless Communications",
@@ -11935,9 +11975,17 @@
           "value": "Papers submitted in response to a specific call for papers."
         },
         "length": {
-          "checked_at": "2026-11-14",
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤13 pages (double column)",
+            "zh": "≤13 页（双栏）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column)",
+            "zh": "≤16 页（双栏）"
+          },
           "url": "https://www.comsoc.org/publications/journals/ieee-jsac/policies-guidelines",
-          "value": "13 double-column pages initially; 16 for revised papers. Check the individual call for issue-specific rules."
+          "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column)."
         },
         "scope": {
           "checked_at": "2026-11-14",
@@ -11954,6 +12002,12 @@
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-jsac/policies-guidelines",
       "id": "jsac",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 16.8,
+        "year": 2025
+      },
       "issn": "0733-8716",
       "issn_l": "0733-8716",
       "name": "IEEE Journal on Selected Areas in Communications",
@@ -11989,15 +12043,40 @@
           "url": "https://www.comsoc.org/publications/journals/ieee-communications-surveys-tutorials",
           "value": "Surveys and tutorials for communication and networking topics."
         },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤30 pages (double column; survey/tutorial)",
+            "zh": "≤30 页（双栏，综述／教程）"
+          },
+          "revised": {
+            "en": "<40 pages (double column; survey/tutorial)",
+            "zh": "<40 页（双栏，综述／教程）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-comst/policies-guidelines",
+          "value": "Initial: ≤30 pages (double column; survey/tutorial); revised: <40 pages (double column; survey/tutorial)."
+        },
         "overlength": {
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/journals/ieee-comst/policies-guidelines",
           "value": "USD 220 per printed page beyond 30, up to the 38-page limit."
         }
       },
+      "editor_in_chief": {
+        "name": "Trung Q. Duong",
+        "since": "2025",
+        "since_source": "https://cerc-ngct.ca/",
+        "source": "https://www.comsoc.org/publications/journals/ieee-comst/ieee-communications-surveys-tutorials-editorial-board"
+      },
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-comst/policies-guidelines",
       "id": "comst",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 50.6,
+        "year": 2025
+      },
       "issn": "1553-877X",
       "issn_l": "1553-877X",
       "name": "IEEE Communications Surveys & Tutorials",
@@ -12034,15 +12113,36 @@
           "url": "https://www.comsoc.org/publications/journals/ieee-communications-letters",
           "value": "Short original communications papers."
         },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤5 pages (double column; letter)",
+            "zh": "≤5 页（双栏，短文）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-comml/policies-guidelines",
+          "value": "Initial: ≤5 pages (double column; letter)."
+        },
         "review_model": {
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/journals/ieee-communications-letters",
           "value": "Regular and double-anonymous review routes are available."
         }
       },
+      "editor_in_chief": {
+        "name": "Daniel Benevides da Costa",
+        "since": "2023-07",
+        "since_source": "https://sites.google.com/site/danielbenevides81/professionaleditorialchairing-activities",
+        "source": "https://www.comsoc.org/publications/journals/ieee-comml/ieee-communications-letters-editorial-board"
+      },
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-comml/policies-guidelines",
       "id": "cl",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 4.5,
+        "year": 2025
+      },
       "issn": "1089-7798",
       "issn_l": "1089-7798",
       "name": "IEEE Communications Letters",
@@ -12082,14 +12182,30 @@
           "value": "Original results in letter format."
         },
         "length": {
-          "checked_at": "2026-11-14",
-          "url": "https://www.comsoc.org/publications/journals",
-          "value": "4-page limit."
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤5 pages (double column; letter)",
+            "zh": "≤5 页（双栏，短文）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-wcl/policies-guidelines",
+          "value": "Initial: ≤5 pages (double column; letter)."
         }
+      },
+      "editor_in_chief": {
+        "name": "Ai-Chun Pang",
+        "since": "2024",
+        "since_source": "https://www.csie.ntu.edu.tw/~acpang/AcademicServices.html",
+        "source": "https://www.comsoc.org/publications/journals/ieee-wcl/ieee-wireless-communications-letters-editorial-board"
       },
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-wcl/policies-guidelines",
       "id": "wcl",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 5.1,
+        "year": 2025
+      },
       "issn": "2162-2337",
       "issn_l": "2162-2337",
       "name": "IEEE Wireless Communications Letters",
@@ -12122,9 +12238,17 @@
           "value": "Regular papers, surveys, and tutorials."
         },
         "length": {
-          "checked_at": "2026-11-14",
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤13 pages (double column)",
+            "zh": "≤13 页（双栏）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column)",
+            "zh": "≤16 页（双栏）"
+          },
           "url": "https://www.comsoc.org/publications/journals/ieee-tccn/policies-guidelines",
-          "value": "Initial limit: 13 double-column pages for regular papers; 20 for surveys and tutorials."
+          "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column)."
         }
       },
       "editor_in_chief": {
@@ -12136,6 +12260,12 @@
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-tccn/policies-guidelines",
       "id": "tccn",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8,
+        "year": 2025
+      },
       "issn": "2332-7731",
       "issn_l": "2332-7731",
       "name": "IEEE Transactions on Cognitive Communications and Networking",
@@ -12168,6 +12298,19 @@
           "value": "USD 2,800 for optional open access.",
           "year": 2026
         },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤30 pages (single column, double-spaced)",
+            "zh": "≤30 页（单栏，双倍行距）"
+          },
+          "revised": {
+            "en": "≤32 pages (single column, double-spaced)",
+            "zh": "≤32 页（单栏，双倍行距）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-tgcn/policies-guidelines",
+          "value": "Initial: ≤30 pages (single column, double-spaced); revised: ≤32 pages (single column, double-spaced)."
+        },
         "scope": {
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/journals/ieee-transactions-green-communications-and-networking",
@@ -12183,6 +12326,12 @@
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-tgcn/policies-guidelines",
       "id": "tgcn",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 6.9,
+        "year": 2025
+      },
       "issn": "2473-2400",
       "issn_l": "2473-2400",
       "name": "IEEE Transactions on Green Communications and Networking",
@@ -12214,6 +12363,19 @@
           "url": "https://vtsociety.org/files/ieeevts/2024-12/vts24-annual-report-final%20%282%29.pdf",
           "value": "47.9 days from submission to first decision, as reported in the 2024 VTS annual report. Historical figure.",
           "year": 2024
+        },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤14 pages (double column; regular paper)",
+            "zh": "≤14 页（双栏，常规稿）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column; regular paper)",
+            "zh": "≤16 页（双栏，常规稿）"
+          },
+          "url": "https://vtsociety.org/publication/ieee-transactions-vehicular-technology/guidelines-authors/instructions",
+          "value": "Initial: ≤14 pages (double column; regular paper); revised: ≤16 pages (double column; regular paper)."
         }
       },
       "editor_in_chief": {
@@ -12225,6 +12387,12 @@
       "guidelines": "https://vtsociety.org/publication/ieee-transactions-vehicular-technology/guidelines-authors/instructions",
       "id": "tvt",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 7.5,
+        "year": 2025
+      },
       "issn": "0018-9545",
       "issn_l": "0018-9545",
       "name": "IEEE Transactions on Vehicular Technology",
@@ -12265,11 +12433,32 @@
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/journals/ieee-ojcoms",
           "value": "Original theoretical and practical work, surveys, and tutorials."
+        },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤25 pages (original manuscript category)",
+            "zh": "≤25 页（原始稿类别）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-ojcoms/policies-guidelines",
+          "value": "Initial: ≤25 pages (original manuscript category)."
         }
+      },
+      "editor_in_chief": {
+        "name": "Sinem Coleri",
+        "since": "2024-01-01",
+        "since_source": "https://www.linkedin.com/posts/sinem-coleri-7051542_i-am-delighted-to-announce-my-appointment-activity-7148954079312990228-8870",
+        "source": "https://www.comsoc.org/publications/journals/ieee-ojcoms/ieee-open-journal-communications-society-editorial-board"
       },
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-ojcoms/policies-guidelines",
       "id": "oj-coms",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 6.2,
+        "year": 2025
+      },
       "issn": "2644-125X",
       "issn_l": "2644-125X",
       "name": "IEEE Open Journal of the Communications Society",
@@ -12307,6 +12496,15 @@
           "url": "https://www.comsoc.org/publications/journals/ieee-tnet/policies-guidelines",
           "value": "USD 2,800 for optional open access.",
           "year": 2026
+        },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "Typically ≤16 pages (double column)",
+            "zh": "通常 ≤16 页（双栏）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-tnet/policies-guidelines",
+          "value": "Initial: Typically ≤16 pages (double column)."
         },
         "overlength": {
           "checked_at": "2026-11-14",
@@ -12361,9 +12559,32 @@
         "version": "2026 (7th edition)"
       },
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        }
+      },
+      "editor_in_chief": {
+        "name": "Dimitrios Koutsonikolas",
+        "since": "2026-01-01",
+        "since_source": "https://www.computer.org/press-room/2026-eics-announced",
+        "source": "https://www.computer.org/csdl/journal/tm"
+      },
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "tmc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8.8,
+        "year": 2025
+      },
       "issn": "1536-1233",
       "issn_l": "1536-1233",
       "name": "IEEE Transactions on Mobile Computing",
@@ -12402,8 +12623,15 @@
         "since_source": "https://www.cloudcom2025.org/keynote-speakers",
         "source": "https://www.comsoc.org/publications/journals/ieee-tnsm/ieee-transactions-network-and-service-management-editorial-board"
       },
+      "guidelines": "https://www.comsoc.org/publications/journals/ieee-tnsm/policies-guidelines",
       "id": "tnsm",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 5.7,
+        "year": 2025
+      },
       "issn": "1932-4537",
       "issn_l": "1932-4537",
       "name": "IEEE Transactions on Network and Service Management",
@@ -12431,6 +12659,15 @@
       "cfp_url": "https://www.comsoc.org/publications/journals/ieee-tnse/cfp",
       "checked_at": "2026-11-14",
       "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 pages (double column)",
+            "zh": "≤18 页（双栏）"
+          },
+          "url": "https://www.comsoc.org/publications/journals/ieee-tnse/policies-guidelines",
+          "value": "Initial: ≤18 pages (double column)."
+        },
         "overlength": {
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/journals/ieee-tnse/policies-guidelines",
@@ -12444,6 +12681,12 @@
       "guidelines": "https://www.comsoc.org/publications/journals/ieee-tnse/policies-guidelines",
       "id": "tnse",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 7.3,
+        "year": 2025
+      },
       "issn": "2327-4697",
       "issn_l": "2327-4697",
       "name": "IEEE Transactions on Network Science and Engineering",
@@ -12490,6 +12733,12 @@
       "guidelines": "https://ieee-iotj.org/guidelines-for-authors/",
       "id": "iotj",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8.7,
+        "year": 2025
+      },
       "issn": "2327-4662",
       "issn_l": "2327-4662",
       "name": "IEEE Internet of Things Journal",
@@ -12534,9 +12783,28 @@
           "value": "Computer networking architectures, protocols above the physical layer, services, and applications."
         }
       },
+      "editor_in_chief": {
+        "co_editors": [
+          {
+            "name": "Antonio Iera",
+            "since": "2020",
+            "since_source": "https://www.sciencedirect.com/science/article/pii/S0167739X24005892",
+            "source": "https://www.sciencedirect.com/science/article/pii/S0167739X24005892"
+          }
+        ],
+        "name": "Tommaso Melodia",
+        "since": "2019",
+        "since_source": "https://wineslab.github.io/team/tommaso-melodia",
+        "source": "https://wineslab.github.io/team/tommaso-melodia"
+      },
       "guidelines": "https://www.sciencedirect.com/journal/computer-networks/publish/guide-for-authors",
       "id": "computer-networks",
       "identity_url": "https://shop.elsevier.com/journals/computer-networks/1389-1286",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://shop.elsevier.com/journals/computer-networks/1389-1286",
+        "value": 4.7
+      },
       "issn": "1389-1286",
       "issn_l": "1389-1286",
       "name": "Computer Networks",
@@ -12580,9 +12848,20 @@
           "value": "Computer communications and Internet architectures, protocol design, measurement, services, and applications above the physical layer."
         }
       },
+      "editor_in_chief": {
+        "name": "Damla Turgut",
+        "since": "2024-01",
+        "since_source": "https://tcgcc.committees.comsoc.org/wp-content/uploads/sites/106/2024/12/TCGCC_2024Nov_final_v3.pdf",
+        "source": "https://www.cs.ucf.edu/~turgut/Home/Home.html"
+      },
       "guidelines": "https://www.sciencedirect.com/journal/computer-communications/publish/guide-for-authors",
       "id": "computer-communications",
       "identity_url": "https://shop.elsevier.com/journals/computer-communications/0140-3664",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://shop.elsevier.com/journals/computer-communications/0140-3664",
+        "value": 4.2
+      },
       "issn": "0140-3664",
       "issn_l": "0140-3664",
       "name": "Computer Communications",
@@ -12616,6 +12895,19 @@
           "url": "https://signalprocessingsociety.org/publications-resources/information-authors",
           "value": "Regular papers and comment correspondences."
         },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤13 pages (double column)",
+            "zh": "≤13 页（双栏）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column)",
+            "zh": "≤16 页（双栏）"
+          },
+          "url": "https://signalprocessingsociety.org/publications-resources/information-authors",
+          "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column)."
+        },
         "scope": {
           "checked_at": "2026-11-14",
           "url": "https://signalprocessingsociety.org/publications-resources/ieee-transactions-signal-processing",
@@ -12637,6 +12929,12 @@
       "guidelines": "https://signalprocessingsociety.org/publications-resources/information-authors",
       "id": "tsp",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 5.5,
+        "year": 2025
+      },
       "issn": "1053-587X",
       "issn_l": "1053-587X",
       "name": "IEEE Transactions on Signal Processing",
@@ -12671,9 +12969,17 @@
           "value": "Papers responding to specific calls within signal processing."
         },
         "length": {
-          "checked_at": "2026-11-14",
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤13 pages (double column; special issue)",
+            "zh": "≤13 页（双栏，特刊）"
+          },
+          "revised": {
+            "en": "≤16 pages (double column; special issue)",
+            "zh": "≤16 页（双栏，特刊）"
+          },
           "url": "https://signalprocessingsociety.org/publications-resources/ieee-journal-selected-topics-signal-processing/information-authors-jstsp",
-          "value": "Final regular paper limit is 16 double-column pages unless the editor-in-chief grants an exception."
+          "value": "Initial: ≤13 pages (double column; special issue); revised: ≤16 pages (double column; special issue)."
         }
       },
       "editor_in_chief": {
@@ -12685,6 +12991,12 @@
       "guidelines": "https://signalprocessingsociety.org/publications-resources/ieee-journal-selected-topics-signal-processing/information-authors-jstsp",
       "id": "jstsp",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8.5,
+        "year": 2025
+      },
       "issn": "1932-4553",
       "issn_l": "1932-4553",
       "name": "IEEE Journal of Selected Topics in Signal Processing",
@@ -12710,9 +13022,32 @@
         "version": "2026 (7th edition)"
       },
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        }
+      },
+      "editor_in_chief": {
+        "name": "Xian-He Sun",
+        "since": "2023-01-01",
+        "since_source": "https://www.computer.org/press-room/editors-in-chief-confirmed-for-ieee-computer-society-publications",
+        "source": "https://www.computer.org/csdl/journal/td"
+      },
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "tpds",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 5.9,
+        "year": 2025
+      },
       "issn": "1045-9219",
       "issn_l": "1045-9219",
       "name": "IEEE Transactions on Parallel and Distributed Systems",
@@ -12739,15 +13074,36 @@
       },
       "checked_at": "2026-11-14",
       "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        },
         "scope": {
           "checked_at": "2026-11-14",
           "url": "https://www.computer.org/digital-library/journals/tc/call-for-papers-general-submissions",
           "value": "Computer architecture, accelerators, operating systems, and embedded computing."
         }
       },
+      "editor_in_chief": {
+        "name": "Avinash Karanth",
+        "since": "2024-01-01",
+        "since_source": "https://www.computer.org/press-room/editors-in-chief-confirmed",
+        "source": "https://www.computer.org/csdl/journal/tc"
+      },
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "tc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 4.9,
+        "year": 2025
+      },
       "issn": "0018-9340",
       "issn_l": "0018-9340",
       "name": "IEEE Transactions on Computers",
@@ -12773,9 +13129,32 @@
         "version": "2026 (7th edition)"
       },
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        }
+      },
+      "editor_in_chief": {
+        "name": "Song Guo",
+        "since": "2025",
+        "since_source": "https://cse.hkust.edu.hk/~songguo/Service.html",
+        "source": "https://www.computer.org/csdl/journal/cc"
+      },
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "tcc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 5.3,
+        "year": 2025
+      },
       "issn": "2168-7161",
       "issn_l": "2168-7161",
       "name": "IEEE Transactions on Cloud Computing",
@@ -12801,6 +13180,17 @@
       },
       "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        }
+      },
       "editor_in_chief": {
         "name": "Dan (Linda) Lin",
         "since": "2026-01-01",
@@ -12810,6 +13200,12 @@
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "tdsc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 6.8,
+        "year": 2025
+      },
       "issn": "1545-5971",
       "issn_l": "1545-5971",
       "name": "IEEE Transactions on Dependable and Secure Computing",
@@ -12833,6 +13229,17 @@
       "category": "systems",
       "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        }
+      },
       "editor_in_chief": {
         "name": "Jesse Hoey",
         "since": "2023-01-01",
@@ -12842,6 +13249,12 @@
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "taffc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 11.3,
+        "year": 2025
+      },
       "issn": "1949-3045",
       "issn_l": "1949-3045",
       "name": "IEEE Transactions on Affective Computing",
@@ -12864,6 +13277,17 @@
       "category": "systems",
       "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤18 formatted pages (CS regular-paper policy)",
+            "zh": "≤18 排版页（学会常规稿通则）"
+          },
+          "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+          "value": "Initial: ≤18 formatted pages (CS regular-paper policy)."
+        }
+      },
       "editor_in_chief": {
         "name": "Patrick Schaumont",
         "since": "2026-01-01",
@@ -12873,6 +13297,12 @@
       "guidelines": "https://www.computer.org/publications/author-resources",
       "id": "tetc",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 4.8,
+        "year": 2025
+      },
       "issn": "2168-6750",
       "issn_l": "2168-6750",
       "name": "IEEE Transactions on Emerging Topics in Computing",
@@ -12897,6 +13327,20 @@
         "version": "2026 (7th edition)"
       },
       "checked_at": "2026-11-14",
+      "editor_in_chief": {
+        "co_editors": [
+          {
+            "name": "Robbert van Renesse",
+            "since": "2024-05-01",
+            "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf",
+            "source": "https://doi.org/10.1145/3696656"
+          }
+        ],
+        "name": "Sam H. Noh",
+        "since": "2024-05-01",
+        "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf",
+        "source": "https://doi.org/10.1145/3696656"
+      },
       "guidelines": "https://dl.acm.org/journal/tocs/author-guidelines",
       "id": "tocs",
       "identity_url": "https://portalparts.acm.org/hippo/latex_templates/acmart.pdf",
@@ -12924,9 +13368,21 @@
         "version": "2026 (7th edition)"
       },
       "checked_at": "2026-11-14",
+      "editor_in_chief": {
+        "name": "Wen Hu",
+        "since": "2024-02-01",
+        "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf",
+        "source": "https://research.unsw.edu.au/people/professor-wen-hu"
+      },
       "guidelines": "https://dl.acm.org/journal/tosn/author-guidelines",
       "id": "tosn",
       "identity_url": "https://portalparts.acm.org/hippo/latex_templates/acmart.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://www.acm.org/binaries/content/assets/press-releases/2025/july/news-release_impact_factors_2025_final.pdf",
+        "value": 4.7,
+        "year": 2024
+      },
       "issn": "1550-4859",
       "issn_l": "1550-4859",
       "name": "ACM Transactions on Sensor Networks",
@@ -12951,6 +13407,12 @@
         "version": "2026 (7th edition)"
       },
       "checked_at": "2026-11-14",
+      "editor_in_chief": {
+        "name": "Cristina Silvano",
+        "since": "2026-06",
+        "since_source": "https://www.deib.polimi.it/eng/news/details/1512",
+        "source": "https://www.deib.polimi.it/eng/news/details/1512"
+      },
       "guidelines": "https://dl.acm.org/journal/taco/author-guidelines",
       "id": "taco",
       "identity_url": "https://portalparts.acm.org/hippo/latex_templates/acmart.pdf",
@@ -12997,9 +13459,20 @@
           "value": "Parallel and distributed computing theory, algorithms, design, implementation, and evaluation."
         }
       },
+      "editor_in_chief": {
+        "name": "Ananth Kalyanaraman",
+        "since": "2025",
+        "since_source": "https://eecs.wsu.edu/~ananth/vita.pdf",
+        "source": "https://eecs.wsu.edu/~ananth/"
+      },
       "guidelines": "https://www.sciencedirect.com/journal/journal-of-parallel-and-distributed-computing/publish/guide-for-authors",
       "id": "jpdc",
       "identity_url": "https://shop.elsevier.com/journals/journal-of-parallel-and-distributed-computing/0743-7315",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://shop.elsevier.com/journals/journal-of-parallel-and-distributed-computing/0743-7315",
+        "value": 3.4
+      },
       "issn": "0743-7315",
       "issn_l": "0743-7315",
       "name": "Journal of Parallel and Distributed Computing",
@@ -13027,9 +13500,15 @@
         "since_source": "https://scis.scichina.com/en/2018/010001.pdf",
         "source": "https://scis.scichina.com/download/scis-editorialboard.pdf"
       },
-      "guidelines": "https://scis.scichina.com/download/scis-authors.pdf",
+      "guidelines": "https://scis.scichina.com/download/scis-info-for-authors.pdf",
       "id": "scis",
       "identity_url": "https://link.springer.com/journal/11432",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://link.springer.com/journal/11432",
+        "value": 8.1,
+        "year": 2025
+      },
       "issn": "1674-733X",
       "issn_l": "1869-1919",
       "name": "SCIENCE CHINA Information Sciences",
@@ -13061,6 +13540,15 @@
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine",
           "value": "Tutorial-style articles for a broad communications readership."
+        },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤7 magazine pages and ≤5,500 words",
+            "zh": "≤7 个杂志版面且 ≤5,500 词"
+          },
+          "url": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine/policies-guidelines",
+          "value": "Initial: ≤7 magazine pages and ≤5,500 words."
         }
       },
       "editor_in_chief": {
@@ -13072,6 +13560,12 @@
       "guidelines": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine/policies-guidelines",
       "id": "commag",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8.3,
+        "year": 2025
+      },
       "issn": "0163-6804",
       "issn_l": "0163-6804",
       "name": "IEEE Communications Magazine",
@@ -13098,14 +13592,32 @@
       },
       "cfp_url": "https://www.comsoc.org/publications/magazines/ieee-network/cfp",
       "checked_at": "2026-11-14",
+      "details": {
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤4,500 words (main text)",
+            "zh": "≤4,500 词（正文）"
+          },
+          "url": "https://www.comsoc.org/publications/magazines/ieee-network/policies-guidelines",
+          "value": "Initial: ≤4,500 words (main text)."
+        }
+      },
       "editor_in_chief": {
         "name": "Jiming Chen（陈积明）",
         "since": "2024-07",
         "since_source": "https://m.thepaper.cn/newsDetail_forward_27988060",
         "source": "https://www.comsoc.org/publications/magazines/ieee-network/editorial-board"
       },
+      "guidelines": "https://www.comsoc.org/publications/magazines/ieee-network/policies-guidelines",
       "id": "ieee-network",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 8.8,
+        "year": 2025
+      },
       "issn": "0890-8044",
       "issn_l": "0890-8044",
       "name": "IEEE Network",
@@ -13142,6 +13654,15 @@
           "checked_at": "2026-11-14",
           "url": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/policies-guidelines",
           "value": "Tutorial-style articles on wireless communications."
+        },
+        "length": {
+          "checked_at": "2026-11-16",
+          "initial": {
+            "en": "≤4,500 words (main text)",
+            "zh": "≤4,500 词（正文）"
+          },
+          "url": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/policies-guidelines",
+          "value": "Initial: ≤4,500 words (main text)."
         }
       },
       "editor_in_chief": {
@@ -13153,6 +13674,12 @@
       "guidelines": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/policies-guidelines",
       "id": "wcm",
       "identity_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
+      "impact_factor": {
+        "checked_at": "2026-11-16",
+        "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+        "value": 13.4,
+        "year": 2025
+      },
       "issn": "1536-1284",
       "issn_l": "1536-1284",
       "name": "IEEE Wireless Communications",

@@ -7,7 +7,9 @@ from urllib.error import HTTPError, URLError
 
 from journal_cfp import deadline_date, detail_fields, parse_page, pdf_fields
 from journal_digest import create_digest, deliver
-from refresh_journals import annual_stats, merge_source, refresh_source, validate_editor, validate_snapshot, read_json
+from refresh_journals import (
+    annual_stats, merge_source, read_json, refresh_source, sync_metadata, validate_editor, validate_impact, validate_snapshot,
+)
 
 
 DATE = "2026-11-14T08:17:00+08:00"
@@ -210,6 +212,39 @@ class EditorTests(unittest.TestCase):
             validate_editor({**editor, "since": "2026-08"}, "journal")
         with self.assertRaises(ValueError):
             validate_editor({**editor, "next": {**editor, "since": "2027", "since_source": editor["source"]}}, "journal")
+
+    def test_co_editors_keep_independent_sources_and_dates(self):
+        first = {"name": "A. Editor", "source": "https://example.org/board"}
+        second = {"name": "B. Editor", "source": "https://example.org/board-2",
+                  "since": "2025-08", "since_source": "https://example.org/appointment"}
+        validate_editor({**first, "co_editors": [second]}, "journal")
+        with self.assertRaises(ValueError):
+            validate_editor({**first, "co_editors": [second, second]}, "journal")
+
+
+class MetadataTests(unittest.TestCase):
+    def test_impact_requires_public_source_and_valid_value(self):
+        field = {"value": 7.5, "year": 2025, "url": "https://example.org/jif", "checked_at": "2026-11-16"}
+        validate_impact(field, "journal")
+        validate_impact({**field, "year": None}, "journal")
+        for change in [{"url": "http://example.org"}, {"value": float("nan")}, {"value": True}, {"year": 2027}]:
+            with self.assertRaises(ValueError):
+                validate_impact({**field, **change}, "journal")
+
+    def test_metadata_sync_preserves_all_cfp_and_stats_state(self):
+        data = Path(__file__).resolve().parents[1] / "tools/journals"
+        snapshot = read_json(data / "snapshot.json")
+        registry = read_json(data / "registry.json")
+        name = "Updated journal name"
+        item = registry[0]
+        result = sync_metadata(registry, {"journals": {item["id"]: {"name": name}}}, snapshot)
+        self.assertEqual(result["journals"][0]["name"], name)
+        self.assertEqual(result["journals"][0]["issn_l"], snapshot["journals"][0]["issn_l"])
+        self.assertEqual({k: v for k, v in result.items() if k != "journals"},
+                         {k: v for k, v in snapshot.items() if k != "journals"})
+        self.assertNotEqual(registry[0]["name"], name)
+        with self.assertRaises(ValueError):
+            sync_metadata(registry[1:], {}, snapshot)
 
 
 class DigestTests(unittest.TestCase):

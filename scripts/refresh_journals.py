@@ -252,7 +252,7 @@ def atomic_json(path, value):
     tmp.replace(path)
 
 
-def validate_editor(editor, journal_id):
+def validate_editor(editor, journal_id, *, allow_co_editors=True):
     require(isinstance(editor, dict) and isinstance(editor.get("name"), str) and
             editor["name"].strip() and https_url(editor.get("source")), f"Invalid chief editor: {journal_id}")
     since = editor.get("since")
@@ -267,7 +267,25 @@ def validate_editor(editor, journal_id):
                 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", successor["since"])
                 and (not since or successor["since"] > since) and "next" not in successor,
                 f"Invalid editor transition: {journal_id}")
-        validate_editor(successor, journal_id)
+        validate_editor(successor, journal_id, allow_co_editors=False)
+    if "co_editors" in editor:
+        colleagues = editor["co_editors"]
+        require(allow_co_editors and isinstance(colleagues, list) and colleagues, f"Invalid co-editors: {journal_id}")
+        names = {editor["name"].casefold().strip()}
+        for colleague in colleagues:
+            validate_editor(colleague, journal_id, allow_co_editors=False)
+            name = colleague["name"].casefold().strip()
+            require(name not in names, f"Duplicate chief editor: {journal_id}")
+            names.add(name)
+
+
+def validate_impact(impact, journal_id):
+    require(isinstance(impact, dict) and https_url(impact.get("url")), f"Unsourced impact factor: {journal_id}")
+    value, year = impact.get("value"), impact.get("year")
+    require(type(value) in {int, float} and 0 <= value < float("inf"), f"Invalid impact factor: {journal_id}")
+    require(year is None or (type(year) is int and 1900 <= year <= 9999), f"Invalid impact factor year: {journal_id}")
+    checked = date.fromisoformat(impact["checked_at"])
+    require(year is None or year <= checked.year, f"Future impact factor year: {journal_id}")
 
 
 def validate_registry(journals):
@@ -289,9 +307,17 @@ def validate_registry(journals):
             require(rank["grade"] in {"A", "B", "C", "not-listed"} and https_url(rank["url"]) and rank["version"], "Invalid CCF entry")
         if row.get("editor_in_chief") is not None:
             validate_editor(row["editor_in_chief"], key)
-        for metric in row.get("details", {}).values():
+        if row.get("impact_factor") is not None:
+            validate_impact(row["impact_factor"], key)
+        for metric_key, metric in row.get("details", {}).items():
             require(bool(metric["value"]) and https_url(metric["url"]), "Unsourced detail")
             date.fromisoformat(metric["checked_at"])
+            if metric_key == "length":
+                for stage in ("initial", "revised"):
+                    if stage in metric:
+                        limit = metric[stage]
+                        require(isinstance(limit, dict) and all(isinstance(limit.get(lang), str) and limit[lang].strip()
+                                                              for lang in ("en", "zh")), f"Invalid {stage} submission limit: {key}")
     return ids
 
 
@@ -324,6 +350,24 @@ def apply_journal_overrides(journals, overrides):
             update = {**update, "details": {**item.get("details", {}), **update["details"]}}
         item.update(update)
     return rows
+
+
+def sync_metadata(registry, overrides, snapshot):
+    """Apply registry metadata without fetching or replacing CFPs or annual counts."""
+    validate_snapshot(snapshot)
+    journals = apply_journal_overrides(registry, overrides.get("journals", {}))
+    ids = validate_registry(journals)
+    previous = {row["id"]: row for row in snapshot["journals"]}
+    require(ids == set(previous), "Metadata update cannot add or remove journals")
+    for row in journals:
+        old = previous[row["id"]]
+        require(all(row.get(key) == old.get(key) for key in ("issn", "previous_issns")),
+                f"Metadata update cannot change journal identity: {row['id']}")
+        if issn_l := snapshot["stats"].get(row["id"], {}).get("issn_l") or old.get("issn_l"):
+            row["issn_l"] = issn_l
+    updated = {**snapshot, "journals": journals}
+    validate_snapshot(updated)
+    return updated
 
 
 def apply_call_overrides(calls, overrides):
@@ -429,11 +473,19 @@ def main():
     parser.add_argument("--seed", action="store_true", help="One-off initial baseline from live sources")
     parser.add_argument("--bootstrap", action="store_true", help="Allow the checked-in seed on the first deployment only")
     parser.add_argument("--full", action="store_true", help="Refresh all OpenAlex counts even on weekdays")
-    parser.add_argument("--validate", action="store_true", help="Validate the supplied snapshot without network")
+    offline = parser.add_mutually_exclusive_group()
+    offline.add_argument("--validate", action="store_true", help="Validate the supplied snapshot without network")
+    offline.add_argument("--metadata-only", action="store_true", help="Sync only registry metadata into the existing output snapshot")
     args = parser.parse_args()
     if args.validate:
         validate_registry(read_json(DATA / "registry.json"))
         validate_snapshot(read_json(args.output))
+    elif args.metadata_only:
+        require(not (args.seed or args.full or args.bootstrap or args.previous_file or args.digest),
+                "--metadata-only updates only the existing --output snapshot")
+        updated = sync_metadata(read_json(DATA / "registry.json"), read_json(DATA / "overrides.json"), read_json(args.output))
+        atomic_json(args.output, updated)
+        print(f"Synced metadata for {len(updated['journals'])} journals; CFPs and statistics unchanged.", flush=True)
     else:
         refresh(args)
 

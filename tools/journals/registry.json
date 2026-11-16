@@ -40,9 +40,17 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "13 double-column pages initially; 16 for revised papers.",
+        "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column).",
         "url": "https://www.comsoc.org/publications/journals/ieee-tcom/policies-and-guidelines",
-        "checked_at": "2026-11-14"
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤13 pages (double column)",
+          "zh": "≤13 页（双栏）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column)",
+          "zh": "≤16 页（双栏）"
+        }
       },
       "apc": {
         "value": "USD 2,800 for optional open access.",
@@ -55,6 +63,18 @@
         "url": "https://www.comsoc.org/publications/journals/ieee-tcom/policies-and-guidelines",
         "checked_at": "2026-11-14"
       }
+    },
+    "impact_factor": {
+      "value": 8.4,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "George Karagiannidis",
+      "source": "https://www.comsoc.org/publications/journals/ieee-tcom/ieee-transactions-communications-editorial-board",
+      "since": "2024-01",
+      "since_source": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?arnumber=10734395"
     }
   },
   {
@@ -97,9 +117,17 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "13 double-column pages initially; 16 for revised papers.",
+        "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column).",
         "url": "https://www.comsoc.org/publications/journals/ieee-twc/policies-guidelines",
-        "checked_at": "2026-11-14"
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤13 pages (double column)",
+          "zh": "≤13 页（双栏）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column)",
+          "zh": "≤16 页（双栏）"
+        }
       },
       "apc": {
         "value": "USD 2,800 for optional open access.",
@@ -112,6 +140,18 @@
         "url": "https://www.comsoc.org/publications/journals/ieee-twc/policies-guidelines",
         "checked_at": "2026-11-14"
       }
+    },
+    "impact_factor": {
+      "value": 10.3,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Vincent Wong",
+      "source": "https://www.comsoc.org/publications/journals/ieee-twc/editorial-board",
+      "since": "2023-01",
+      "since_source": "https://people.ece.ubc.ca/~vincentw/Homepage/Activities.html"
     }
   },
   {
@@ -160,10 +200,24 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "13 double-column pages initially; 16 for revised papers. Check the individual call for issue-specific rules.",
+        "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column).",
         "url": "https://www.comsoc.org/publications/journals/ieee-jsac/policies-guidelines",
-        "checked_at": "2026-11-14"
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤13 pages (double column)",
+          "zh": "≤13 页（双栏）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column)",
+          "zh": "≤16 页（双栏）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 16.8,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -206,7 +260,32 @@
         "value": "USD 220 per printed page beyond 30, up to the 38-page limit.",
         "url": "https://www.comsoc.org/publications/journals/ieee-comst/policies-guidelines",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: ≤30 pages (double column; survey/tutorial); revised: <40 pages (double column; survey/tutorial).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-comst/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤30 pages (double column; survey/tutorial)",
+          "zh": "≤30 页（双栏，综述／教程）"
+        },
+        "revised": {
+          "en": "<40 pages (double column; survey/tutorial)",
+          "zh": "<40 页（双栏，综述／教程）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 50.6,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Trung Q. Duong",
+      "source": "https://www.comsoc.org/publications/journals/ieee-comst/ieee-communications-surveys-tutorials-editorial-board",
+      "since": "2025",
+      "since_source": "https://cerc-ngct.ca/"
     }
   },
   {
@@ -250,7 +329,28 @@
         "value": "Regular and double-anonymous review routes are available.",
         "url": "https://www.comsoc.org/publications/journals/ieee-communications-letters",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: ≤5 pages (double column; letter).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-comml/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤5 pages (double column; letter)",
+          "zh": "≤5 页（双栏，短文）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 4.5,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Daniel Benevides da Costa",
+      "source": "https://www.comsoc.org/publications/journals/ieee-comml/ieee-communications-letters-editorial-board",
+      "since": "2023-07",
+      "since_source": "https://sites.google.com/site/danielbenevides81/professionaleditorialchairing-activities"
     }
   },
   {
@@ -285,9 +385,13 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "4-page limit.",
-        "url": "https://www.comsoc.org/publications/journals",
-        "checked_at": "2026-11-14"
+        "value": "Initial: ≤5 pages (double column; letter).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-wcl/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤5 pages (double column; letter)",
+          "zh": "≤5 页（双栏，短文）"
+        }
       },
       "apc": {
         "value": "USD 2,800 for optional open access.",
@@ -295,6 +399,18 @@
         "checked_at": "2026-11-14",
         "year": 2026
       }
+    },
+    "impact_factor": {
+      "value": 5.1,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Ai-Chun Pang",
+      "source": "https://www.comsoc.org/publications/journals/ieee-wcl/ieee-wireless-communications-letters-editorial-board",
+      "since": "2024",
+      "since_source": "https://www.csie.ntu.edu.tw/~acpang/AcademicServices.html"
     }
   },
   {
@@ -336,10 +452,24 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "Initial limit: 13 double-column pages for regular papers; 20 for surveys and tutorials.",
+        "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column).",
         "url": "https://www.comsoc.org/publications/journals/ieee-tccn/policies-guidelines",
-        "checked_at": "2026-11-14"
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤13 pages (double column)",
+          "zh": "≤13 页（双栏）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column)",
+          "zh": "≤16 页（双栏）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 8,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -385,7 +515,26 @@
         "url": "https://www.comsoc.org/publications/journals/ieee-tgcn/policies-guidelines",
         "checked_at": "2026-11-14",
         "year": 2026
+      },
+      "length": {
+        "value": "Initial: ≤30 pages (single column, double-spaced); revised: ≤32 pages (single column, double-spaced).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-tgcn/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤30 pages (single column, double-spaced)",
+          "zh": "≤30 页（单栏，双倍行距）"
+        },
+        "revised": {
+          "en": "≤32 pages (single column, double-spaced)",
+          "zh": "≤32 页（单栏，双倍行距）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 6.9,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -428,7 +577,26 @@
         "url": "https://vtsociety.org/files/ieeevts/2024-12/vts24-annual-report-final%20%282%29.pdf",
         "checked_at": "2026-11-14",
         "year": 2024
+      },
+      "length": {
+        "value": "Initial: ≤14 pages (double column; regular paper); revised: ≤16 pages (double column; regular paper).",
+        "url": "https://vtsociety.org/publication/ieee-transactions-vehicular-technology/guidelines-authors/instructions",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤14 pages (double column; regular paper)",
+          "zh": "≤14 页（双栏，常规稿）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column; regular paper)",
+          "zh": "≤16 页（双栏，常规稿）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 7.5,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -471,7 +639,28 @@
         "url": "https://www.comsoc.org/publications/journals/ieee-ojcoms/policies-guidelines",
         "checked_at": "2026-11-14",
         "year": 2026
+      },
+      "length": {
+        "value": "Initial: ≤25 pages (original manuscript category).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-ojcoms/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤25 pages (original manuscript category)",
+          "zh": "≤25 页（原始稿类别）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 6.2,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Sinem Coleri",
+      "source": "https://www.comsoc.org/publications/journals/ieee-ojcoms/ieee-open-journal-communications-society-editorial-board",
+      "since": "2024-01-01",
+      "since_source": "https://www.linkedin.com/posts/sinem-coleri-7051542_i-am-delighted-to-announce-my-appointment-activity-7148954079312990228-8870"
     }
   },
   {
@@ -536,6 +725,15 @@
         "value": "USD 220 per published page beyond 10.",
         "url": "https://www.comsoc.org/publications/journals/ieee-tnet/policies-guidelines",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: Typically ≤16 pages (double column).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-tnet/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "Typically ≤16 pages (double column)",
+          "zh": "通常 ≤16 页（双栏）"
+        }
       }
     }
   },
@@ -563,7 +761,30 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources"
+    "guidelines": "https://www.computer.org/publications/author-resources",
+    "impact_factor": {
+      "value": 8.8,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Dimitrios Koutsonikolas",
+      "source": "https://www.computer.org/csdl/journal/tm",
+      "since": "2026-01-01",
+      "since_source": "https://www.computer.org/press-room/2026-eics-announced"
+    },
+    "details": {
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
+      }
+    }
   },
   {
     "id": "tnsm",
@@ -603,7 +824,14 @@
         "url": "https://www.comsoc.org/publications/journals/ieee-transactions-network-and-service-management",
         "checked_at": "2026-11-14"
       }
-    }
+    },
+    "impact_factor": {
+      "value": 5.7,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "guidelines": "https://www.comsoc.org/publications/journals/ieee-tnsm/policies-guidelines"
   },
   {
     "id": "tnse",
@@ -640,7 +868,22 @@
         "value": "USD 220 per printed page beyond 10.",
         "url": "https://www.comsoc.org/publications/journals/ieee-tnse/policies-guidelines",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: ≤18 pages (double column).",
+        "url": "https://www.comsoc.org/publications/journals/ieee-tnse/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 pages (double column)",
+          "zh": "≤18 页（双栏）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 7.3,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -688,6 +931,12 @@
         "url": "https://ieee-iotj.org/guidelines-for-authors/",
         "checked_at": "2026-11-14"
       }
+    },
+    "impact_factor": {
+      "value": 8.7,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -733,6 +982,25 @@
         "url": "https://shop.elsevier.com/journals/computer-networks/1389-1286",
         "checked_at": "2026-11-14"
       }
+    },
+    "impact_factor": {
+      "value": 4.7,
+      "url": "https://shop.elsevier.com/journals/computer-networks/1389-1286",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Tommaso Melodia",
+      "source": "https://wineslab.github.io/team/tommaso-melodia",
+      "since": "2019",
+      "since_source": "https://wineslab.github.io/team/tommaso-melodia",
+      "co_editors": [
+        {
+          "name": "Antonio Iera",
+          "source": "https://www.sciencedirect.com/science/article/pii/S0167739X24005892",
+          "since": "2020",
+          "since_source": "https://www.sciencedirect.com/science/article/pii/S0167739X24005892"
+        }
+      ]
     }
   },
   {
@@ -779,6 +1047,17 @@
         "url": "https://shop.elsevier.com/journals/computer-communications/0140-3664",
         "checked_at": "2026-11-14"
       }
+    },
+    "impact_factor": {
+      "value": 4.2,
+      "url": "https://shop.elsevier.com/journals/computer-communications/0140-3664",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Damla Turgut",
+      "source": "https://www.cs.ucf.edu/~turgut/Home/Home.html",
+      "since": "2024-01",
+      "since_source": "https://tcgcc.committees.comsoc.org/wp-content/uploads/sites/106/2024/12/TCGCC_2024Nov_final_v3.pdf"
     }
   },
   {
@@ -831,7 +1110,26 @@
         "value": "Regular papers and comment correspondences.",
         "url": "https://signalprocessingsociety.org/publications-resources/information-authors",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: ≤13 pages (double column); revised: ≤16 pages (double column).",
+        "url": "https://signalprocessingsociety.org/publications-resources/information-authors",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤13 pages (double column)",
+          "zh": "≤13 页（双栏）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column)",
+          "zh": "≤16 页（双栏）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 5.5,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -874,10 +1172,24 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "Final regular paper limit is 16 double-column pages unless the editor-in-chief grants an exception.",
+        "value": "Initial: ≤13 pages (double column; special issue); revised: ≤16 pages (double column; special issue).",
         "url": "https://signalprocessingsociety.org/publications-resources/ieee-journal-selected-topics-signal-processing/information-authors-jstsp",
-        "checked_at": "2026-11-14"
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤13 pages (double column; special issue)",
+          "zh": "≤13 页（双栏，特刊）"
+        },
+        "revised": {
+          "en": "≤16 pages (double column; special issue)",
+          "zh": "≤16 页（双栏，特刊）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 8.5,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -905,7 +1217,30 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources"
+    "guidelines": "https://www.computer.org/publications/author-resources",
+    "impact_factor": {
+      "value": 5.9,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Xian-He Sun",
+      "source": "https://www.computer.org/csdl/journal/td",
+      "since": "2023-01-01",
+      "since_source": "https://www.computer.org/press-room/editors-in-chief-confirmed-for-ieee-computer-society-publications"
+    },
+    "details": {
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
+      }
+    }
   },
   {
     "id": "tc",
@@ -938,7 +1273,28 @@
         "value": "Computer architecture, accelerators, operating systems, and embedded computing.",
         "url": "https://www.computer.org/digital-library/journals/tc/call-for-papers-general-submissions",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 4.9,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Avinash Karanth",
+      "source": "https://www.computer.org/csdl/journal/tc",
+      "since": "2024-01-01",
+      "since_source": "https://www.computer.org/press-room/editors-in-chief-confirmed"
     }
   },
   {
@@ -965,7 +1321,30 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources"
+    "guidelines": "https://www.computer.org/publications/author-resources",
+    "impact_factor": {
+      "value": 5.3,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Song Guo",
+      "source": "https://www.computer.org/csdl/journal/cc",
+      "since": "2025",
+      "since_source": "https://cse.hkust.edu.hk/~songguo/Service.html"
+    },
+    "details": {
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
+      }
+    }
   },
   {
     "id": "tdsc",
@@ -998,7 +1377,24 @@
     },
     "checked_at": "2026-11-14",
     "guidelines": "https://www.computer.org/publications/author-resources",
-    "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers"
+    "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
+    "impact_factor": {
+      "value": 6.8,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "details": {
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
+      }
+    }
   },
   {
     "id": "taffc",
@@ -1029,6 +1425,23 @@
       "source": "https://www.computer.org/csdl/journal/ta/",
       "since": "2023-01-01",
       "since_source": "https://www.computer.org/press-room/editors-in-chief-confirmed-for-ieee-computer-society-publications"
+    },
+    "impact_factor": {
+      "value": 11.3,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "details": {
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
+      }
     }
   },
   {
@@ -1059,6 +1472,23 @@
       "source": "https://www.computer.org/csdl/journal/ec/",
       "since": "2026-01-01",
       "since_source": "https://www.computer.org/press-room/2026-eics-announced"
+    },
+    "impact_factor": {
+      "value": 4.8,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "details": {
+      "length": {
+        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
+        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤18 formatted pages (CS regular-paper policy)",
+          "zh": "≤18 排版页（学会常规稿通则）"
+        }
+      }
     }
   },
   {
@@ -1085,7 +1515,21 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://dl.acm.org/journal/tocs/author-guidelines"
+    "guidelines": "https://dl.acm.org/journal/tocs/author-guidelines",
+    "editor_in_chief": {
+      "name": "Sam H. Noh",
+      "source": "https://doi.org/10.1145/3696656",
+      "since": "2024-05-01",
+      "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf",
+      "co_editors": [
+        {
+          "name": "Robbert van Renesse",
+          "source": "https://doi.org/10.1145/3696656",
+          "since": "2024-05-01",
+          "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf"
+        }
+      ]
+    }
   },
   {
     "id": "tosn",
@@ -1111,7 +1555,19 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://dl.acm.org/journal/tosn/author-guidelines"
+    "guidelines": "https://dl.acm.org/journal/tosn/author-guidelines",
+    "impact_factor": {
+      "value": 4.7,
+      "year": 2024,
+      "url": "https://www.acm.org/binaries/content/assets/press-releases/2025/july/news-release_impact_factors_2025_final.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Wen Hu",
+      "source": "https://research.unsw.edu.au/people/professor-wen-hu",
+      "since": "2024-02-01",
+      "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf"
+    }
   },
   {
     "id": "taco",
@@ -1138,7 +1594,13 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://dl.acm.org/journal/taco/author-guidelines"
+    "guidelines": "https://dl.acm.org/journal/taco/author-guidelines",
+    "editor_in_chief": {
+      "name": "Cristina Silvano",
+      "source": "https://www.deib.polimi.it/eng/news/details/1512",
+      "since": "2026-06",
+      "since_source": "https://www.deib.polimi.it/eng/news/details/1512"
+    }
   },
   {
     "id": "jpdc",
@@ -1184,6 +1646,17 @@
         "url": "https://shop.elsevier.com/journals/journal-of-parallel-and-distributed-computing/0743-7315",
         "checked_at": "2026-11-14"
       }
+    },
+    "impact_factor": {
+      "value": 3.4,
+      "url": "https://shop.elsevier.com/journals/journal-of-parallel-and-distributed-computing/0743-7315",
+      "checked_at": "2026-11-16"
+    },
+    "editor_in_chief": {
+      "name": "Ananth Kalyanaraman",
+      "source": "https://eecs.wsu.edu/~ananth/",
+      "since": "2025",
+      "since_source": "https://eecs.wsu.edu/~ananth/vita.pdf"
     }
   },
   {
@@ -1205,13 +1678,19 @@
     "access": "hybrid",
     "access_url": "https://link.springer.com/journal/11432",
     "checked_at": "2026-11-14",
-    "guidelines": "https://scis.scichina.com/download/scis-authors.pdf",
+    "guidelines": "https://scis.scichina.com/download/scis-info-for-authors.pdf",
     "cfp_url": "https://scis.scichina.com/",
     "editor_in_chief": {
       "name": "Hong Mei（梅宏）",
       "source": "https://scis.scichina.com/download/scis-editorialboard.pdf",
       "since": "2018",
       "since_source": "https://scis.scichina.com/en/2018/010001.pdf"
+    },
+    "impact_factor": {
+      "value": 8.1,
+      "year": 2025,
+      "url": "https://link.springer.com/journal/11432",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -1252,7 +1731,22 @@
         "value": "Tutorial-style articles for a broad communications readership.",
         "url": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Initial: ≤7 magazine pages and ≤5,500 words.",
+        "url": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤7 magazine pages and ≤5,500 words",
+          "zh": "≤7 个杂志版面且 ≤5,500 词"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 8.3,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   },
   {
@@ -1285,7 +1779,25 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "cfp_url": "https://www.comsoc.org/publications/magazines/ieee-network/cfp"
+    "cfp_url": "https://www.comsoc.org/publications/magazines/ieee-network/cfp",
+    "impact_factor": {
+      "value": 8.8,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
+    },
+    "guidelines": "https://www.comsoc.org/publications/magazines/ieee-network/policies-guidelines",
+    "details": {
+      "length": {
+        "value": "Initial: ≤4,500 words (main text).",
+        "url": "https://www.comsoc.org/publications/magazines/ieee-network/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤4,500 words (main text)",
+          "zh": "≤4,500 词（正文）"
+        }
+      }
+    }
   },
   {
     "id": "wcm",
@@ -1330,7 +1842,22 @@
         "url": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/policies-guidelines",
         "checked_at": "2026-11-14",
         "year": 2026
+      },
+      "length": {
+        "value": "Initial: ≤4,500 words (main text).",
+        "url": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/policies-guidelines",
+        "checked_at": "2026-11-16",
+        "initial": {
+          "en": "≤4,500 words (main text)",
+          "zh": "≤4,500 词（正文）"
+        }
       }
+    },
+    "impact_factor": {
+      "value": 13.4,
+      "year": 2025,
+      "url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026.pdf",
+      "checked_at": "2026-11-16"
     }
   }
 ]
