@@ -117,9 +117,13 @@ function positionTrend() {
   const { clientWidth: width, clientHeight: height } = root;
   if (anchor.bottom < 0 || anchor.top > height ||
       anchor.right <= Math.max(0, tableBounds.left) || anchor.left >= Math.min(width, tableBounds.right)) {
-    closeTrend();
+    // Keyboard focus can reach a cell before the table scrolls it into view.
+    trend.hidden = true;
+    trendAnchor.setAttribute("aria-expanded", "false");
     return;
   }
+  trend.hidden = false;
+  trendAnchor.setAttribute("aria-expanded", "true");
   const margin = 8;
   const { offsetWidth, offsetHeight } = trend;
   const clamp = (value, max) => Math.max(margin, Math.min(value, max - margin));
@@ -131,7 +135,10 @@ function positionTrend() {
 }
 
 function showTrend(anchor, journal) {
-  if (anchor === trendAnchor) return;
+  if (anchor === trendAnchor) {
+    positionTrend();
+    return;
+  }
   closeTrend();
   const data = stats[journal.id];
   const series = annualSeries(journal, data, year);
@@ -150,8 +157,6 @@ function showTrend(anchor, journal) {
       p(t("* IEEE/ACM predecessor title", "* 对应旧刊名 IEEE/ACM Transactions on Networking"), "journal-muted") : null
   ].filter(Boolean));
   trendAnchor = anchor;
-  trend.hidden = false;
-  anchor.setAttribute("aria-expanded", "true");
   positionTrend();
 }
 
