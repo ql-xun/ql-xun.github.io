@@ -25,13 +25,15 @@
     const selected = normalizeLanguage(language);
     root.dataset.lang = selected;
     root.lang = selected === "zh" ? "zh-CN" : "en";
-    toggle.textContent = selected === "zh" ? "English" : "中文";
-    toggle.setAttribute("aria-label", selected === "zh" ? "Switch to English" : "切换至中文");
+    if (toggle) {
+      toggle.textContent = selected === "zh" ? "English" : "中文";
+      toggle.setAttribute("aria-label", selected === "zh" ? "Switch to English" : "切换至中文");
+    }
     const titles = {
       home: { en: "Qinglin Xun | Homepage", zh: "荀清林｜主页" },
       hobbies: { en: "Hobbies | Qinglin Xun", zh: "兴趣爱好｜荀清林" },
       thoughts: { en: "Thoughts | Qinglin Xun", zh: "思考｜荀清林" },
-      journals: { en: "Journal Explorer | Qinglin Xun", zh: "期刊观察｜荀清林" }
+      journals: { en: "Journal Explorer", zh: "期刊观察" }
     };
     document.title = titles[page][selected];
 
