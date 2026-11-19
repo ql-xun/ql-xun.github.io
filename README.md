@@ -6,10 +6,10 @@ Personal homepage for Qinglin Xun, hosted with GitHub Pages at
 ## Local preview
 
 ```bash
-python -m http.server 8080
+python -B scripts/serve_site.py 8775
 ```
 
-Then open `http://127.0.0.1:8080/`.
+Then open `http://127.0.0.1:8775/`. The preview reloads after website files change while the local server is running.
 
 ## Updating the site
 
@@ -23,6 +23,7 @@ Then open `http://127.0.0.1:8080/`.
 - Thoughts data: `content/thoughts.json`
 - Downloadable CV: `cv/Qinglin-Xun-CV.pdf`
 - Content editing instructions: `CONTENT_GUIDE.md`
+- Journal Explorer: `tools/journals/` ([maintenance guide](JOURNAL_GUIDE.md))
 - GitHub Pages workflow: `.github/workflows/static.yml`
 
 The Hobbies and Thoughts pages are data-driven so they can be updated
