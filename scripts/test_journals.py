@@ -8,7 +8,8 @@ from urllib.error import HTTPError, URLError
 from journal_cfp import deadline_date, detail_fields, parse_page, pdf_fields
 from journal_digest import create_digest, deliver
 from refresh_journals import (
-    annual_stats, merge_source, read_json, refresh_source, sync_metadata, validate_editor, validate_impact, validate_snapshot,
+    annual_stats, complete_cfp_check, merge_source, read_json, read_url, refresh_source, statistics_to_refresh,
+    sync_metadata, validate_editor, validate_impact, validate_snapshot,
 )
 
 
@@ -36,6 +37,17 @@ SPS_URL = "https://signalprocessingsociety.org/event-categories/special-issue-de
 
 
 class CFPTests(unittest.TestCase):
+    @patch("refresh_journals.time.sleep")
+    @patch("refresh_journals.build_opener")
+    def test_truncated_http_body_is_retried_not_parsed_as_a_partial_directory(self, opener, _):
+        response = opener.return_value.open.return_value.__enter__.return_value
+        response.headers = {"Content-Length": "8"}
+        response.read.side_effect = [b"short", b"complete"]
+        self.assertEqual(read_url(URL, {"www.comsoc.org"}), b"complete")
+        response.read.side_effect = [b"short", b"short"]
+        with self.assertRaises(URLError):
+            read_url(URL, {"www.comsoc.org"})
+
     def test_parser_does_not_invent_deadline(self):
         first, closed, unknown = parse_page(TABLE, URL, "jsac")
         self.assertEqual(first["deadline"], "2026-11-21")
@@ -172,6 +184,30 @@ class CFPTests(unittest.TestCase):
         self.assertEqual(source["status"], "error")
         self.assertEqual(source["checked_at"], DATE)
         self.assertIsNone(rows)
+
+
+class ScheduleTests(unittest.TestCase):
+    def test_check_timestamp_advances_only_after_all_supported_sources_succeed(self):
+        journals = [{"id": "jsac", "cfp_url": URL}, {"id": "tcom"},
+                    {"id": "ton", "cfp_url": TNET_URL}]
+        sources = {key: {"status": "ok", "checked_at": DATE} for key in ("jsac", "ton")}
+        previous = {"cfp_checked_at": "2026-11-13T08:00:00+08:00"}
+        self.assertEqual(complete_cfp_check(journals, sources, previous, NOW), DATE)
+        for failure in ({"status": "error", "checked_at": DATE}, {},
+                        {"status": "ok", "checked_at": previous["cfp_checked_at"]}):
+            self.assertEqual(complete_cfp_check(journals, {**sources, "ton": failure}, previous, NOW),
+                             previous["cfp_checked_at"])
+        self.assertIsNone(complete_cfp_check(journals, {}, {}, NOW))
+        self.assertEqual(complete_cfp_check([], {}, previous, NOW), previous["cfp_checked_at"])
+
+    def test_daily_cfp_only_never_requests_statistics_even_if_missing(self):
+        journals = [{"id": "jsac"}]
+        self.assertEqual(statistics_to_refresh(journals, {}, NOW, cfp_only=True), [])
+        stats = {"jsac": {"checked_at": DATE, "counts": {"2026": 0}}}
+        sunday = datetime.fromisoformat("2026-11-15T08:00:00+08:00")
+        self.assertEqual(statistics_to_refresh(journals, stats, sunday), [])
+        self.assertEqual(statistics_to_refresh(journals, stats, sunday, full=True), journals)
+        self.assertEqual(statistics_to_refresh(journals, {}, sunday), journals)
 
 
 class OpenAlexTests(unittest.TestCase):

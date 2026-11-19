@@ -1,8 +1,7 @@
-import { annualCount, annualSeries, currentEditors, groupCallsByCommunity, groupLibrary, journalGrade, journalRoute, libraryCommunities, safeLink } from "./journal-model.js?v=4";
+import { annualCount, annualSeries, cfpCheckLabel, compactSubmissionLength, currentEditors, editorMonth, groupCallsByCommunity, groupLibrary, journalGrade, journalRoute, libraryCommunities, safeLink } from "./journal-model.js?v=6";
 import { bindTrendTrigger } from "./trend-trigger.js";
 
 const app = document.querySelector("#journal-app");
-const meta = document.querySelector("#journal-meta");
 const root = document.documentElement;
 const t = (en, zh) => root.dataset.lang === "zh" ? zh : en;
 const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
@@ -75,20 +74,23 @@ function societyNav(labels, ids) {
 function chiefLine(journal) {
   const editors = currentEditors(journal, today);
   // An empty array still renders both field labels with a dash.
-  return (editors.length ? editors : [null]).map(editor => el("p", { class: "cfp-chief journal-muted" },
-    el("span", {}, t("Editor-in-Chief: ", "主编："), link(editor?.source, editor?.name) || editor?.name || missing),
-    el("span", {}, t("Since: ", "上任："), link(editor?.since_source, editor?.since) || editor?.since || missing)));
+  return (editors.length ? editors : [null]).map(editor => {
+    const month = editorMonth(editor?.since);
+    return el("p", { class: "cfp-chief journal-muted" },
+      el("span", {}, t("Editor-in-Chief: ", "主编："), link(editor?.source, editor?.name) || editor?.name || missing),
+      el("span", {}, t("Since: ", "上任："), link(editor?.since_source, month) || month || missing));
+  });
 }
 
 function pageLimits(journal) {
   const detail = journal.details?.length;
   if (!detail?.initial && !detail?.revised) return missing;
   const stage = (label, value) => {
-    const text = value && t(value.en, value.zh);
-    return el("div", { class: "journal-limit" }, el("span", {}, label),
+    const text = value && compactSubmissionLength(t(value.en, value.zh));
+    return el("div", { class: "journal-limit" }, label ? el("span", {}, label) : null,
       link(detail.url, text) || text || missing);
   };
-  return el("div", {}, stage(t("Initial", "初投"), detail.initial),
+  return el("div", {}, stage(detail.revised ? t("Initial", "初投") : null, detail.initial),
     detail.revised ? stage(t("Revised", "修回"), detail.revised) : null);
 }
 
@@ -96,8 +98,7 @@ function impactFactor(journal) {
   const impact = journal.impact_factor;
   if (!impact) return missing;
   const value = new Intl.NumberFormat(root.lang, { minimumFractionDigits: 1 }).format(impact.value);
-  return el("div", { class: "journal-numeric" }, link(impact.url, value) || value,
-    impact.year ? el("small", { class: "journal-sub journal-muted" }, String(impact.year)) : null);
+  return el("span", { class: "journal-numeric" }, value);
 }
 
 // A single chart floats outside the scrollable table, so overflow never clips it.
@@ -197,7 +198,9 @@ function cfpJournal({ journal, calls: entries }, heading) {
   const label = journal.name + " (" + journal.abbreviation + ")";
   const name = link(journal.cfp_url || journal.url, label) || label;
   return el("section", { class: "cfp-journal", "data-journal": journal.id },
-    el(heading, { class: "cfp-title" }, name), chiefLine(journal),
+    el("header", { class: "cfp-journal-heading" },
+      el(heading, { class: "cfp-title" }, name),
+      el("div", { class: "cfp-editor-list" }, chiefLine(journal))),
     entries.length ? table([t("Topic", "特刊主题"), t("Submission deadline", "投稿截止日期"), t("Guest editors", "客座编辑")],
       entries.map(call => [link(call.url, call.title) || call.title,
         call.deadline ? el("time", { datetime: call.deadline, class: "journal-numeric" }, call.deadline) : missing,
@@ -214,8 +217,12 @@ function tracker() {
   };
   const group = groupCallsByCommunity(journals, calls, today).find(group => group.id === route.society);
   const nav = societyNav(labels, ["comsoc", "computer", "other"]);
+  const checked = cfpCheckLabel(snapshot.cfp_checked_at);
   return el("section", { class: "cfp-directory", "aria-label": t("Special issues by society", "按学会浏览特刊") },
     nav,
+    p([t("Last checked: ", "更新："), checked ?
+      el("time", { datetime: snapshot.cfp_checked_at }, checked) : missing,
+      t(" (Beijing time)", "（北京时间）")], "cfp-updated journal-muted"),
     group ? el("section", { class: "cfp-community", "data-society": group.id, "aria-labelledby": "cfp-community-heading" },
       el("h2", { id: "cfp-community-heading" }, labels[group.id]),
       group.id === "other" ? Object.entries(subdivisions).map(([id, label]) => {
@@ -230,9 +237,6 @@ function render() {
     app.replaceChildren(p(t("Journal data could not load. Reload the page to try again.", "未能加载期刊数据，请刷新页面重试。"), "journal-state"));
     return;
   }
-  const checked = snapshot.generated_at?.slice(0, 10);
-  meta.textContent = t(journals.length + " journals", "收录 " + journals.length + " 本") +
-    (checked ? t(" · Snapshot: ", " · 数据快照 ") + checked : "");
   app.replaceChildren(el("nav", { class: "journal-tabs", "aria-label": t("Journal Explorer views", "期刊观察功能") },
     routeLink(t("Journal library", "期刊资料库"), "library", null, "view-library"),
     routeLink(t("Special issues", "特刊追踪"), "tracker", null, "view-tracker")),

@@ -4,6 +4,18 @@ export function safeLink(value) {
   catch { return null; }
 }
 
+export function cfpCheckLabel(value) {
+  // Never substitute the visitor's clock or a metadata-only build time.
+  if (typeof value !== "string" || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.test(value)) return null;
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return null;
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+  }).formatToParts(date).map(part => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
+}
+
 export function daysLeft(date, today) {
   if (![date, today].every(value => /^\d{4}-\d\d-\d\d$/.test(value || ""))) return null;
   const times = [date, today].map(value => Date.parse(value + "T00:00:00Z"));
@@ -72,6 +84,19 @@ export function currentEditor(journal, today) {
 export function currentEditors(journal, today) {
   const editor = journal.editor_in_chief;
   return editor ? [currentEditor(journal, today), ...(editor.co_editors || []).map(member => editorAt(member, today))] : [];
+}
+
+// Month-only presentation; keep original precision for provenance and handovers.
+export function editorMonth(value) {
+  return /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/.test(value || "") ?
+    value.slice(0, 4) + "-" + (value.slice(5, 7) || "01") : null;
+}
+
+export function compactSubmissionLength(text) {
+  return text?.replace(/（双栏）/g, "").replace(/（双栏，/g, "（")
+    .replace(/\s*\(double[- ]column\)/gi, "").replace(/\(double[- ]column[;,]\s*/gi, "(")
+    .replace(/^(?:通常\s*|Typically\s+)/i, "")
+    .replace(/（正文）|\s*\(main text\)/gi, "").trim();
 }
 
 export function annualCount(data, year) {

@@ -57,8 +57,11 @@ def read_url(url, hosts, *, accept="text/html", limit=5_000_000):
     for attempt in range(2):
         try:
             with build_opener(OfficialRedirect()).open(req, timeout=16) as response:
+                length = response.headers.get("Content-Length", "")
                 data = response.read(limit + 1)
             require(len(data) <= limit, "Source response too large")
+            if length.isdecimal() and len(data) != int(length):
+                raise URLError("Incomplete source response")
             return data
         except HTTPError as error:
             if error.code not in {429, 500, 502, 503, 504} or attempt:
@@ -323,6 +326,8 @@ def validate_registry(journals):
 
 def validate_snapshot(snapshot):
     require(snapshot["version"] == 1, "Unrecognized snapshot version")
+    if checked := snapshot.get("cfp_checked_at"):
+        require(datetime.fromisoformat(checked).utcoffset() is not None, "CFP check time must include a timezone")
     ids = validate_registry(snapshot["journals"])
     calls = snapshot["calls"]
     require(isinstance(calls, dict), "Invalid CFP map")
@@ -404,6 +409,23 @@ def previous_snapshot(args):
         raise
 
 
+def complete_cfp_check(journals, sources, previous, now):
+    """Advance the public check time only after every supported directory succeeds."""
+    supported = [row["id"] for row in journals if row.get("cfp_url") and parser_for(row["cfp_url"], row["id"])]
+    stamp = now.isoformat()
+    if supported and all(sources.get(key, {}).get("status") == "ok" and
+                         sources[key].get("checked_at") == stamp for key in supported):
+        return stamp
+    return previous.get("cfp_checked_at")
+
+
+def statistics_to_refresh(journals, stats, now, *, full=False, cfp_only=False):
+    if cfp_only:
+        return []
+    return [row for row in journals if full or not stats.get(row["id"], {}).get("checked_at") or
+            str(now.year) not in stats.get(row["id"], {}).get("counts", {})]
+
+
 def refresh(args):
     now = datetime.now(SHANGHAI)
     registry = read_json(DATA / "registry.json")
@@ -425,9 +447,7 @@ def refresh(args):
             if records is not None:
                 active_ids |= merge_source(calls, key, records, now.isoformat())
 
-    update = [item for item in journals if args.full or now.weekday() == 6 or
-              not stats.get(item["id"], {}).get("checked_at") or
-              str(now.year) not in stats.get(item["id"], {}).get("counts", {})]
+    update = statistics_to_refresh(journals, stats, now, full=args.full, cfp_only=args.cfp_only)
     if update:
         issns = sorted({issn for item in update for issn in
                         [item["issn"], *(p["issn"] for p in item.get("previous_issns", []))]})
@@ -452,7 +472,8 @@ def refresh(args):
     apply_call_overrides(calls, overrides.get("calls", {}))
     seen, digest = create_digest(None if bootstrap else previous, calls, active_ids, now.date())
     snapshot = {"version": 1, "generated_at": now.isoformat(), "journals": journals, "calls": calls, "stats": stats,
-                "cfp_sources": sources, "digest_seen": seen}
+                "cfp_sources": sources, "digest_seen": seen,
+                "cfp_checked_at": complete_cfp_check(journals, sources, old, now)}
     if raw_calls != calls:
         snapshot["raw_calls"] = raw_calls
     validate_snapshot(snapshot)
@@ -472,7 +493,9 @@ def main():
     parser.add_argument("--digest", type=Path)
     parser.add_argument("--seed", action="store_true", help="One-off initial baseline from live sources")
     parser.add_argument("--bootstrap", action="store_true", help="Allow the checked-in seed on the first deployment only")
-    parser.add_argument("--full", action="store_true", help="Refresh all OpenAlex counts even on weekdays")
+    statistics = parser.add_mutually_exclusive_group()
+    statistics.add_argument("--full", action="store_true", help="Refresh all OpenAlex counts explicitly")
+    statistics.add_argument("--cfp-only", action="store_true", help="Refresh CFPs without requesting OpenAlex statistics")
     offline = parser.add_mutually_exclusive_group()
     offline.add_argument("--validate", action="store_true", help="Validate the supplied snapshot without network")
     offline.add_argument("--metadata-only", action="store_true", help="Sync only registry metadata into the existing output snapshot")
@@ -481,7 +504,7 @@ def main():
         validate_registry(read_json(DATA / "registry.json"))
         validate_snapshot(read_json(args.output))
     elif args.metadata_only:
-        require(not (args.seed or args.full or args.bootstrap or args.previous_file or args.digest),
+        require(not (args.seed or args.full or args.cfp_only or args.bootstrap or args.previous_file or args.digest),
                 "--metadata-only updates only the existing --output snapshot")
         updated = sync_metadata(read_json(DATA / "registry.json"), read_json(DATA / "overrides.json"), read_json(args.output))
         atomic_json(args.output, updated)

@@ -1,11 +1,77 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { annualCount, annualSeries, callStatus, communityId, currentEditor, currentEditors, daysLeft,
+import { annualCount, annualSeries, callStatus, cfpCheckLabel, communityId, compactSubmissionLength, currentEditor, currentEditors, daysLeft, editorMonth,
   groupCallsByCommunity, groupLibrary, journalGrade, journalRoute, safeLink } from "../tools/journals/journal-model.js";
 import { bindTrendTrigger } from "../tools/journals/trend-trigger.js";
 
 const registry = JSON.parse(readFileSync(new URL("../tools/journals/registry.json", import.meta.url), "utf8"));
+
+test("SI timestamp comes from the saved check and always uses Beijing time", () => {
+  assert.equal(cfpCheckLabel("2026-11-19T12:07:47Z"), "2026-11-19 20:07");
+  assert.equal(cfpCheckLabel("2026-11-19T00:00:00+08:00"), "2026-11-19 00:00");
+  for (const absent of [null, undefined, "", "2026-11-19", "2026-11-19T12:07:47", "invalid", 123]) {
+    assert.equal(cfpCheckLabel(absent), null);
+  }
+});
+
+test("chief display uses month precision without changing the source date", () => {
+  assert.equal(editorMonth("2026"), "2026-01");
+  assert.equal(editorMonth("2026-08"), "2026-08");
+  assert.equal(editorMonth("2026-01-15"), "2026-01");
+  assert.equal(editorMonth(null), null);
+  assert.equal(editorMonth(""), null);
+  const editor = { since: "2026" };
+  editorMonth(editor.since);
+  assert.equal(editor.since, "2026");
+});
+
+test("concise submission labels keep exceptional formats and strict inequalities", () => {
+  const examples = [
+    ["≤13 页（双栏）", "≤13 页"],
+    ["<40 页（双栏，综述／教程）", "<40 页（综述／教程）"],
+    ["≤5 页（双栏，短文）", "≤5 页（短文）"],
+    ["通常 ≤16 页（双栏）", "≤16 页"],
+    ["≤4,500 词（正文）", "≤4,500 词"],
+    ["≤30 页（单栏，双倍行距）", "≤30 页（单栏，双倍行距）"],
+    ["Typically ≤16 pages (double-column)", "≤16 pages"],
+    ["Typically ≤16 pages (double column)", "≤16 pages"],
+    ["<40 pages (double-column, survey/tutorial)", "<40 pages (survey/tutorial)"],
+    ["≤5 pages (double column; letter)", "≤5 pages (letter)"],
+    ["≤4,500 words (main text)", "≤4,500 words"]
+  ];
+  for (const [before, after] of examples) assert.equal(compactSubmissionLength(before), after);
+  for (const journal of registry) {
+    for (const limit of [journal.details?.length?.initial, journal.details?.length?.revised]) {
+      if (!limit) continue;
+      assert.doesNotMatch(compactSubmissionLength(limit.en), /double[- ]column/i);
+      assert.doesNotMatch(compactSubmissionLength(limit.zh), /双栏/);
+    }
+  }
+});
+
+test("submission limits use current journal guides and distinguish absent caps from no cap", () => {
+  const byId = new Map(registry.map(journal => [journal.id, journal]));
+  for (const [id, pages] of Object.entries({ tmc: 18, tpds: 18, tc: 14, tcc: 18, tdsc: 18, taffc: 18, tetc: 16 })) {
+    const length = byId.get(id).details.length;
+    assert.equal(length.initial.zh, `≤${pages} 页`);
+    assert.match(length.url, /^https:\/\/www\.computer\.org\/csdl\/journal\/.+\/write-for-us\/\d+$/);
+    assert.equal(length.revised, undefined);
+  }
+  assert.match(byId.get("taco").details.length.initial.zh, /20.*不含参考文献/);
+  assert.equal(byId.get("taco").details.length.initial.zh, "≤20 页（ACM 模板，不含参考文献）");
+  assert.equal(byId.get("taco").details.length.initial.en, "≤20 pages (ACM template; excl. refs)");
+  assert.match(byId.get("taco").details.length.revised.zh, /25.*含参考文献/);
+  assert.match(byId.get("tosn").details.length.initial.zh, /无页数／字数上限/);
+  assert.match(byId.get("jpdc").details.length.initial.zh, /16.*单栏 20/);
+  for (const id of ["iotj", "tnsm", "tocs", "computer-networks", "computer-communications", "scis"]) {
+    assert.equal(byId.get(id).details.length.initial, undefined);
+    assert.equal(byId.get(id).details.length.revised, undefined);
+    assert.equal(byId.get(id).details.length.checked_at, "2026-11-19");
+  }
+  assert.equal(journalGrade(byId.get("scis")), "A");
+  assert.match(byId.get("scis").ccf.url, /^https:\/\/www\.ccf\.org\.cn\//);
+});
 
 test("library groups contain all 33 existing titles exactly once and sort by rank", () => {
   const groups = groupLibrary(registry);

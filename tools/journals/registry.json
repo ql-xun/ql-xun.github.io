@@ -761,7 +761,7 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/tm/write-for-us/15075",
     "impact_factor": {
       "value": 8.8,
       "year": 2025,
@@ -776,12 +776,12 @@
     },
     "details": {
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 18 double-column pages, including references and biographies. The base 12 pages is the overlength-charge threshold, not the submission maximum; no separate revised cap is stated.",
+        "url": "https://www.computer.org/csdl/journal/tm/write-for-us/15075",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤18 pages",
+          "zh": "≤18 页"
         }
       }
     }
@@ -823,6 +823,11 @@
         "value": "Management and operation of networks, systems, services, and applications.",
         "url": "https://www.comsoc.org/publications/journals/ieee-transactions-network-and-service-management",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Public guide does not state a separate initial or revised maximum. The 16 printed-page cap belongs to accepted publication; the ten-page threshold concerns charges.",
+        "url": "https://www.comsoc.org/publications/journals/ieee-tnsm/policies-guidelines",
+        "checked_at": "2026-11-19"
       }
     },
     "impact_factor": {
@@ -930,6 +935,11 @@
         "value": "IoT architecture, sensing, enabling technologies, services, testbeds, and standardization.",
         "url": "https://ieee-iotj.org/guidelines-for-authors/",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Public author guide does not specify separate initial or revised page maxima. The eight published pages mentioned in overlength charges are not a submission maximum.",
+        "url": "https://ieee-iotj.org/guidelines-for-authors/",
+        "checked_at": "2026-11-19"
       }
     },
     "impact_factor": {
@@ -981,6 +991,11 @@
         "value": "Research papers plus specialist data and software article routes.",
         "url": "https://shop.elsevier.com/journals/computer-networks/1389-1286",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "The current public guide does not specify a journal-wide numerical submission page maximum. Word submissions use a single-column layout; double-column is allowed for LaTeX.",
+        "url": "https://www.sciencedirect.com/journal/computer-networks/publish/guide-for-authors",
+        "checked_at": "2026-11-19"
       }
     },
     "impact_factor": {
@@ -1046,6 +1061,11 @@
         "value": "Theoretical and applied research, and surveys.",
         "url": "https://shop.elsevier.com/journals/computer-communications/0140-3664",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "The current public guide does not specify a journal-wide numerical submission page maximum. Word submissions use a single-column layout; double-column is allowed for LaTeX.",
+        "url": "https://www.sciencedirect.com/journal/computer-communications/publish/guide-for-authors",
+        "checked_at": "2026-11-19"
       }
     },
     "impact_factor": {
@@ -1217,7 +1237,7 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/td/write-for-us/15085",
     "impact_factor": {
       "value": 5.9,
       "year": 2025,
@@ -1232,12 +1252,12 @@
     },
     "details": {
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 18 double-column pages, including references and biographies. The base 12 pages is the overlength-charge threshold, not the submission maximum; no separate revised cap is stated.",
+        "url": "https://www.computer.org/csdl/journal/td/write-for-us/15085",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤18 pages",
+          "zh": "≤18 页"
         }
       }
     }
@@ -1267,7 +1287,7 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/tc/write-for-us/15066",
     "details": {
       "scope": {
         "value": "Computer architecture, accelerators, operating systems, and embedded computing.",
@@ -1275,12 +1295,12 @@
         "checked_at": "2026-11-14"
       },
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 14 double-column pages; up to 16 only with prior Editor-in-Chief approval. The 10–12-page range is the fee-free threshold, not the submission maximum.",
+        "url": "https://www.computer.org/csdl/journal/tc/write-for-us/15066",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤14 pages",
+          "zh": "≤14 页"
         }
       }
     },
@@ -1321,7 +1341,7 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/cc/write-for-us/15064",
     "impact_factor": {
       "value": 5.3,
       "year": 2025,
@@ -1336,12 +1356,12 @@
     },
     "details": {
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 18 double-column pages, including references and biographies. The base 12 pages is the overlength-charge threshold, not the submission maximum; no separate revised cap is stated.",
+        "url": "https://www.computer.org/csdl/journal/cc/write-for-us/15064",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤18 pages",
+          "zh": "≤18 页"
         }
       }
     }
@@ -1376,7 +1396,7 @@
       "version": "2026 (7th edition)"
     },
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/tq/write-for-us/15068",
     "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
     "impact_factor": {
       "value": 6.8,
@@ -1386,12 +1406,12 @@
     },
     "details": {
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 18 double-column pages, including references and biographies. The base 12 pages is the overlength-charge threshold, not the submission maximum; no separate revised cap is stated.",
+        "url": "https://www.computer.org/csdl/journal/tq/write-for-us/15068",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤18 pages",
+          "zh": "≤18 页"
         }
       }
     }
@@ -1418,7 +1438,7 @@
     "access": "hybrid",
     "access_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/ta/write-for-us/15060",
     "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
     "editor_in_chief": {
       "name": "Jesse Hoey",
@@ -1434,12 +1454,12 @@
     },
     "details": {
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 18 double-column pages, including references and biographies. The base 12 pages is the overlength-charge threshold, not the submission maximum; no separate revised cap is stated.",
+        "url": "https://www.computer.org/csdl/journal/ta/write-for-us/15060",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤18 pages",
+          "zh": "≤18 页"
         }
       }
     }
@@ -1465,7 +1485,7 @@
     "access": "hybrid",
     "access_url": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf",
     "checked_at": "2026-11-14",
-    "guidelines": "https://www.computer.org/publications/author-resources",
+    "guidelines": "https://www.computer.org/csdl/journal/ec/write-for-us/15071",
     "cfp_url": "https://www.computer.org/publications/author-resources/calls-for-papers",
     "editor_in_chief": {
       "name": "Patrick Schaumont",
@@ -1481,12 +1501,12 @@
     },
     "details": {
       "length": {
-        "value": "Initial: ≤18 formatted pages (CS regular-paper policy).",
-        "url": "https://ieeecs-media.computer.org/assets/pdf/MOPC_policy.pdf",
-        "checked_at": "2026-11-16",
+        "value": "Regular submissions: up to 16 double-column pages. More than 16 requires prior Editor-in-Chief approval, including for revisions; no separate revised cap. The base 12 pages is the fee threshold.",
+        "url": "https://www.computer.org/csdl/journal/ec/write-for-us/15071",
+        "checked_at": "2026-11-19",
         "initial": {
-          "en": "≤18 formatted pages (CS regular-paper policy)",
-          "zh": "≤18 排版页（学会常规稿通则）"
+          "en": "≤16 pages",
+          "zh": "≤16 页"
         }
       }
     }
@@ -1529,6 +1549,13 @@
           "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf"
         }
       ]
+    },
+    "details": {
+      "length": {
+        "value": "The current public author guide does not give a numeric page maximum for regular submissions. The approximately 5,000-word suggestion applies only to Research Highlights and is not a regular-paper cap.",
+        "url": "https://dl.acm.org/journal/tocs/author-guidelines",
+        "checked_at": "2026-11-19"
+      }
     }
   },
   {
@@ -1567,6 +1594,17 @@
       "source": "https://research.unsw.edu.au/people/professor-wen-hu",
       "since": "2024-02-01",
       "since_source": "https://www.acm.org/binaries/content/assets/about/annual-reports/f24-pubs-annual-report.pdf"
+    },
+    "details": {
+      "length": {
+        "value": "The official guide explicitly sets no page or word limit. Manuscript length must be commensurate with the contribution.",
+        "url": "https://dl.acm.org/journal/tosn/author-guidelines",
+        "checked_at": "2026-11-19",
+        "initial": {
+          "en": "No page/word limit",
+          "zh": "无页数／字数上限"
+        }
+      }
     }
   },
   {
@@ -1600,6 +1638,21 @@
       "source": "https://www.deib.polimi.it/eng/news/details/1512",
       "since": "2026-06",
       "since_source": "https://www.deib.polimi.it/eng/news/details/1512"
+    },
+    "details": {
+      "length": {
+        "value": "Initial submissions: at most 20 pages in the ACM 7×10 submission format, excluding references. Revised submissions: at most 25 pages including references.",
+        "url": "https://dl.acm.org/journal/taco/author-guidelines",
+        "checked_at": "2026-11-19",
+        "initial": {
+          "en": "≤20 pages (ACM template; excl. refs)",
+          "zh": "≤20 页（ACM 模板，不含参考文献）"
+        },
+        "revised": {
+          "en": "≤25 pages (incl. refs)",
+          "zh": "≤25 页（含参考文献）"
+        }
+      }
     }
   },
   {
@@ -1645,6 +1698,15 @@
         "value": "Parallel and distributed computing theory, algorithms, design, implementation, and evaluation.",
         "url": "https://shop.elsevier.com/journals/journal-of-parallel-and-distributed-computing/0743-7315",
         "checked_at": "2026-11-14"
+      },
+      "length": {
+        "value": "Regular-paper submission formatting guideline: 16 double-column pages or 20 single-column pages. Survey guideline: 24 double-column or 29 single-column pages. The guide contains inconsistent Research Note limits, so no Research Note maximum is recorded.",
+        "url": "https://www.sciencedirect.com/journal/journal-of-parallel-and-distributed-computing/publish/guide-for-authors",
+        "checked_at": "2026-11-19",
+        "initial": {
+          "en": "≤16 pages (or 20 single-column)",
+          "zh": "≤16 页（或单栏 20 页）"
+        }
       }
     },
     "impact_factor": {
@@ -1691,6 +1753,19 @@
       "year": 2025,
       "url": "https://link.springer.com/journal/11432",
       "checked_at": "2026-11-16"
+    },
+    "details": {
+      "length": {
+        "value": "The public guide gives research papers up to 16 printed pages, letters up to two printed pages, and reviews around 20 printed pages on average. It does not separately establish initial/revised manuscript maxima.",
+        "url": "https://scis.scichina.com/download/scis-info-for-authors.pdf",
+        "checked_at": "2026-11-19"
+      }
+    },
+    "ccf": {
+      "grade": "A",
+      "category": "交叉/综合/新兴",
+      "url": "https://www.ccf.org.cn/Academic_Evaluation/Cross_Compre_Emerging/zgjsjxhtjgjxskw/al/2023-03-09/787290.shtml",
+      "version": "2026 (7th edition)"
     }
   },
   {
