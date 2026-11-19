@@ -1,11 +1,45 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { runInNewContext } from "node:vm";
 import { annualCount, annualSeries, callStatus, cfpCheckLabel, communityId, compactSubmissionLength, currentEditor, currentEditors, daysLeft, editorMonth,
   groupCallsByCommunity, groupLibrary, journalGrade, journalRoute, safeLink } from "../tools/journals/journal-model.js";
 import { bindTrendTrigger } from "../tools/journals/trend-trigger.js";
 
 const registry = JSON.parse(readFileSync(new URL("../tools/journals/registry.json", import.meta.url), "utf8"));
+
+test("journal page has no personal-home controls or branding", () => {
+  const html = readFileSync(new URL("../tools/journals/index.html", import.meta.url), "utf8");
+  assert.doesNotMatch(html, /languageToggle|journal-utilities|Qinglin Xun|荀清林|href="\/"/);
+  assert.match(html, /<title>Journal Explorer<\/title>/);
+  assert.match(html, /rel="icon" href="\.\/favicon\.svg"/);
+});
+
+test("language setup works without a toggle and preserves the personal homepage toggle", () => {
+  const source = readFileSync(new URL("../assets/js/site.js", import.meta.url), "utf8");
+  function setup(page, lang, toggle = null) {
+    const root = { dataset: { page } };
+    const document = { documentElement: root, getElementById: id => id === "languageToggle" ? toggle : null,
+      querySelectorAll: () => [] };
+    const window = { location: { search: "?lang=" + lang }, addEventListener() {},
+      localStorage: { getItem: () => null, setItem() {} } };
+    runInNewContext(source, { document, window, URLSearchParams, navigator: { language: "en" } });
+    return { root, document };
+  }
+  for (const lang of ["zh", "en"]) {
+    const { root, document } = setup("journals", lang);
+    assert.equal(root.dataset.lang, lang);
+    assert.equal(document.title, lang === "zh" ? "期刊观察" : "Journal Explorer");
+  }
+  let click;
+  const toggle = { setAttribute() {}, addEventListener: (event, fn) => { if (event === "click") click = fn; } };
+  const home = setup("home", "zh", toggle);
+  assert.equal(home.document.title, "荀清林｜主页");
+  assert.equal(toggle.textContent, "English");
+  click();
+  assert.equal(home.document.title, "Qinglin Xun | Homepage");
+  assert.equal(toggle.textContent, "中文");
+});
 
 test("SI timestamp comes from the saved check and always uses Beijing time", () => {
   assert.equal(cfpCheckLabel("2026-11-19T12:07:47Z"), "2026-11-19 20:07");
