@@ -3,44 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Compare communications and computer science journals, track special issue deadlines, and explore annual publication counts.">
+  <meta name="description" content="Browse communications and computer science journals by society, check submission limits, and track calls for special issues.">
   <title>Journal Explorer | Qinglin Xun</title>
   <link rel="canonical" href="https://ql-xun.github.io/tools/journals/">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/css/site.css?v=20261114-journals">
-  <link rel="stylesheet" href="./journals.css?v=1">
+  <link rel="stylesheet" href="./journals.css?v=6">
   <script defer src="/assets/js/site.js?v=20261114-journals"></script>
-  <script type="module" src="./journals.js?v=1"></script>
+  <script type="module" src="./journals.js?v=6"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="topbar">
-      <a class="brand" href="/">Qinglin Xun Homepage</a>
-      <nav class="topnav" aria-label="Primary navigation">
-        <a href="/"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
-        <a href="/hobbies.html"><span class="lang-en">Hobbies</span><span class="lang-zh">兴趣爱好</span></a>
-        <a href="/thoughts.html"><span class="lang-en">Thoughts</span><span class="lang-zh">思考</span></a>
-        <a href="/tools/journals/" aria-current="page"><span class="lang-en">Tools</span><span class="lang-zh">工具</span></a>
-      </nav>
-      <button id="languageToggle" class="language-toggle" type="button" aria-label="切换至中文">中文</button>
-    </div>
-  </header>
   <main class="journal-shell">
     <header class="journal-intro">
       <h1><span class="lang-en">Journal Explorer</span><span class="lang-zh">期刊观察</span></h1>
-      <p><span class="lang-en">Compare communications and computer science journals and keep track of special issue deadlines.</span><span class="lang-zh">查阅通信与计算机领域的期刊资料，对比发文趋势，追踪特刊截止日期。</span></p>
-      <p id="journal-meta" class="journal-muted" aria-live="polite"></p>
+      <p><span class="lang-en">Journal information, submission limits, and special issue calls.</span><span class="lang-zh">查阅期刊资料、投稿要求与特刊征稿。</span></p>
+      <nav class="journal-utilities" aria-label="Page controls">
+        <a href="/"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+        <button id="languageToggle" class="language-toggle" type="button" aria-label="切换至中文">中文</button>
+      </nav>
     </header>
     <div id="journal-app">
       <p role="status"><span class="lang-en">Loading journal data…</span><span class="lang-zh">正在加载期刊数据…</span></p>
     </div>
     <noscript>Journal Explorer requires JavaScript. 期刊观察需要启用 JavaScript。</noscript>
-    <footer class="journal-method">
-      <h2><span class="lang-en">Data and methods</span><span class="lang-zh">数据与口径</span></h2>
-      <p><span class="lang-en">OpenAlex counts journal articles and reviews by publication year. Coverage depends on its index; counts are not publisher totals or acceptance rates. The current year is incomplete.</span><span class="lang-zh">OpenAlex 按出版年份统计收录的 article 与 review，不等同于出版社公布的发文量，也不代表录用率。本年度数据尚不完整。</span></p>
-      <p><span class="lang-en">Deadline information may change. Confirm the latest date and time zone on the official call. Check journal metrics at their respective official sources:</span><span class="lang-zh">征稿日期可能变化，请以官方 CFP 的最新日期和时区为准。更多等级信息可在相应官方渠道查询：</span></p>
-      <p class="journal-links"><a href="https://www.ccf.org.cn/Academic_Evaluation/By_category/">CCF</a><a href="https://help.openalex.org/how-to/counting/">OpenAlex</a><a href="https://jcr.clarivate.com/">Journal Citation Reports</a><a href="https://www.fenqubiao.com/"><span class="lang-en">CAS Journal Ranking</span><span class="lang-zh">中科院期刊分区表</span></a></p>
-    </footer>
   </main>
 </body>
 </html>

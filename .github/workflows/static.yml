@@ -12,9 +12,14 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      refresh_statistics:
+        description: 'Refresh OpenAlex statistics (quarterly maintenance)'
+        type: boolean
+        default: false
   schedule:
-    # 08:17 Beijing time. The updater runs full statistics on Sundays.
-    - cron: '17 0 * * *'
+    # 08:00 Beijing time (00:00 UTC). GitHub scheduling may be delayed.
+    - cron: '0 0 * * *'
 
 permissions:
   contents: read
@@ -70,10 +75,13 @@ jobs:
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         env:
           BEFORE_SHA: ${{ github.event.before }}
+          REFRESH_STATISTICS: ${{ inputs.refresh_statistics }}
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: |
-          options=()
-          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then options+=(--full); fi
+          options=(--cfp-only)
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" && "$REFRESH_STATISTICS" == "true" ]]; then
+            options=(--full)
+          fi
           if [[ "$GITHUB_EVENT_NAME" == "push" ]] && git cat-file -e "${BEFORE_SHA}^{commit}" \
             && ! git cat-file -e "${BEFORE_SHA}:tools/journals/snapshot.json" 2>/dev/null; then
             options+=(--bootstrap)

@@ -4,6 +4,18 @@ export function safeLink(value) {
   catch { return null; }
 }
 
+export function cfpCheckLabel(value) {
+  // Never substitute the visitor's clock or a metadata-only build time.
+  if (typeof value !== "string" || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.test(value)) return null;
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return null;
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+  }).formatToParts(date).map(part => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
+}
+
 export function daysLeft(date, today) {
   if (![date, today].every(value => /^\d{4}-\d\d-\d\d$/.test(value || ""))) return null;
   const times = [date, today].map(value => Date.parse(value + "T00:00:00Z"));
@@ -19,55 +31,106 @@ export function callStatus(call, today) {
   return days === null ? "unknown" : days < 0 ? "past" : "open";
 }
 
-export function filterJournals(entries, filters, stats, year) {
-  const terms = (filters.query || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const count = item => stats[item.id]?.counts?.[year] ?? -1;
-  const grade = item => ["A", "B", "C", "not-listed", undefined].indexOf(item.ccf?.grade);
-  return entries.filter(item =>
-    (!filters.category || filters.category === item.category) &&
-    (!filters.publisher || filters.publisher === item.publisher) &&
-    (!filters.access || filters.access === (item.access || "unknown")) &&
-    (!filters.grade || filters.grade === (item.ccf?.grade || "unknown")) &&
-    terms.every(term => [item.abbreviation, item.name, item.publisher, item.issn, ...(item.tags || []), ...(item.aliases || [])].join(" ").toLowerCase().includes(term))
-  ).sort((a, b) => (filters.sort === "count" ? count(b) - count(a)
-    : filters.sort === "grade" ? grade(a) - grade(b) : 0) || a.abbreviation.localeCompare(b.abbreviation));
+const communities = [
+  ["comsoc", ["commag", "ieee-network", "wcm", "jsac", "ton", "tccn", "tgcn", "tnse", "tnsm", "iotj"]],
+  ["computer", ["tdsc", "taffc", "tetc"]],
+  ["other", ["tsp", "jstsp", "tvt", "scis"]]
+];
+const otherSocieties = { tsp: "sps", jstsp: "sps", tvt: "vts", scis: "scp" };
+const libraryComSoc = new Set([...communities[0][1], "tcom", "twc", "comst", "cl", "wcl", "oj-coms"]);
+const libraryComputer = new Set([...communities[1][1], "tmc", "tpds", "tc", "tcc"]);
+export const libraryCommunities = ["comsoc", "computer", "acm", "other"];
+
+export function communityId(value) {
+  return communities.some(([id]) => id === value) ? value : "comsoc";
 }
 
-export function sanitizeNotes(value, allowed) {
-  if (!value || value.version !== 1 || !value.items || typeof value.items !== "object" || Array.isArray(value.items)) {
-    throw new Error("Invalid favorites export");
+export function journalRoute(search) {
+  const query = new URLSearchParams(search);
+  if (query.get("view") === "library") {
+    const society = query.get("librarySociety");
+    return { view: "library", society: libraryCommunities.includes(society) ? society : "comsoc" };
   }
-  const items = Object.create(null);
-  for (const [key, note] of Object.entries(value.items)) {
-    if (allowed.has(key) && typeof note === "string") items[key] = note.slice(0, 4000);
-  }
-  return items;
+  return { view: "tracker", society: communityId(query.get("society")) };
 }
 
-const icsEscape = value => String(value).replace(/\\/g, "\\\\").replace(/\r\n|[\r\n]/g, "\\n").replace(/[;,]/g, "\\$&");
-function foldLine(line) {
-  const encoder = new TextEncoder();
-  let current = "", size = 0;
-  const parts = [];
-  for (const char of line) {
-    const length = encoder.encode(char).length;
-    if (size + length > 75) { parts.push(current); current = " "; size = 1; }
-    current += char;
-    size += length;
-  }
-  return [...parts, current].join("\r\n");
+export function journalGrade(journal) {
+  const grade = journal.ccf?.grade;
+  return ["A", "B", "C"].includes(grade) ? grade : null;
 }
-export function calendar(calls, now = new Date()) {
-  const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Qinglin Xun//Journal Explorer//EN", "CALSCALE:GREGORIAN"];
+
+export function groupLibrary(journals) {
+  const groups = new Map(libraryCommunities.map(id => [id, []]));
+  for (const journal of journals) {
+    const id = libraryComSoc.has(journal.id) ? "comsoc" : libraryComputer.has(journal.id) ? "computer" :
+      journal.publisher === "ACM" ? "acm" : "other";
+    groups.get(id).push(journal);
+  }
+  return [...groups].map(([id, entries]) => ({
+    id,
+    journals: entries.sort((a, b) => (journalGrade(a) || "Z").localeCompare(journalGrade(b) || "Z", "en") ||
+      a.abbreviation.localeCompare(b.abbreviation, "en"))
+  }));
+}
+
+function editorAt(editor, today) {
+  return editor?.next?.since && editor.next.since <= today ? editor.next : editor;
+}
+
+export function currentEditor(journal, today) {
+  return editorAt(journal.editor_in_chief, today);
+}
+
+export function currentEditors(journal, today) {
+  const editor = journal.editor_in_chief;
+  return editor ? [currentEditor(journal, today), ...(editor.co_editors || []).map(member => editorAt(member, today))] : [];
+}
+
+// Month-only presentation; keep original precision for provenance and handovers.
+export function editorMonth(value) {
+  return /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/.test(value || "") ?
+    value.slice(0, 4) + "-" + (value.slice(5, 7) || "01") : null;
+}
+
+export function compactSubmissionLength(text) {
+  return text?.replace(/（双栏）/g, "").replace(/（双栏，/g, "（")
+    .replace(/\s*\(double[- ]column\)/gi, "").replace(/\(double[- ]column[;,]\s*/gi, "(")
+    .replace(/^(?:通常\s*|Typically\s+)/i, "")
+    .replace(/（正文）|\s*\(main text\)/gi, "").trim();
+}
+
+export function annualCount(data, year) {
+  const count = data?.counts?.[year];
+  return Number.isSafeInteger(count) && count >= 0 ? count : null;
+}
+
+export function annualSeries(journal, data, currentYear) {
+  return Array.from({ length: 6 }, (_, i) => {
+    const year = currentYear - 5 + i;
+    return { year, count: annualCount(data, year), partial: year === currentYear,
+      predecessor: Boolean(journal.previous_issns?.some(entry => year <= entry.through)) };
+  }).filter(row => !row.partial || row.count !== null);
+}
+
+export function groupCallsByCommunity(journals, calls, today) {
+  const active = new Map();
   for (const call of calls) {
-    if (!/^\d{4}-\d\d-\d\d$/.test(call.deadline || "") || !/^[a-z0-9-]+$/.test(call.id)) continue;
-    lines.push("BEGIN:VEVENT", "UID:" + call.id + "@ql-xun.github.io", "DTSTAMP:" + stamp,
-      "DTSTART;VALUE=DATE:" + call.deadline.replace(/-/g, ""),
-      "SUMMARY:" + icsEscape(call.title),
-      "DESCRIPTION:" + icsEscape("Submission deadline. Confirm time and time zone on the official CFP."),
-      ...(safeLink(call.url) ? ["URL:" + safeLink(call.url)] : []), "END:VEVENT");
+    if (!["open", "ongoing"].includes(callStatus(call, today))) continue;
+    if (!active.has(call.journal_id)) active.set(call.journal_id, []);
+    active.get(call.journal_id).push(call);
   }
-  lines.push("END:VCALENDAR");
-  return lines.map(foldLine).join("\r\n") + "\r\n";
+  const byId = new Map(journals.map(item => [item.id, item]));
+  const assigned = new Set(communities.flatMap(([, ids]) => ids));
+  return communities.map(([id, ids]) => {
+    const titles = ids.map(key => byId.get(key)).filter(Boolean);
+    if (id === "other") {
+      titles.push(...journals.filter(item => !assigned.has(item.id) && (item.cfp_url || active.has(item.id)))
+        .sort((a, b) => a.name.localeCompare(b.name, "en")));
+    }
+    return { id, journals: titles.map(journal => ({
+      journal,
+      subgroup: id === "other" ? otherSocieties[journal.id] || "misc" : null,
+      calls: (active.get(journal.id) || []).sort((a, b) => a.title.localeCompare(b.title, "en"))
+    })) };
+  }).filter(group => group.journals.length);
 }
