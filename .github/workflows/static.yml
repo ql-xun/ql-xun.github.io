@@ -20,8 +20,6 @@ on:
   schedule:
     # 08:00 Beijing time (00:00 UTC). GitHub scheduling may be delayed.
     - cron: '0 0 * * *'
-    # TEMPORARY: 2026-11-20, 10:03-11:58 Beijing time; remove after verification.
-    - cron: '3-58/5 2,3 20 11 *'
 
 permissions:
   contents: read
@@ -33,28 +31,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  schedule_probe:
-    name: Scheduled trigger probe (no deployment)
-    if: github.event_name == 'schedule' && github.event.schedule == '3-58/5 2,3 20 11 *'
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-      - name: Record actual scheduler evidence only
-        env:
-          TRIGGER_EVENT: ${{ github.event_name }}
-          TRIGGER_CRON: ${{ github.event.schedule }}
-        run: |
-          test "$TRIGGER_EVENT" = schedule
-          test "$TRIGGER_CRON" = '3-58/5 2,3 20 11 *'
-          printf 'event=%s\ncron=%s\nrun_id=%s\nhead_sha=%s\n' "$TRIGGER_EVENT" "$TRIGGER_CRON" "$GITHUB_RUN_ID" "$GITHUB_SHA"
-          date -u '+utc=%Y-%m-%dT%H:%M:%SZ'
-          TZ=Asia/Shanghai date '+beijing=%Y-%m-%dT%H:%M:%S%z'
-
   validate:
     name: Validate site and prepare Pages artifact
-    if: github.event_name != 'schedule' || github.event.schedule == '0 0 * * *'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -129,7 +107,7 @@ jobs:
           path: ${{ runner.temp }}/pages-site
 
   deploy:
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && (github.event_name != 'schedule' || github.event.schedule == '0 0 * * *')
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
     needs: validate
     permissions:
       contents: read
