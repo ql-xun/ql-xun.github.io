@@ -7926,6 +7926,35 @@
       "title": "Call for Papers: IEEE Transactions on Dependable and Secure Computing",
       "url": "https://www.computer.org/digital-library/journals/tq/cfp-dependable-secure-computing"
     },
+    "tdsc-a6d1c6ef7834c62e93": {
+      "checked_at": "2026-11-20T13:04:27.922227+08:00",
+      "cs_detail_version": 2,
+      "deadline": "2027-09-30",
+      "deadline_source": "https://www.computer.org/digital-library/journals/tq/cfp-observability-dependable-secure-agent",
+      "deadline_text": "30 September 2027",
+      "deadline_version": 0,
+      "detail_checked_at": "2026-11-20T15:21:33.324542+08:00",
+      "editors": [
+        "Xuan Liu",
+        "Hong Xu",
+        "Mauro Conti",
+        "Roberto Di Pietro"
+      ],
+      "history": [
+        {
+          "at": "2026-11-20T12:05:09.502423+08:00",
+          "kind": "new",
+          "to": "2027-09-30"
+        }
+      ],
+      "id": "tdsc-a6d1c6ef7834c62e93",
+      "journal_id": "tdsc",
+      "listed": true,
+      "publication": null,
+      "status": "dated",
+      "title": "Special Issue on Observability for Dependable and Secure Agent Systems",
+      "url": "https://www.computer.org/digital-library/journals/tq/cfp-observability-dependable-secure-agent"
+    },
     "tdsc-a952a51de44a688812": {
       "checked_at": "2026-11-19T20:14:03.233195+08:00",
       "deadline": "2027-01-15",
@@ -11790,6 +11819,7 @@
     "taffc-1ccfaeb3515a4b8688:change:1:2027-01-30": "2026-11-14",
     "taffc-f8c76eeafc99719fae:change:1:2026-12-30": "2026-11-14",
     "tdsc-1bb1633b144cccb850:new": "2026-11-14",
+    "tdsc-a6d1c6ef7834c62e93:new": "2026-11-20",
     "tdsc-a952a51de44a688812:new": "2026-11-14",
     "tdsc-cedbce84cffc0d5de3:new": "2026-11-14",
     "tetc-a2847fcdb2ccc621b5:change:1:2027-01-15": "2026-11-14",
