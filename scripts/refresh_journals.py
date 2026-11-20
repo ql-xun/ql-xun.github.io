@@ -15,7 +15,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-from journal_cfp import CS_JOURNALS, PUBLISHERS, detail_fields, parse_page, parser_for, pdf_fields
+from journal_cfp import CS_DETAIL_VERSION, CS_JOURNALS, PUBLISHERS, detail_fields, parse_page, parser_for, pdf_fields
 from journal_digest import create_digest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -136,6 +136,8 @@ def saved_detail(item, prior, prefer_detail):
     if not prior.get("detail_checked_at"):
         return
     item["detail_checked_at"] = prior["detail_checked_at"]
+    if "cs_detail_version" in prior:
+        item["cs_detail_version"] = prior["cs_detail_version"]
     if prior["status"] == "closed" or ((prefer_detail or item["status"] == "unknown") and prior.get("deadline")):
         item["deadline"], item["status"] = prior["deadline"], prior["status"]
         if prior.get("deadline_source"):
@@ -171,6 +173,7 @@ def refresh_source(journal, old, prior_calls, now):
             # SCIS may replace a PDF in place while its directory remains unchanged.
             max_age = 0 if journal_id == "scis" else 1 if prefer_detail else 7
             fresh = (last and not prior.get("detail_stale") and 0 <= (today - date.fromisoformat(last[:10])).days < max_age
+                     and (journal_id not in CS_JOURNALS or prior.get("cs_detail_version") == CS_DETAIL_VERSION)
                      and (not prefer_detail or prior.get("deadline_source") == item["url"]))
             if fresh and prior.get("deadline_text") == item["deadline_text"]:
                 saved_detail(item, prior, prefer_detail)
@@ -194,6 +197,8 @@ def refresh_source(journal, old, prior_calls, now):
                     raise ValueError("Official CFP submission deadline not found")
                 if editors:
                     item["editors"] = editors
+                if journal_id in CS_JOURNALS and (editors or not prior.get("editors")):
+                    item["cs_detail_version"] = CS_DETAIL_VERSION
                 item["detail_checked_at"] = now.isoformat()
                 if detail_date == "Closed":
                     item["deadline"], item["status"] = None, "closed"

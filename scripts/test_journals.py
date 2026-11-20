@@ -75,6 +75,38 @@ class CFPTests(unittest.TestCase):
                                '<h2>Guest Editors</h2><p><a href="mailto:editor@example.org">A. Editor</a></p></main>')
         self.assertEqual(fields, (["A. Editor"], "2026-11-21"))
 
+    def test_tdsc_observability_uses_linked_names_and_refreshes_legacy_cache(self):
+        # Minimal markup from the TDSC Observability CFP; the delimiters vary by editor.
+        detail = """<main><p>Submission deadline: 30 September 2027</p><h2>Guest Editors</h2>
+            <ul><li><a href="mailto:a@example.org">Xuan Liu</a>, College of Engineering</li>
+            <li><a href="mailto:b@example.org"><strong>Hong Xu</strong></a> (Department of Computer Science and Engineering, CUHK</li>
+            <li><a href="mailto:c@example.org">Mauro Conti</a>, University of Padua</li>
+            <li><a href="mailto:d@example.org">Roberto Di Pietro</a> Computer Science Program, KAUST</li></ul></main>"""
+        expected = ["Xuan Liu", "Hong Xu", "Mauro Conti", "Roberto Di Pietro"]
+        journal = {"id": "tdsc", "cfp_url": CS_URL}
+        [old] = parse_page(CS_DIR, CS_URL, "tdsc")
+        old.update(editors=["Xuan Liu", "Mauro Conti", "Roberto Di Pietro Computer Science Program"],
+                   detail_checked_at=DATE, deadline_source=old["url"])
+        # A missing section must not certify an obsolete cached list as repaired.
+        with patch("refresh_journals.read_url", side_effect=[CS_DIR, "<p>Submission deadline: 30 September 2027</p>"]):
+            _, _, [incomplete] = refresh_source(journal, {}, {old["id"]: old}, NOW)
+        self.assertEqual(incomplete["editors"], old["editors"])
+        self.assertNotIn("cs_detail_version", incomplete)
+        with patch("refresh_journals.read_url", side_effect=[CS_DIR, detail]):
+            _, _, [item] = refresh_source(journal, {}, {old["id"]: incomplete}, NOW)
+        self.assertEqual((item["editors"], item["deadline"]), (expected, "2027-09-30"))
+        with patch("refresh_journals.read_url", side_effect=[CS_DIR]) as read:
+            _, _, [cached] = refresh_source(journal, {}, {item["id"]: item}, NOW)
+        self.assertEqual((read.call_count, cached["editors"]), (1, expected))
+
+    def test_mixed_editor_rows_do_not_replace_names_with_affiliation_links(self):
+        detail = """<h3>Guest Editors</h3><ul>
+            <li><a href="/people/rivera">Ana Rivera</a> Department of Computing, Example University</li>
+            <li>John Scholar, <a href="/lab">Research Group</a></li>
+            <li>Jane Researcher, <a href="mailto:jane@example.org">jane@example.org</a></li>
+            <li>Corresponding TETC Editor: <a href="/editor">Other Person</a></li></ul>"""
+        self.assertEqual(detail_fields(detail)[0], ["Ana Rivera", "John Scholar", "Jane Researcher"])
+
     def test_tnet_single_topic_tracks_submission_not_publication(self):
         [item] = parse_page("""<main><h2>IEEE Transactions on Networking Special Issue on AI and Networking</h2>
             <p>Manuscript Submission Deadline: 15 January 2025</p><p>Planned Publication: March 2026</p></main>""",

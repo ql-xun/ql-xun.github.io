@@ -13,6 +13,8 @@ COMPUTER = "www.computer.org"
 SPS = "signalprocessingsociety.org"
 SCIS = "scis.scichina.com"
 CS_JOURNALS = {"tdsc": "tq", "taffc": "ta", "tetc": "ec"}
+# Unversioned CS detail caches flattened linked editor names and affiliations.
+CS_DETAIL_VERSION = 2
 PUBLISHERS = {COMSOC, COMPUTER, SPS, SCIS,
               "ieee-iotj.org", "vtsociety.org", "www.vtsociety.org"}
 MONTH = r"(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)"
@@ -289,6 +291,18 @@ def editor_name(line):
     return None
 
 
+def listed_editor(row):
+    line = text(row)
+    anchor = row.find("a", href=True)
+    if anchor is not None:
+        # Only a leading name link identifies the editor. Never follow the
+        # link or treat a later institution/contact link as a person's name.
+        label = text(anchor)
+        if label and line.startswith(label) and (name := editor_name(label)):
+            return name
+    return editor_name(line)
+
+
 def detail_fields(html):
     soup = soup_for(html)
     body = next((article for article in soup.select("article.general-post-content") if text(article)), None)
@@ -301,8 +315,10 @@ def detail_fields(html):
         if node is None and heading.name in {"strong", "b"}:
             node = heading.parent.find_next_sibling()
         if node and node.name in {"p", "ul", "ol", "div"}:
-            rows = [text(li) for li in node.select("li")] or node.get_text("\n", strip=True).splitlines()
-            editors = [name for row in rows if (name := editor_name(row))]
+            if rows := node.select("li"):
+                editors = [name for row in rows if (name := listed_editor(row))]
+            else:
+                editors = [name for line in node.get_text("\n", strip=True).splitlines() if (name := editor_name(line))]
         if editors:
             break
     deadline = submission_text(text(body))

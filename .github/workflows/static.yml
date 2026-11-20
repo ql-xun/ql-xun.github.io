@@ -51,11 +51,12 @@ jobs:
           node-version: "22"
       - name: Install journal parser
         run: python -m pip install -r scripts/requirements-journals.txt
+      - name: Test journal parsing and guest-editor cache migration
+        run: python -B -m unittest discover -v -s scripts -p 'test_journal*.py'
       - name: Check site contract
         run: |
           python -B scripts/check_site_contract.py
           python -B scripts/refresh_journals.py --validate
-          python -B -m unittest discover -s scripts -p 'test_journal*.py'
           node --check assets/js/site.js
           node --check tools/journals/journals.js
           node --test scripts/test_journal_model.mjs
