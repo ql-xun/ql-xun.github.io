@@ -1,0 +1,26 @@
+name: Temporary cron control 2026-11-20
+
+on:
+  schedule:
+    # Bounded diagnostic window: 10:04-11:59 Beijing time on 2026-11-20.
+    - cron: '4-59/5 2,3 20 11 *'
+
+permissions:
+  contents: read
+
+jobs:
+  scheduled_control:
+    name: Scheduled control (logs only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Record actual scheduler evidence only
+        env:
+          TRIGGER_EVENT: ${{ github.event_name }}
+          TRIGGER_CRON: ${{ github.event.schedule }}
+        run: |
+          test "$TRIGGER_EVENT" = schedule
+          test "$TRIGGER_CRON" = '4-59/5 2,3 20 11 *'
+          printf 'event=%s\ncron=%s\nrun_id=%s\nhead_sha=%s\n' "$TRIGGER_EVENT" "$TRIGGER_CRON" "$GITHUB_RUN_ID" "$GITHUB_SHA"
+          date -u '+utc=%Y-%m-%dT%H:%M:%SZ'
+          TZ=Asia/Shanghai date '+beijing=%Y-%m-%dT%H:%M:%S%z'
