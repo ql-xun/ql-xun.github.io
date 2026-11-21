@@ -12,7 +12,7 @@ test("journal page has no personal-home controls or branding", () => {
   const html = readFileSync(new URL("../tools/journals/index.html", import.meta.url), "utf8");
   assert.doesNotMatch(html, /languageToggle|journal-utilities|Qinglin Xun|荀清林|href="\/"/);
   assert.match(html, /<title>Journal Explorer<\/title>/);
-  assert.match(html, /rel="icon" href="\.\/favicon\.svg"/);
+  assert.match(html, /rel="icon" href="\.\/favicon\.svg(?:\?v=[\w-]+)?"/);
 });
 
 test("language setup works without a toggle and preserves the personal homepage toggle", () => {
