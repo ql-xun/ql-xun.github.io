@@ -296,6 +296,35 @@ def validate_impact(impact, journal_id):
     require(year is None or year <= checked.year, f"Future impact factor year: {journal_id}")
 
 
+def validate_rankings(rankings, journal_id):
+    def has_text(value):
+        return isinstance(value, str) and bool(value.strip())
+
+    require(isinstance(rankings, dict) and rankings.keys() <= {"jcr", "cas"},
+            f"Invalid rankings: {journal_id}")
+    for system, data in rankings.items():
+        label = f"{journal_id}/{system}"
+        require(isinstance(data, dict) and data.get("year") == 2025 and
+                has_text(data.get("source")) and https_url(data.get("url")), f"Invalid ranking source or year: {label}")
+        require(date.fromisoformat(data["checked_at"]).year >= (2026 if system == "jcr" else 2025),
+                f"Invalid ranking check date: {label}")
+        if system == "jcr":
+            categories = data.get("categories")
+            require(isinstance(categories, list) and bool(categories) and
+                    type(data.get("partial", False)) is bool, f"Invalid JCR categories: {label}")
+            names = set()
+            for item in categories:
+                require(isinstance(item, dict) and has_text(item.get("category")) and
+                        item.get("quartile") in ("Q1", "Q2", "Q3", "Q4"), f"Invalid JIF quartile: {label}")
+                name = item["category"].strip().casefold()
+                require(name not in names, f"Duplicate JCR category: {label}")
+                names.add(name)
+        else:
+            category, zone = data.get("category"), data.get("zone")
+            require(isinstance(category, dict) and all(has_text(category.get(lang)) for lang in ("en", "zh"))
+                    and type(zone) is int and 1 <= zone <= 4, f"Invalid CAS major category: {label}")
+
+
 def validate_registry(journals):
     require(isinstance(journals, list) and bool(journals), "Journal registry is empty")
     ids = set()
@@ -317,6 +346,8 @@ def validate_registry(journals):
             validate_editor(row["editor_in_chief"], key)
         if row.get("impact_factor") is not None:
             validate_impact(row["impact_factor"], key)
+        if "rankings" in row:
+            validate_rankings(row["rankings"], key)
         for metric_key, metric in row.get("details", {}).items():
             require(bool(metric["value"]) and https_url(metric["url"]), "Unsourced detail")
             date.fromisoformat(metric["checked_at"])

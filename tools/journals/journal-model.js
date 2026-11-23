@@ -59,6 +59,11 @@ export function journalGrade(journal) {
   return ["A", "B", "C"].includes(grade) ? grade : null;
 }
 
+export function jcrRange(jcr) {
+  const quartiles = [...new Set(jcr?.categories?.map(item => item.quartile) || [])].sort();
+  return quartiles.length > 1 ? quartiles[0] + "–" + quartiles.at(-1) : quartiles[0] ?? null;
+}
+
 export function groupLibrary(journals) {
   const groups = new Map(libraryCommunities.map(id => [id, []]));
   for (const journal of journals) {

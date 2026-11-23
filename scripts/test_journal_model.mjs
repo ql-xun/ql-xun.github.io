@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 import { annualCount, annualSeries, callStatus, cfpCheckLabel, communityId, compactSubmissionLength, currentEditor, currentEditors, daysLeft, editorMonth,
-  groupCallsByCommunity, groupLibrary, journalGrade, journalRoute, safeLink } from "../tools/journals/journal-model.js";
+  groupCallsByCommunity, groupLibrary, jcrRange, journalGrade, journalRoute, safeLink } from "../tools/journals/journal-model.js";
 import { bindTrendTrigger } from "../tools/journals/trend-trigger.js";
 
 const registry = JSON.parse(readFileSync(new URL("../tools/journals/registry.json", import.meta.url), "utf8"));
@@ -11,34 +11,63 @@ const registry = JSON.parse(readFileSync(new URL("../tools/journals/registry.jso
 test("journal page has no personal-home controls or branding", () => {
   const html = readFileSync(new URL("../tools/journals/index.html", import.meta.url), "utf8");
   assert.doesNotMatch(html, /languageToggle|journal-utilities|Qinglin Xun|荀清林|href="\/"/);
-  assert.match(html, /<title>Journal Explorer<\/title>/);
+  assert.match(html, /<html lang="zh-CN" data-lang="zh" data-page="journals">/);
+  assert.match(html, /<title>期刊观察<\/title>/);
   assert.match(html, /rel="icon" href="\.\/favicon\.svg(?:\?v=[\w-]+)?"/);
 });
 
-test("language setup works without a toggle and preserves the personal homepage toggle", () => {
+test("journal language defaults to Chinese in isolation and follows history; homepage toggle still works", () => {
   const source = readFileSync(new URL("../assets/js/site.js", import.meta.url), "utf8");
-  function setup(page, lang, toggle = null) {
+  function setup(page, search, toggle = null) {
     const root = { dataset: { page } };
     const document = { documentElement: root, getElementById: id => id === "languageToggle" ? toggle : null,
       querySelectorAll: () => [] };
-    const window = { location: { search: "?lang=" + lang }, addEventListener() {},
-      localStorage: { getItem: () => null, setItem() {} } };
+    const events = new Map();
+    let saved = "en";
+    const writes = [];
+    const window = { location: { search }, addEventListener: (event, fn) => events.set(event, fn),
+      localStorage: { getItem: () => saved, setItem: (key, next) => { saved = next; writes.push([key, next]); } } };
     runInNewContext(source, { document, window, URLSearchParams, navigator: { language: "en" } });
-    return { root, document };
+    return { root, document, window, writes, events };
   }
-  for (const lang of ["zh", "en"]) {
-    const { root, document } = setup("journals", lang);
+  for (const [search, lang] of [["", "zh"], ["?view=library", "zh"], ["?lang=fr", "zh"], ["?lang=zh", "zh"], ["?lang=en", "en"]]) {
+    const { root, document, window, events, writes } = setup("journals", search);
     assert.equal(root.dataset.lang, lang);
     assert.equal(document.title, lang === "zh" ? "期刊观察" : "Journal Explorer");
+    window.location.search = "?lang=en&view=library";
+    events.get("popstate")();
+    assert.equal(root.lang, "en");
+    window.location.search = "";
+    events.get("popstate")();
+    assert.equal(root.lang, "zh-CN");
+    assert.deepEqual(writes, []);
   }
   let click;
   const toggle = { setAttribute() {}, addEventListener: (event, fn) => { if (event === "click") click = fn; } };
-  const home = setup("home", "zh", toggle);
+  const home = setup("home", "?lang=zh", toggle);
   assert.equal(home.document.title, "荀清林｜主页");
   assert.equal(toggle.textContent, "English");
   click();
   assert.equal(home.document.title, "Qinglin Xun | Homepage");
   assert.equal(toggle.textContent, "中文");
+});
+
+test("rank summaries use the JIF quartile range, not a best-only value; missing is null", () => {
+  const byId = new Map(registry.map(journal => [journal.id, journal]));
+  assert.equal(jcrRange(byId.get("tcom").rankings.jcr), "Q1");
+  assert.equal(jcrRange(byId.get("wcl").rankings.jcr), "Q1–Q2");
+  assert.equal(jcrRange(byId.get("taco").rankings.jcr), "Q2–Q3");
+  assert.equal(jcrRange(byId.get("ton").rankings?.jcr), null);
+  assert.equal(jcrRange({ categories: [{ quartile: "Q2" }], partial: true }), "Q2");
+  assert.equal(byId.get("scis").rankings.cas.category.zh, "计算机科学");
+  assert.equal(byId.get("scis").rankings.cas.zone, 1);
+  assert.equal(registry.filter(row => row.rankings?.cas?.year === 2025).length, 32);
+  assert.equal(byId.get("ton").rankings?.cas, undefined);
+  assert.equal(byId.get("tcom").rankings.cas.zone, 2);
+  assert.equal(byId.get("tsp").rankings.cas.category.zh, "工程技术");
+  assert.equal(byId.get("tocs").rankings.cas.zone, 4);
+  const snapshot = JSON.parse(readFileSync(new URL("../tools/journals/snapshot.json", import.meta.url), "utf8"));
+  assert.deepEqual(snapshot.journals.map(row => [row.id, row.rankings]), registry.map(row => [row.id, row.rankings]));
 });
 
 test("SI timestamp comes from the saved check and always uses Beijing time", () => {

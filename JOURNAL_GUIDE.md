@@ -18,7 +18,7 @@ node --test scripts/test_journal_model.mjs
 python -B scripts/serve_site.py 8775
 ```
 
-打开 `http://127.0.0.1:8775/tools/journals/?lang=zh`。用 `view=library` 直达资料库，用 `librarySociety=comsoc|computer|acm|other` 指定资料库学会。预览仅监听本机；服务运行时，网页文件保存后会自动刷新。
+打开 `http://127.0.0.1:8775/tools/journals/`，默认中文。用 `view=library` 直达资料库，用 `librarySociety=comsoc|computer|acm|other` 指定资料库学会；英文直达加 `lang=en`。工具页不使用或改变个人主页的语言偏好。预览仅监听本机；服务运行时，网页文件保存后会自动刷新。
 
 ## 维护期刊与数据
 
@@ -27,10 +27,16 @@ python -B scripts/serve_site.py 8775
 - **日期显示**：页面统一显示为 `YYYY-MM`；只有年份时按用户约定显示该年 `01` 月，月份未知时这不是已核实的任命月份。原始 `since` 不补写月份，交接判断仍使用原始生效日期。
 - **维护 IF 与篇幅**：`impact_factor` 记录公开的 JIF 数值、来源、核查日期和已知的指标年份；不要使用 CiteScore 或把旧刊名的 IF 当成现刊指标。用 `details.length` 的 `initial`（和有独立上限时的 `revised`）记录中英文短语及同一个指南来源。区别初稿、修回、收费门槛与出版篇幅；学会通则要注明口径。
 - **精简显示**：IF 在表格里只显示数值，年份与来源仍存入数据文件。篇幅显示层省略“双栏”“通常”“正文”，但保留单栏、行距、ACM 格式和参考文献计数等影响口径的信息。只有一条篇幅规则时不重复显示“初投”标签。指南未给出初投上限时，`length` 只记录核查说明、来源和日期，不写 `initial`；只有官网明确表示不限制时才能写“无页数／字数上限”。
+- **维护分区**：登记表中的可选 `rankings.jcr` 使用 2025 指标年（2026 年发布）的 JIF 分区；`categories` 逐项记录 `category` 与 `quartile`（Q1–Q4），只核实部分学科时加 `partial: true`。`rankings.cas` 只接收中科院 2025 版大类，填双语 `category` 与数字 `zone`（1–4）。两套均记录 `year: 2025`、核查来源名 `source`、网址 `url` 和 `checked_at`。按现刊名和 ISSN 核对；缺失系统直接省略。来源留作维护记录，浮窗不显示来源或外链。
 - **仅更新期刊资料**：编辑登记表后运行 `python -B scripts/refresh_journals.py --metadata-only`。只更新当前本地快照里的期刊资料，不访问 CFP／OpenAlex，不改写其数据或原快照日期。
 - **人工修正**：`tools/journals/overrides.json` 的 `journals` 按期刊 ID 补充内容；`calls` 按快照中已存在的特刊 ID 修正字段，例如客座编辑、预计出版时间或截止日期。使用 ISO 日期 `YYYY-MM-DD`，补日期时将 `status` 一并改为 `dated`。修正后在界面复核。已修正值优先于采集；原始记录仍保留。
 - **新增来源**：只填审核过的官方 CFP 入口。适配器覆盖 ComSoc 表格与 TNET 专题、Computer Society（TDSC、TAFFC、TETC）、SPS（TSP、JSTSP）、IoTJ、VTS 和 SCIS。Computer Society 以各专题详情页为准；SCIS 只从英文刊的征稿栏目读取 PDF，不读取已出版专题。TVT 与 SCIS 需要 `pdftotext`。新页面布局请在 `scripts/journal_cfp.py` 增加适配器及测试。
 - **更新统计**：使用 OpenAlex 的主发表来源、出版年份、article 与 review；每年独立记录数据源。TNET 2024 年及以前使用前身 ISSN。匿名 API 可用；若有额度限制，可在仓库 Actions Secrets 可选配置 `OPENALEX_API_KEY`。不要把密钥放入前端或 JSON。
+
+### 分区核查记录（2026-11-23）
+
+- **JCR：32/33。** 按 ISSN 对照 [UEFISCDI 公布的 2025 指标年 JIF 学科分区表](https://uefiscdi.gov.ro/scientometrie-reviste)，采用 JIF 而非 AIS 栏。缺 TNET：现刊 ISSN 2998-4157 的分区为 N/A，不挪用旧刊分区。
+- **中科院 2025 版大类：32/33。** 使用[科研通的期刊详情](https://www.ablesci.com/journal/index?keywords=communication)按刊名和 ISSN 核查，只取「中科院2025年分区（2025年3月20日发布）」的大类，不使用搜索列表呈现的新锐分区。SCIS 与期刊官网披露一致，保留原核查记录。现刊 TNET（2998-4157）未核实到 2025 版大类，不用新锐版或旧刊填补。
 
 ## 自动更新与排障
 

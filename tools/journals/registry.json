@@ -1,6 +1,35 @@
 [
   {
     "id": "tcom",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5j2Y45",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "TCOM",
     "name": "IEEE Transactions on Communications",
     "category": "communications",
@@ -79,6 +108,35 @@
   },
   {
     "id": "twc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5j2ye5",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "TWC",
     "name": "IEEE Transactions on Wireless Communications",
     "category": "communications",
@@ -156,6 +214,35 @@
   },
   {
     "id": "jsac",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5JqKGp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Zhiguo Ding",
       "source": "https://www.comsoc.org/publications/journals/ieee-jsac/ieee-journal-selected-areas-communications-editorial-board",
@@ -222,6 +309,35 @@
   },
   {
     "id": "comst",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=r8Lw0r",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "COMST",
     "name": "IEEE Communications Surveys & Tutorials",
     "category": "communications",
@@ -290,6 +406,31 @@
   },
   {
     "id": "cl",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=p3geZp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Telecommunications",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "CL",
     "name": "IEEE Communications Letters",
     "category": "communications",
@@ -355,6 +496,39 @@
   },
   {
     "id": "wcl",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5mx9jp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "WCL",
     "name": "IEEE Wireless Communications Letters",
     "category": "communications",
@@ -415,6 +589,31 @@
   },
   {
     "id": "tccn",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=p1xJar",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Shiwen Mao",
       "source": "https://www.comsoc.org/publications/journals/ieee-tccn/ieee-transactions-cognitive-communications-and-networking-editorial-board",
@@ -474,6 +673,31 @@
   },
   {
     "id": "tgcn",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DMgaxp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Yuanwei Liu",
       "source": "https://www.comsoc.org/publications/journals/ieee-tgcn/editorial-board",
@@ -539,6 +763,39 @@
   },
   {
     "id": "tvt",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5yNAED",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Transportation Science & Technology",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Lin Cai",
       "source": "https://vtsociety.org/position/editor-chief-tvt",
@@ -601,6 +858,35 @@
   },
   {
     "id": "oj-coms",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=r0P0Jr",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "OJ-COMS",
     "name": "IEEE Open Journal of the Communications Society",
     "category": "communications",
@@ -739,6 +1025,35 @@
   },
   {
     "id": "tmc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DXRA8p",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "TMC",
     "name": "IEEE Transactions on Mobile Computing",
     "category": "networking",
@@ -788,6 +1103,31 @@
   },
   {
     "id": "tnsm",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5ONvap",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Abdallah Shami",
       "source": "https://www.comsoc.org/publications/journals/ieee-tnsm/ieee-transactions-network-and-service-management-editorial-board",
@@ -840,6 +1180,35 @@
   },
   {
     "id": "tnse",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DXlKGD",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Multidisciplinary",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Mathematics, Interdisciplinary Applications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Yingying Chen",
       "source": "https://www.comsoc.org/publications/journals/ieee-tnse/ieee-transactions-network-science-and-engineering-editorial-board"
@@ -893,6 +1262,39 @@
   },
   {
     "id": "iotj",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=rwxJ1p",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Bo Li",
       "source": "https://ieee-iotj.org/editorial-board/",
@@ -951,6 +1353,43 @@
   },
   {
     "id": "computer-networks",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DXRRYp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Hardware & Architecture",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "CN",
     "name": "Computer Networks",
     "category": "networking",
@@ -1020,6 +1459,39 @@
   },
   {
     "id": "computer-communications",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5xxx45",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "CC",
     "name": "Computer Communications",
     "category": "networking",
@@ -1082,6 +1554,31 @@
   },
   {
     "id": "tsp",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Engineering",
+          "zh": "工程技术"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DlZOop",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "cfp_url": "https://signalprocessingsociety.org/event-categories/special-issue-deadlines",
     "editor_in_chief": {
       "name": "Zhi Tian",
@@ -1154,6 +1651,31 @@
   },
   {
     "id": "jstsp",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5xxAg5",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Patrizio Campisi",
       "source": "https://signalprocessingsociety.org/publications-resources/ieee-journal-selected-topics-signal-processing/senior-editorial-board",
@@ -1214,6 +1736,35 @@
   },
   {
     "id": "tpds",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DYQGxD",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Theory & Methods",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "TPDS",
     "name": "IEEE Transactions on Parallel and Distributed Systems",
     "category": "systems",
@@ -1264,6 +1815,35 @@
   },
   {
     "id": "tc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=D4x8ED",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Hardware & Architecture",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "TC",
     "name": "IEEE Transactions on Computers",
     "category": "systems",
@@ -1319,6 +1899,35 @@
   },
   {
     "id": "tcc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DXl81D",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Computer Science, Theory & Methods",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "TCC",
     "name": "IEEE Transactions on Cloud Computing",
     "category": "systems",
@@ -1368,6 +1977,39 @@
   },
   {
     "id": "tdsc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=rRl3K5",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Hardware & Architecture",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Computer Science, Software Engineering",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Dan (Linda) Lin",
       "source": "https://www.computer.org/csdl/journal/tq",
@@ -1418,6 +2060,35 @@
   },
   {
     "id": "taffc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=pWEB6D",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Artificial Intelligence",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Computer Science, Cybernetics",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "abbreviation": "TAFFC",
     "name": "IEEE Transactions on Affective Computing",
     "category": "systems",
@@ -1466,6 +2137,35 @@
   },
   {
     "id": "tetc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DYY97D",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "TETC",
     "name": "IEEE Transactions on Emerging Topics in Computing",
     "category": "systems",
@@ -1513,6 +2213,31 @@
   },
   {
     "id": "tocs",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 4,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=W5OMrj",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Theory & Methods",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "TOCS",
     "name": "ACM Transactions on Computer Systems",
     "category": "systems",
@@ -1560,6 +2285,35 @@
   },
   {
     "id": "tosn",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 4,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=b5JGDB",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q2"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "TOSN",
     "name": "ACM Transactions on Sensor Networks",
     "category": "systems",
@@ -1609,6 +2363,35 @@
   },
   {
     "id": "taco",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=QpqEpX",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Hardware & Architecture",
+            "quartile": "Q3"
+          },
+          {
+            "category": "Computer Science, Theory & Methods",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "TACO",
     "name": "ACM Transactions on Architecture and Code Optimization",
     "category": "systems",
@@ -1657,6 +2440,31 @@
   },
   {
     "id": "jpdc",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=peN7X5",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Theory & Methods",
+            "quartile": "Q2"
+          }
+        ]
+      }
+    },
     "abbreviation": "JPDC",
     "name": "Journal of Parallel and Distributed Computing",
     "category": "systems",
@@ -1723,6 +2531,35 @@
   },
   {
     "id": "scis",
+    "rankings": {
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          }
+        ]
+      },
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 1,
+        "source": "Science China Press · Science China Information Sciences",
+        "url": "https://scis.scichina.com/",
+        "checked_at": "2026-11-23"
+      }
+    },
     "abbreviation": "SCIS",
     "name": "SCIENCE CHINA Information Sciences",
     "category": "systems",
@@ -1770,6 +2607,35 @@
   },
   {
     "id": "commag",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=DlZoLp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Rose Qingyang Hu",
       "source": "https://www.comsoc.org/publications/magazines/ieee-communications-magazine/ieee-communications-magazine-editorial-board",
@@ -1826,6 +2692,43 @@
   },
   {
     "id": "ieee-network",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 3,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=5dg2kp",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Hardware & Architecture",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Jiming Chen（陈积明）",
       "source": "https://www.comsoc.org/publications/magazines/ieee-network/editorial-board",
@@ -1876,6 +2779,43 @@
   },
   {
     "id": "wcm",
+    "rankings": {
+      "cas": {
+        "year": 2025,
+        "category": {
+          "en": "Computer Science",
+          "zh": "计算机科学"
+        },
+        "zone": 2,
+        "source": "科研通 · 中科院2025年分区",
+        "url": "https://www.ablesci.com/journal/detail?id=rvR2lr",
+        "checked_at": "2026-11-23"
+      },
+      "jcr": {
+        "year": 2025,
+        "source": "UEFISCDI · Clarivate Journal Citation Reports",
+        "url": "https://uefiscdi.gov.ro/resource-832709-JCR-2025.iunie-2026.site.pdf",
+        "checked_at": "2026-11-23",
+        "categories": [
+          {
+            "category": "Computer Science, Hardware & Architecture",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Computer Science, Information Systems",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Engineering, Electrical & Electronic",
+            "quartile": "Q1"
+          },
+          {
+            "category": "Telecommunications",
+            "quartile": "Q1"
+          }
+        ]
+      }
+    },
     "editor_in_chief": {
       "name": "Octavia A. Dobre",
       "source": "https://www.comsoc.org/publications/magazines/ieee-wireless-communications/editorial-board",
