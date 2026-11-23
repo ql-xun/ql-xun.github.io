@@ -1,4 +1,4 @@
-import { annualCount, annualSeries, cfpCheckLabel, compactSubmissionLength, currentEditors, editorMonth, groupCallsByCommunity, groupLibrary, journalGrade, journalRoute, libraryCommunities, safeLink } from "./journal-model.js?v=6";
+import { annualCount, annualSeries, cfpCheckLabel, compactSubmissionLength, currentEditors, editorMonth, groupCallsByCommunity, groupLibrary, jcrRange, journalGrade, journalRoute, libraryCommunities, safeLink } from "./journal-model.js?v=7";
 import { bindTrendTrigger } from "./trend-trigger.js";
 
 const app = document.querySelector("#journal-app");
@@ -46,7 +46,6 @@ function routeLink(label, view, society, focus) {
   if (view === "library") url.searchParams.set("view", "library");
   else url.searchParams.delete("view");
   if (society) url.searchParams.set(view === "library" ? "librarySociety" : "society", society);
-  url.searchParams.set("lang", root.dataset.lang);
   const current = route.view === view && (!society || route.society === society);
   return el("a", { href: url.href, "aria-current": current ? "page" : null, "data-focus": focus,
     onclick: event => {
@@ -101,8 +100,8 @@ function impactFactor(journal) {
   return el("span", { class: "journal-numeric" }, value);
 }
 
-// A single chart floats outside the scrollable table, so overflow never clips it.
-const trend = el("section", { class: "journal-trend", id: "journal-trend", hidden: true, "aria-labelledby": "journal-trend-title" });
+// A shared panel floats outside the scrollable table, so overflow never clips it.
+const trend = el("section", { class: "journal-trend", id: "journal-detail", hidden: true, "aria-labelledby": "journal-detail-title" });
 app.after(trend);
 let trendAnchor = null;
 function closeTrend() {
@@ -135,17 +134,23 @@ function positionTrend() {
   trend.style.top = clamp(top, height - offsetHeight) + "px";
 }
 
-function showTrend(anchor, journal) {
+function showDetail(anchor, content) {
   if (anchor === trendAnchor) {
     positionTrend();
     return;
   }
   closeTrend();
+  trend.replaceChildren(...content());
+  trendAnchor = anchor;
+  positionTrend();
+}
+
+function trendContent(journal) {
   const data = stats[journal.id];
   const series = annualSeries(journal, data, year);
   const max = Math.max(1, ...series.map(row => row.count ?? 0));
-  trend.replaceChildren(...[
-    el("h3", { id: "journal-trend-title" }, journal.abbreviation + t(" · OpenAlex counts", " · OpenAlex 收录量")),
+  return [
+    el("h3", { id: "journal-detail-title" }, journal.abbreviation + t(" · OpenAlex counts", " · OpenAlex 收录量")),
     el("ul", { class: "journal-trend-series", role: "list", style: "--years:" + series.length }, series.map(row =>
       el("li", { class: row.partial ? "journal-trend-partial" : null },
         el("div", { class: "journal-trend-track" },
@@ -156,9 +161,16 @@ function showTrend(anchor, journal) {
     data?.checked_at ? p(t("Checked ", "数据核查 ") + data.checked_at.slice(0, 10), "journal-muted") : null,
     series.some(row => row.predecessor) ?
       p(t("* IEEE/ACM predecessor title", "* 对应旧刊名 IEEE/ACM Transactions on Networking"), "journal-muted") : null
-  ].filter(Boolean));
-  trendAnchor = anchor;
-  positionTrend();
+  ].filter(Boolean);
+}
+
+function bindDetail(anchor, content) {
+  bindTrendTrigger(anchor, {
+    open: () => showDetail(anchor, content),
+    close: closeTrend,
+    isOpen: () => trendAnchor === anchor
+  });
+  return anchor;
 }
 
 function countCell(journal) {
@@ -169,8 +181,41 @@ function countCell(journal) {
     "aria-label": t(journal.abbreviation + ": " + value + " works in " + (year - 1) + ", view annual counts",
       journal.abbreviation + "，" + (year - 1) + " 年收录 " + value + " 篇，查看年度收录量"),
     "aria-controls": trend.id, "aria-expanded": "false", "data-focus": "count-" + journal.id }, value);
-  bindTrendTrigger(anchor, { open: () => showTrend(anchor, journal), close: closeTrend, isOpen: () => trendAnchor === anchor });
-  return anchor;
+  return bindDetail(anchor, () => trendContent(journal));
+}
+
+function casZone(value) {
+  return t("Q" + value, value + " 区");
+}
+
+function rankingContent(journal) {
+  const { jcr, cas } = journal.rankings;
+  const detail = (label, rows, data) => el("div", { class: "journal-rank-detail" },
+    el("h4", {}, label),
+    rows.length ? el("dl", {}, rows.flatMap(([category, rank]) => [el("dt", {}, category), el("dd", {}, rank)])) : missing,
+    data?.partial ? p(t("Range covers only the verified categories.", "范围仅涵盖已核实的学科。"), "journal-muted") : null);
+  return [
+    el("h3", { id: "journal-detail-title" }, journal.abbreviation + t(" · Rankings", " · 分区")),
+    detail(t("JCR · JIF year 2025 (2026 release)", "JCR · 2025 指标年（2026 年发布）"),
+      jcr?.categories.map(({ category, quartile }) => [category, quartile]) || [], jcr),
+    detail(t("CAS · 2025 edition (major category)", "中科院 · 2025 版（大类）"),
+      cas ? [[t(cas.category.en, cas.category.zh), casZone(cas.zone)]] : [], cas)
+  ];
+}
+
+function rankingCell(journal) {
+  const jcr = jcrRange(journal.rankings?.jcr);
+  const cas = journal.rankings?.cas;
+  const casLabel = t("CAS", "中科院");
+  const summary = (label, value) => el("span", { class: "journal-rank-line" },
+    label + t(": ", "："), el("span", { class: value ? "journal-rank-value" : "journal-muted" }, value || missing));
+  const rows = [summary("JCR", jcr), summary(casLabel, cas ? casZone(cas.zone) : null)];
+  if (!jcr && !cas) return el("div", { class: "journal-rank" }, rows);
+  return bindDetail(el("button", { type: "button", class: "journal-count journal-rank",
+    "aria-label": t(journal.abbreviation + " rankings: ", journal.abbreviation + " 分区：") +
+      rows.map(row => row.textContent).join(t(", ", "，")),
+    "aria-controls": trend.id, "aria-expanded": "false", "data-focus": "ranking-" + journal.id }, rows),
+  () => rankingContent(journal));
 }
 
 function library() {
@@ -184,6 +229,7 @@ function library() {
         el("span", { class: "journal-name" }, link(item.url, title) || title), chiefLine(item)),
       grade ? "CCF-" + grade : missing,
       impactFactor(item),
+      rankingCell(item),
       pageLimits(item),
       countCell(item)
     ];
@@ -191,7 +237,7 @@ function library() {
   return el("section", { class: "journal-library", "aria-label": t("Journal library", "期刊资料库") },
     societyNav(labels, libraryCommunities),
     el("h2", { class: "library-heading" }, labels[group.id]),
-    table([t("Journal", "期刊"), "CCF", t("Impact factor", "IF因子"), t("Submission length", "投稿页数"),
+    table([t("Journal", "期刊"), "CCF", t("Impact factor", "IF因子"), t("Rankings", "分区"), t("Length limit", "投稿页数"),
       t((year - 1) + " indexed works", (year - 1) + " 年收录量")], rows, labels[group.id], "library-table"));
 }
 function cfpJournal({ journal, calls: entries }, heading) {
@@ -242,13 +288,6 @@ function render() {
     routeLink(t("Special issues", "特刊追踪"), "tracker", null, "view-tracker")),
     route.view === "library" ? library() : tracker());
 }
-function syncLanguageQuery() {
-  const url = new URL(location.href);
-  if (url.searchParams.has("lang") && url.searchParams.get("lang") !== root.dataset.lang) {
-    url.searchParams.set("lang", root.dataset.lang);
-    history.replaceState(history.state, "", url);
-  }
-}
 async function start() {
   try {
     const response = await fetch("./snapshot.json", { cache: "no-cache" });
@@ -260,10 +299,7 @@ async function start() {
     calls = Object.values(snapshot.calls || {});
     render();
   } catch { journals = null; render(); }
-  new MutationObserver(() => {
-    syncLanguageQuery();
-    rerender();
-  }).observe(root, { attributes: true, attributeFilter: ["data-lang"] });
+  new MutationObserver(rerender).observe(root, { attributes: true, attributeFilter: ["data-lang"] });
 }
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && trendAnchor) closeTrend();
@@ -275,7 +311,6 @@ window.addEventListener("scroll", positionTrend, { capture: true, passive: true 
 window.addEventListener("resize", positionTrend);
 window.addEventListener("popstate", () => {
   route = journalRoute(location.search);
-  syncLanguageQuery();
   render();
 });
 start();

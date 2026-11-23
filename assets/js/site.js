@@ -8,11 +8,12 @@
   const page = root.dataset.page || "home";
   const contentVersion = "20261011-4";
   const chineseRegions = new Set(["CN", "HK", "MO", "TW"]);
-  const queryLanguage = new URLSearchParams(window.location.search).get("lang");
+  const readLanguageQuery = () => new URLSearchParams(window.location.search).get("lang");
+  const queryLanguage = readLanguageQuery();
   let savedLanguage = null;
 
   try {
-    savedLanguage = window.localStorage.getItem(storageKey);
+    if (page !== "journals") savedLanguage = window.localStorage.getItem(storageKey);
   } catch (_) {
     // Local storage can be unavailable in privacy-restricted browsers.
   }
@@ -207,7 +208,13 @@
 
   const explicitLanguage = queryLanguage === "zh" || queryLanguage === "en" ? queryLanguage : null;
   const browserLanguage = normalizeLanguage(navigator.language || "en");
-  applyLanguage(explicitLanguage || savedLanguage || browserLanguage, Boolean(explicitLanguage));
+  if (page === "journals") {
+    const applyJournalLanguage = () => applyLanguage(readLanguageQuery() === "en" ? "en" : "zh", false);
+    applyJournalLanguage();
+    window.addEventListener("popstate", applyJournalLanguage);
+  } else {
+    applyLanguage(explicitLanguage || savedLanguage || browserLanguage, Boolean(explicitLanguage));
+  }
 
   if (toggle) {
     toggle.addEventListener("click", function () {

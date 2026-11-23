@@ -30,11 +30,15 @@
 .journal-state { border-left: 3px solid #929fb0; padding: 9px 13px; background: #f4f5f6; }
 .journal-shell section h2 { font-size: 17px; margin: 12px 0 5px; }
 .journal-shell .library-heading { font-size: 18px; margin: 0 0 10px; }
-.library-table { min-width: 720px; table-layout: fixed; }
-.library-table :is(th, td):nth-child(2) { width: 72px; white-space: nowrap; }
-.library-table :is(th, td):nth-child(3) { width: 72px; }
-.library-table :is(th, td):nth-child(4) { width: 172px; }
-.library-table :is(th, td):nth-child(5) { width: 140px; }
+.journal-library .journal-table-wrap { max-width: min(100%, 1040px); }
+.library-table { min-width: 920px; table-layout: fixed; }
+.library-table :is(th, td) { padding-inline: 14px; }
+.library-table thead th { white-space: normal; overflow-wrap: anywhere; }
+.library-table :is(th, td):nth-child(2) { width: 80px; }
+.library-table :is(th, td):nth-child(3) { width: 124px; }
+.library-table :is(th, td):nth-child(4) { width: 120px; }
+.library-table :is(th, td):nth-child(5) { width: 172px; }
+.library-table :is(th, td):nth-child(6) { width: 164px; }
 .library-table tbody th { font-weight: 400; }
 .library-table tr > :last-child { text-align: left; }
 .library-journal { overflow-wrap: anywhere; }
@@ -60,6 +64,15 @@
   cursor: pointer;
 }
 .journal-count:hover, .journal-count[aria-expanded="true"] { background: var(--journal-tint); }
+.journal-rank { font-size: 13px; text-align: left; }
+button.journal-rank { color: inherit; font-weight: inherit; text-decoration: none; }
+.journal-rank-line { display: block; white-space: nowrap; }
+button.journal-rank .journal-rank-value {
+  color: #184f9a;
+  font-weight: 650;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
 .journal-trend {
   position: fixed;
   z-index: 110;
@@ -74,6 +87,11 @@
 }
 .journal-trend h3 { margin: 0 0 6px; font-size: 13px; }
 .journal-trend p { margin: 4px 0 0; font-size: 11px; line-height: 1.4; }
+.journal-rank-detail { font-size: 12px; }
+.journal-rank-detail + .journal-rank-detail { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--journal-rule); }
+.journal-rank-detail h4 { margin: 0 0 3px; font-size: 12px; }
+.journal-rank-detail dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; margin: 0; }
+.journal-rank-detail dd { margin: 0; font-weight: 650; }
 .journal-trend-series {
   display: grid;
   grid-template-columns: repeat(var(--years), minmax(0, 1fr));
@@ -143,6 +161,7 @@
   .cfp-societies { gap: 5px; }
   .cfp-societies a { padding: 7px 8px; }
   .journal-table th, .journal-table td { padding: 8px; }
+  .library-table :is(th, td) { padding-inline: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-page="journals"] { scroll-behavior: auto; }
