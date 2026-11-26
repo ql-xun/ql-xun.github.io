@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
-import { annualCount, annualSeries, callStatus, cfpCheckLabel, communityId, compactSubmissionLength, currentEditor, currentEditors, daysLeft, editorMonth,
+import { annualCount, annualSeries, callListingDate, callStatus, callTags, cfpCheckLabel, communityId, compactSubmissionLength, currentEditor, currentEditors, daysLeft, editorMonth,
   groupCallsByCommunity, groupLibrary, jcrRange, journalGrade, journalRoute, safeLink } from "../tools/journals/journal-model.js";
 import { bindTrendTrigger } from "../tools/journals/trend-trigger.js";
 
@@ -153,11 +153,39 @@ test("library groups contain all 33 existing titles exactly once and sort by ran
 });
 
 test("library and tracker selections are independent; old tracker URLs still open", () => {
-  assert.deepEqual(journalRoute("?lang=zh&society=computer"), { view: "tracker", society: "computer" });
-  assert.deepEqual(journalRoute("?view=library&librarySociety=acm&society=computer&lang=en"), { view: "library", society: "acm" });
-  assert.deepEqual(journalRoute("?view=library&society=other"), { view: "library", society: "comsoc" });
-  assert.deepEqual(journalRoute("?view=favorites&society=acm"), { view: "tracker", society: "comsoc" });
-  assert.deepEqual(journalRoute("?view=library&librarySociety=invalid"), { view: "library", society: "comsoc" });
+  assert.deepEqual(journalRoute("?lang=zh&society=computer"), { view: "tracker", society: "computer", overview: false });
+  assert.deepEqual(journalRoute("?view=library&librarySociety=acm&society=computer&lang=en"),
+    { view: "library", society: "acm", overview: false, sort: null });
+  assert.deepEqual(journalRoute("?view=library&society=other"),
+    { view: "library", society: "comsoc", overview: false, sort: null });
+  assert.deepEqual(journalRoute("?view=favorites&society=acm"), { view: "tracker", society: "comsoc", overview: false });
+  assert.deepEqual(journalRoute("?view=library&librarySociety=invalid&overview=all&sort=impact"),
+    { view: "library", society: "comsoc", overview: true, sort: { key: "impact", direction: "desc" } });
+  assert.deepEqual(journalRoute("?society=other&overview=all"), { view: "tracker", society: "other", overview: true });
+  assert.equal(journalRoute("?view=library&sort=invalid&order=asc").sort, null);
+});
+
+test("library attribute sorts ignore CCF grade; missing entries stay last in either direction", () => {
+  const row = (id, grade, impact, quartile, zone, length) => ({
+    id, name: id, abbreviation: id, publisher: "ACM", ccf: { grade },
+    impact_factor: impact === null ? null : { value: impact },
+    rankings: { jcr: quartile ? { categories: quartile.map(q => ({ quartile: q })) } : null, cas: { zone } },
+    details: { length: { initial: { en: length } } }
+  });
+  const list = [
+    row("a", "A", 9, ["Q1", "Q2"], 2, "≤4,500 words"),
+    row("b", "A", 5, ["Q1"], 1, "≤10 pages"),
+    row("c", "A", null, null, null, "No page/word limit"),
+    row("d", "B", 50, ["Q1"], 1, "≤4 pages")
+  ];
+  const order = (key, direction, stats) => groupLibrary(list, { key, direction }, stats, 2025)[2].journals.map(j => j.id);
+  assert.deepEqual(order("impact", "desc"), ["d", "a", "b", "c"]);
+  assert.deepEqual(order("impact", "asc"), ["b", "a", "d", "c"]);
+  assert.deepEqual(order("jcr", "asc"), ["b", "d", "a", "c"]);
+  assert.deepEqual(order("cas", "asc"), ["b", "d", "a", "c"]);
+  assert.deepEqual(order("length", "desc"), ["b", "d", "a", "c"]);
+  assert.deepEqual(order("count", "asc", { a: { counts: { 2025: 6 } }, b: { counts: { 2025: 0 } } }), ["b", "a", "c", "d"]);
+  assert.deepEqual(groupLibrary(list)[2].journals.map(j => j.id), ["a", "b", "c", "d"]);
 });
 
 test("chart series preserves zero, distinguishes missing, and marks YTD and predecessor data", () => {
@@ -214,12 +242,14 @@ test("source links accept only HTTPS without embedded credentials", () => {
   assert.equal(safeLink("https://user:password@example.org"), null);
 });
 
-test("CFPs stay grouped by society and journal, with topics sorted by title", () => {
+test("CFPs stay grouped by society and journal, sorting deadlines with undated calls last", () => {
   const titles = ["tdsc", "tvt", "jsac", "commag", "new", "scis", "jstsp", "tsp", "tetc", "taffc", "ton"].map(id => ({ id, name: id }));
   const input = [
     { journal_id: "tdsc", title: "Earlier deadline", status: "dated", deadline: "2026-11-15" },
     { journal_id: "commag", title: "Z topic", status: "dated", deadline: "2026-11-16" },
     { journal_id: "commag", title: "A topic", status: "dated", deadline: "2026-12-20" },
+    { journal_id: "commag", title: "B same day", status: "dated", deadline: "2026-12-20" },
+    { journal_id: "commag", title: "A undated", status: "ongoing" },
     { journal_id: "commag", title: "Closed", status: "closed", deadline: "2026-12-20" },
     { journal_id: "commag", title: "Past", status: "dated", deadline: "2026-11-01" },
     { journal_id: "ton", title: "Old TNET topic", status: "dated", deadline: "2025-01-15" },
@@ -229,12 +259,29 @@ test("CFPs stay grouped by society and journal, with topics sorted by title", ()
   const groups = groupCallsByCommunity(titles, input, "2026-11-14");
   assert.deepEqual(groups.map(group => group.id), ["comsoc", "computer", "other"]);
   assert.deepEqual(groups[0].journals.map(item => item.journal.id), ["commag", "jsac", "ton"]);
-  assert.deepEqual(groups[0].journals[0].calls.map(item => item.title), ["A topic", "Z topic"]);
+  assert.deepEqual(groups[0].journals[0].calls.map(item => item.title), ["Z topic", "A topic", "B same day", "A undated"]);
   assert.deepEqual(groups[0].journals[1].calls, []);
   assert.deepEqual(groups[0].journals[2].calls, []);
   assert.deepEqual(groups[1].journals.map(item => item.journal.id), ["tdsc", "taffc", "tetc"]);
   assert.deepEqual(groups[2].journals.map(item => [item.journal.id, item.subgroup]),
     [["tsp", "sps"], ["jstsp", "sps"], ["tvt", "vts"], ["scis", "scp"], ["new", "misc"]]);
+});
+
+test("CFP history shows only post-baseline first detections and real extensions", () => {
+  const call = { status: "dated", deadline: "2026-12-08", history: [
+    { kind: "new", at: "2026-11-24T17:00:00Z", to: "2026-12-03" },
+    { kind: "deadline", from: "2026-12-03", to: "2026-12-08" }
+  ] };
+  assert.equal(callListingDate(call), "2026-11-25");
+  assert.equal(callListingDate({}), null);
+  assert.equal(callListingDate({ history: [{ kind: "new", at: "2026-11-24T15:00:00+08:00" }] }), null);
+  assert.deepEqual(callTags(call, "2026-12-01"), ["new", "due", "extended"]);
+  assert.deepEqual(callTags(call, "2026-11-30"), ["new", "extended"]);
+  assert.deepEqual(callTags({ ...call, deadline: "2027-01-30" }, "2026-12-26"), []);
+  assert.deepEqual(callTags({ ...call, status: "closed" }, "2026-12-01"), []);
+  assert.deepEqual(callTags({ ...call, history: [...call.history, { kind: "deadline", from: "2026-12-10", to: call.deadline }] },
+    "2026-12-01"), ["new", "due"]);
+  assert.deepEqual(callTags({ ...call, history: [{ kind: "deadline", from: null, to: call.deadline }] }, "2026-12-01"), ["due"]);
 });
 
 test("society links only accept recognized groups and default to ComSoc", () => {

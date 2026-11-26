@@ -31,6 +31,28 @@ export function callStatus(call, today) {
   return days === null ? "unknown" : days < 0 ? "past" : "open";
 }
 
+// Older "new" events include imported baselines. Do not use those as posting dates.
+const listingDateStart = "2026-11-25";
+
+export function callListingDate(call) {
+  const first = call.history?.find(event => event.kind === "new");
+  const date = cfpCheckLabel(first?.at)?.slice(0, 10);
+  return date && date >= listingDateStart ? date : null;
+}
+
+export function callTags(call, today) {
+  const status = callStatus(call, today);
+  if (!["open", "ongoing"].includes(status)) return [];
+  const tags = [];
+  const age = daysLeft(today, callListingDate(call));
+  if (age !== null && age >= 0 && age <= 30) tags.push("new");
+  const remaining = daysLeft(call.deadline, today);
+  if (remaining !== null && remaining >= 0 && remaining <= 7) tags.push("due");
+  const change = call.history?.findLast(event => event.kind === "deadline");
+  if (change?.to === call.deadline && daysLeft(change.to, change.from) > 0) tags.push("extended");
+  return tags;
+}
+
 const communities = [
   ["comsoc", ["commag", "ieee-network", "wcm", "jsac", "ton", "tccn", "tgcn", "tnse", "tnsm", "iotj"]],
   ["computer", ["tdsc", "taffc", "tetc"]],
@@ -40,6 +62,11 @@ const otherSocieties = { tsp: "sps", jstsp: "sps", tvt: "vts", scis: "scp" };
 const libraryComSoc = new Set([...communities[0][1], "tcom", "twc", "comst", "cl", "wcl", "oj-coms"]);
 const libraryComputer = new Set([...communities[1][1], "tmc", "tpds", "tc", "tcc"]);
 export const libraryCommunities = ["comsoc", "computer", "acm", "other"];
+const ascendingSorts = new Set(["name", "jcr", "cas", "length"]);
+const descendingSorts = new Set(["impact", "count"]);
+export function defaultLibraryDirection(key) {
+  return descendingSorts.has(key) ? "desc" : "asc";
+}
 
 export function communityId(value) {
   return communities.some(([id]) => id === value) ? value : "comsoc";
@@ -47,11 +74,16 @@ export function communityId(value) {
 
 export function journalRoute(search) {
   const query = new URLSearchParams(search);
+  const overview = query.get("overview") === "all";
   if (query.get("view") === "library") {
     const society = query.get("librarySociety");
-    return { view: "library", society: libraryCommunities.includes(society) ? society : "comsoc" };
+    const key = query.get("sort");
+    const order = query.get("order");
+    const sort = ascendingSorts.has(key) || descendingSorts.has(key) ?
+      { key, direction: ["asc", "desc"].includes(order) ? order : defaultLibraryDirection(key) } : null;
+    return { view: "library", society: libraryCommunities.includes(society) ? society : "comsoc", overview, sort };
   }
-  return { view: "tracker", society: communityId(query.get("society")) };
+  return { view: "tracker", society: communityId(query.get("society")), overview };
 }
 
 export function journalGrade(journal) {
@@ -64,16 +96,51 @@ export function jcrRange(jcr) {
   return quartiles.length > 1 ? quartiles[0] + "–" + quartiles.at(-1) : quartiles[0] ?? null;
 }
 
-export function groupLibrary(journals) {
+function initialLength(journal) {
+  const text = compactSubmissionLength(journal.details?.length?.initial?.en);
+  // Keep page and word limits separate; never convert one to the other.
+  const match = text?.match(/^[≤<]\s*([\d,]+)\s+(?:magazine\s+)?(pages?|words?)\b/i);
+  return match ? [match[2].toLowerCase().startsWith("page") ? 0 : 1, Number(match[1].replaceAll(",", ""))] : null;
+}
+
+function libraryValue(journal, key, stats, countYear) {
+  switch (key) {
+    case "name": return journal.name;
+    case "impact": return journal.impact_factor?.value ?? null;
+    case "cas": return journal.rankings?.cas?.zone ?? null;
+    case "jcr": {
+      const range = jcrRange(journal.rankings?.jcr);
+      return range ? [Number(range[1]), Number(range.at(-1))] : null;
+    }
+    case "length": return initialLength(journal);
+    case "count": return annualCount(stats[journal.id], countYear);
+    default: return null;
+  }
+}
+
+function compareLibraryValues(a, b, { key, direction }) {
+  if (a === null || b === null) return Number(a === null) - Number(b === null);
+  const sign = direction === "desc" ? -1 : 1;
+  if (key === "length") return a[0] - b[0] || sign * (a[1] - b[1]);
+  if (key === "jcr") return sign * (a[0] - b[0] || a[1] - b[1]);
+  if (key === "name") return sign * a.localeCompare(b, "en");
+  return sign * (a - b);
+}
+
+export function groupLibrary(journals, sort = null, stats = {}, countYear) {
   const groups = new Map(libraryCommunities.map(id => [id, []]));
+  const values = new Map();
   for (const journal of journals) {
     const id = libraryComSoc.has(journal.id) ? "comsoc" : libraryComputer.has(journal.id) ? "computer" :
       journal.publisher === "ACM" ? "acm" : "other";
     groups.get(id).push(journal);
+    if (sort) values.set(journal.id, libraryValue(journal, sort.key, stats, countYear));
   }
   return [...groups].map(([id, entries]) => ({
     id,
-    journals: entries.sort((a, b) => (journalGrade(a) || "Z").localeCompare(journalGrade(b) || "Z", "en") ||
+    journals: entries.sort((a, b) => (sort ?
+      compareLibraryValues(values.get(a.id), values.get(b.id), sort) :
+      (journalGrade(a) || "Z").localeCompare(journalGrade(b) || "Z", "en")) ||
       a.abbreviation.localeCompare(b.abbreviation, "en"))
   }));
 }
@@ -135,7 +202,9 @@ export function groupCallsByCommunity(journals, calls, today) {
     return { id, journals: titles.map(journal => ({
       journal,
       subgroup: id === "other" ? otherSocieties[journal.id] || "misc" : null,
-      calls: (active.get(journal.id) || []).sort((a, b) => a.title.localeCompare(b.title, "en"))
+      calls: (active.get(journal.id) || []).sort((a, b) =>
+        (a.deadline || "9999-12-31").localeCompare(b.deadline || "9999-12-31") ||
+        a.title.localeCompare(b.title, "en"))
     })) };
   }).filter(group => group.journals.length);
 }

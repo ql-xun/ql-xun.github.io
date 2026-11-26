@@ -9,7 +9,7 @@ from journal_cfp import deadline_date, detail_fields, parse_page, pdf_fields
 from journal_digest import create_digest, deliver
 from refresh_journals import (
     annual_stats, complete_cfp_check, merge_source, read_json, read_url, refresh_source, statistics_to_refresh,
-    sync_metadata, validate_editor, validate_impact, validate_snapshot,
+    sync_live_snapshot, sync_metadata, validate_editor, validate_impact, validate_snapshot,
 )
 
 
@@ -313,6 +313,18 @@ class MetadataTests(unittest.TestCase):
         self.assertNotEqual(registry[0]["name"], name)
         with self.assertRaises(ValueError):
             sync_metadata(registry[1:], {}, snapshot)
+
+    def test_live_sync_accepts_newer_data_without_overwriting_local_metadata(self):
+        data = Path(__file__).resolve().parents[1] / "tools/journals"
+        local = read_json(data / "snapshot.json")
+        live = {**local, "generated_at": "2099-01-01T08:00:00+08:00"}
+        self.assertEqual(sync_live_snapshot(local, live), live)
+        with self.assertRaisesRegex(ValueError, "older"):
+            sync_live_snapshot(live, local)
+        with self.assertRaisesRegex(ValueError, "metadata differs"):
+            sync_live_snapshot(local, {**live, "journals": list(reversed(live["journals"]))})
+        with self.assertRaisesRegex(ValueError, "missing local CFP"):
+            sync_live_snapshot(local, {**live, "calls": {}})
 
 
 class DigestTests(unittest.TestCase):

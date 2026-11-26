@@ -1,4 +1,4 @@
-import { annualCount, annualSeries, cfpCheckLabel, compactSubmissionLength, currentEditors, editorMonth, groupCallsByCommunity, groupLibrary, jcrRange, journalGrade, journalRoute, libraryCommunities, safeLink } from "./journal-model.js?v=7";
+import { annualCount, annualSeries, callListingDate, callTags, cfpCheckLabel, compactSubmissionLength, currentEditors, defaultLibraryDirection, editorMonth, groupCallsByCommunity, groupLibrary, jcrRange, journalGrade, journalRoute, libraryCommunities, safeLink } from "./journal-model.js?v=9";
 import { bindTrendTrigger } from "./trend-trigger.js";
 
 const app = document.querySelector("#journal-app");
@@ -33,7 +33,8 @@ function rerender() {
   if (key) [...app.querySelectorAll("[data-focus]")].find(node => node.dataset.focus === key)?.focus({ preventScroll: true });
 }
 function table(headers, rows, label, style) {
-  const cells = headers.map(title => el("th", { scope: "col" }, title));
+  const cells = headers.map(header => typeof header === "string" ? el("th", { scope: "col" }, header) :
+    el("th", { scope: "col", "aria-sort": header.sortDirection }, header.content));
   return el("div", { class: "journal-table-wrap", tabindex: 0, role: "region", "aria-label": label },
     el("table", { class: style ? "journal-table " + style : "journal-table", "aria-label": label },
       el("thead", {}, el("tr", {}, cells)),
@@ -41,21 +42,38 @@ function table(headers, rows, label, style) {
         style && !i ? el("th", { scope: "row" }, value) : el("td", {}, value)))))));
 }
 
+function navigateJournal(url) {
+  history.pushState(null, "", url);
+  route = journalRoute(location.search);
+  rerender();
+}
+
 function routeLink(label, view, society, focus) {
   const url = new URL(location.href);
   if (view === "library") url.searchParams.set("view", "library");
   else url.searchParams.delete("view");
-  if (society) url.searchParams.set(view === "library" ? "librarySociety" : "society", society);
-  const current = route.view === view && (!society || route.society === society);
+  if (society) {
+    url.searchParams.set(view === "library" ? "librarySociety" : "society", society);
+    url.searchParams.delete("overview");
+  }
+  const current = route.view === view && (!society || (!route.overview && route.society === society));
   return el("a", { href: url.href, "aria-current": current ? "page" : null, "data-focus": focus,
     onclick: event => {
       if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       if (current) return;
-      history.pushState(null, "", url);
-      route = journalRoute(location.search);
-      rerender();
+      navigateJournal(url);
     } }, label);
+}
+
+function overviewButton() {
+  return el("button", { type: "button", class: "journal-overview", "aria-pressed": String(route.overview),
+    "data-focus": "overview", onclick: () => {
+      const url = new URL(location.href);
+      if (route.overview) url.searchParams.delete("overview");
+      else url.searchParams.set("overview", "all");
+      navigateJournal(url);
+    } }, t("Overview", "整体预览"));
 }
 
 const societyLabels = () => ({
@@ -218,9 +236,47 @@ function rankingCell(journal) {
   () => rankingContent(journal));
 }
 
-function library() {
-  const labels = societyLabels();
-  const group = groupLibrary(journals).find(group => group.id === route.society);
+function librarySortButton(key, label, groupId, description = label) {
+  const active = (route.sort?.key || "ccf") === key;
+  const direction = route.sort?.direction;
+  const mark = active ? key === "ccf" ? "↓" : direction === "asc" ? "↑" : "↓" : key === "ccf" ? null : "↕";
+  const hint = key === "ccf" ? t("Restore default CCF order", "恢复 CCF 默认顺序") :
+    t("Sort by: ", "按此项排序：") + description;
+  return el("button", { type: "button", class: "library-sort-button", title: hint,
+    "aria-label": active && key !== "ccf" ?
+      hint + (direction === "asc" ? t(", ascending", "，升序") : t(", descending", "，降序")) : hint,
+    "aria-pressed": String(active), "data-focus": "sort-" + groupId + "-" + key,
+    onclick: () => {
+      const url = new URL(location.href);
+      if (key === "ccf") {
+        if (active) return;
+        url.searchParams.delete("sort");
+        url.searchParams.delete("order");
+      } else {
+        url.searchParams.set("sort", key);
+        url.searchParams.set("order", active ? direction === "asc" ? "desc" : "asc" : defaultLibraryDirection(key));
+      }
+      navigateJournal(url);
+    } }, label, mark ? el("span", { class: "library-sort-mark", "aria-hidden": "true" }, mark) : null);
+}
+
+function libraryGroup(group, label) {
+  const direction = route.sort?.direction === "desc" ? "descending" : "ascending";
+  const sort = (key, title, description) => ({
+    content: librarySortButton(key, title, group.id, description),
+    sortDirection: route.sort?.key === key ? key === "length" ? "other" : direction : null
+  });
+  const headings = [
+    sort("name", t("Journal", "期刊")),
+    { content: librarySortButton("ccf", "CCF", group.id), sortDirection: route.sort ? null : "ascending" },
+    sort("impact", t("Impact factor", "IF因子")),
+    { content: el("div", { class: "library-rank-sorts" }, t("Rankings", "分区"),
+      el("div", {}, librarySortButton("jcr", "JCR", group.id), librarySortButton("cas", "CAS", group.id, t("CAS", "中科院大类")))),
+      sortDirection: ["jcr", "cas"].includes(route.sort?.key) ? direction : null },
+    sort("length", t("Length limit", "投稿页数"),
+      t("initial limit; pages before words", "初投篇幅；页数和字数分开")),
+    sort("count", t((year - 1) + " indexed works", (year - 1) + " 年收录量"))
+  ];
   const rows = group.journals.map(item => {
     const title = item.name + " (" + item.abbreviation + ")";
     const grade = journalGrade(item);
@@ -234,12 +290,34 @@ function library() {
       countCell(item)
     ];
   });
+  return el("section", { class: "library-group", "data-society": group.id },
+    el("h2", { class: "library-heading" }, label), table(headings, rows, label, "library-table"));
+}
+
+function library() {
+  const labels = societyLabels();
+  const groups = groupLibrary(journals, route.sort, stats, year - 1)
+    .filter(group => route.overview || group.id === route.society);
   return el("section", { class: "journal-library", "aria-label": t("Journal library", "期刊资料库") },
     societyNav(labels, libraryCommunities),
-    el("h2", { class: "library-heading" }, labels[group.id]),
-    table([t("Journal", "期刊"), "CCF", t("Impact factor", "IF因子"), t("Rankings", "分区"), t("Length limit", "投稿页数"),
-      t((year - 1) + " indexed works", (year - 1) + " 年收录量")], rows, labels[group.id], "library-table"));
+    groups.map(group => libraryGroup(group, labels[group.id])));
 }
+
+function cfpTopic(call) {
+  const first = callListingDate(call);
+  const tags = {
+    new: ["New", t("First detected in the last 30 days", "最近 30 天首次监测到")],
+    due: ["Due soon", t("Deadline within 7 days", "距离截稿不超过 7 天")],
+    extended: ["Extended", t("Submission deadline was extended", "投稿截止日期已延期")]
+  };
+  return el("div", { class: "cfp-topic" },
+    link(call.url, call.title) || call.title,
+    ...callTags(call, today).map(key => el("span", { class: "cfp-tag cfp-tag-" + key, title: tags[key][1] }, tags[key][0])),
+    el("div", { class: "cfp-listing journal-muted",
+      title: t("First detected by the tracker, not necessarily the publisher announcement date", "首次监测到征稿的日期，不一定是出版社公告日期") },
+      t("First seen: ", "发布时间："), first ? el("time", { datetime: first }, first) : missing));
+}
+
 function cfpJournal({ journal, calls: entries }, heading) {
   const label = journal.name + " (" + journal.abbreviation + ")";
   const name = link(journal.cfp_url || journal.url, label) || label;
@@ -248,7 +326,7 @@ function cfpJournal({ journal, calls: entries }, heading) {
       el(heading, { class: "cfp-title" }, name),
       el("div", { class: "cfp-editor-list" }, chiefLine(journal))),
     entries.length ? table([t("Topic", "特刊主题"), t("Submission deadline", "投稿截止日期"), t("Guest editors", "客座编辑")],
-      entries.map(call => [link(call.url, call.title) || call.title,
+      entries.map(call => [cfpTopic(call),
         call.deadline ? el("time", { datetime: call.deadline, class: "journal-numeric" }, call.deadline) : missing,
         (call.editors || []).map(name => name.trim().replace(/[\s,，;；]+$/, "")).filter(Boolean).join(", ") || missing]), label) :
       p(t("No SI", "暂无SI"), "journal-muted cfp-empty"));
@@ -261,7 +339,8 @@ function tracker() {
     scp: t("Science China Press", "中国科学杂志社"),
     misc: t("Other publications", "其他期刊")
   };
-  const group = groupCallsByCommunity(journals, calls, today).find(group => group.id === route.society);
+  const groups = groupCallsByCommunity(journals, calls, today)
+    .filter(group => route.overview || group.id === route.society);
   const nav = societyNav(labels, ["comsoc", "computer", "other"]);
   const checked = cfpCheckLabel(snapshot.cfp_checked_at);
   return el("section", { class: "cfp-directory", "aria-label": t("Special issues by society", "按学会浏览特刊") },
@@ -269,13 +348,13 @@ function tracker() {
     p([t("Last checked: ", "更新："), checked ?
       el("time", { datetime: snapshot.cfp_checked_at }, checked) : missing,
       t(" (Beijing time)", "（北京时间）")], "cfp-updated journal-muted"),
-    group ? el("section", { class: "cfp-community", "data-society": group.id, "aria-labelledby": "cfp-community-heading" },
-      el("h2", { id: "cfp-community-heading" }, labels[group.id]),
+    groups.map(group => el("section", { class: "cfp-community", "data-society": group.id, "aria-labelledby": "cfp-heading-" + group.id },
+      el("h2", { id: "cfp-heading-" + group.id }, labels[group.id]),
       group.id === "other" ? Object.entries(subdivisions).map(([id, label]) => {
         const items = group.journals.filter(item => item.subgroup === id);
         return items.length ? el("section", { class: "cfp-subgroup" }, el("h3", {}, label),
           items.map(item => cfpJournal(item, "h4"))) : null;
-      }) : group.journals.map(item => cfpJournal(item, "h3"))) : null);
+      }) : group.journals.map(item => cfpJournal(item, "h3")))));
 }
 function render() {
   closeTrend();
@@ -285,7 +364,8 @@ function render() {
   }
   app.replaceChildren(el("nav", { class: "journal-tabs", "aria-label": t("Journal Explorer views", "期刊观察功能") },
     routeLink(t("Journal library", "期刊资料库"), "library", null, "view-library"),
-    routeLink(t("Special issues", "特刊追踪"), "tracker", null, "view-tracker")),
+    routeLink(t("Special issues", "特刊追踪"), "tracker", null, "view-tracker"),
+    overviewButton()),
     route.view === "library" ? library() : tracker());
 }
 async function start() {
