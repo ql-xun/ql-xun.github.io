@@ -411,6 +411,17 @@ def sync_metadata(registry, overrides, snapshot):
     return updated
 
 
+def sync_live_snapshot(local, live):
+    """Accept the deployed data without overwriting local journal metadata or history."""
+    validate_snapshot(local)
+    validate_snapshot(live)
+    require(live["journals"] == local["journals"], "Live journal metadata differs; sync the checkout first")
+    require(local["calls"].keys() <= live["calls"].keys(), "Live snapshot is missing local CFP records")
+    require(datetime.fromisoformat(live["generated_at"]) >= datetime.fromisoformat(local["generated_at"]),
+            "Live snapshot is older than the local snapshot")
+    return live
+
+
 def apply_call_overrides(calls, overrides):
     for key, value in overrides.items():
         require(not ({"id", "journal_id", "history", "deadline_version"} & value.keys()), "Override cannot modify CFP identity/history")
@@ -535,6 +546,7 @@ def main():
     offline = parser.add_mutually_exclusive_group()
     offline.add_argument("--validate", action="store_true", help="Validate the supplied snapshot without network")
     offline.add_argument("--metadata-only", action="store_true", help="Sync only registry metadata into the existing output snapshot")
+    offline.add_argument("--sync-live", action="store_true", help="Copy the validated Pages snapshot for local preview")
     args = parser.parse_args()
     if args.validate:
         validate_registry(read_json(DATA / "registry.json"))
@@ -545,6 +557,14 @@ def main():
         updated = sync_metadata(read_json(DATA / "registry.json"), read_json(DATA / "overrides.json"), read_json(args.output))
         atomic_json(args.output, updated)
         print(f"Synced metadata for {len(updated['journals'])} journals; CFPs and statistics unchanged.", flush=True)
+    elif args.sync_live:
+        require(not (args.seed or args.full or args.cfp_only or args.bootstrap or args.previous_file or args.digest),
+                "--sync-live only copies the deployed Pages snapshot")
+        local = read_json(args.output)
+        live, _ = previous_snapshot(args)
+        updated = sync_live_snapshot(local, live)
+        atomic_json(args.output, updated)
+        print(f"Synced {len(updated['calls'])} CFP records from Pages. CFP check: {updated.get('cfp_checked_at')}", flush=True)
     else:
         refresh(args)
 
